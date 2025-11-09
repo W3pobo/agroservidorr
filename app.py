@@ -1900,7 +1900,6 @@ def enviar_email_verificacion(usuario, token):
 # --- FIN DE FUNCIÓN AÑADIDA ---
 
 
-
 @app.route('/desactivar_producto/<int:producto_id>', methods=['POST'])
 def desactivar_producto(producto_id):
     producto = Producto.query.get_or_404(producto_id)
@@ -2506,42 +2505,42 @@ def texto_a_voz():
         print(f"Error en texto_a_voz: {e}")
         return jsonify({'error': 'Error al generar audio'}), 500
 
-@app.route('/reproducir_audio', methods=['POST'])
-def reproducir_audio():
-    """Reproduce audio desde base64"""
-    try:
-        data = request.get_json()
-        audio_base64 = data.get('audio', '')
-        
-        if not audio_base64:
-            return jsonify({'error': 'No se proporcionó audio'}), 400
-        
+#@app.route('/reproducir_audio', methods=['POST'])
+#def reproducir_audio():
+   # """Reproduce audio desde base64"""
+    #try:
+     #   data = request.get_json()
+      #  audio_base64 = data.get('audio', '')
+       # 
+        #if not audio_base64:
+         #   return jsonify({'error': 'No se proporcionó audio'}), 400
+        #
         # Decodificar base64 y reproducir
-        audio_data = base64.b64decode(audio_base64)
-        audio_buffer = BytesIO(audio_data)
+        #audio_data = base64.b64decode(audio_base64)
+        #audio_buffer = BytesIO(audio_data)
         
         # Detener cualquier audio previo
-        pygame.mixer.music.stop()
+        #pygame.mixer.music.stop()
         
         # Cargar y reproducir nuevo audio
-        pygame.mixer.music.load(audio_buffer)
-        pygame.mixer.music.play()
+        #pygame.mixer.music.load(audio_buffer)
+        #pygame.mixer.music.play()
         
-        return jsonify({'status': 'reproduciendo'})
+        #eturn jsonify({'status': 'reproduciendo'})
         
-    except Exception as e:
-        print(f"Error en reproducir_audio: {e}")
-        return jsonify({'error': 'Error al reproducir audio'}), 500
+    #except Exception as e:
+     #   print(f"Error en reproducir_audio: {e}")
+      #  return jsonify({'error': 'Error al reproducir audio'}), 500
 
-@app.route('/detener_audio', methods=['POST'])
-def detener_audio():
-    """Detiene la reproducción de audio"""
-    try:
-        pygame.mixer.music.stop()
-        return jsonify({'status': 'detenido'})
-    except Exception as e:
-        print(f"Error al detener audio: {e}")
-        return jsonify({'error': 'Error al detener audio'}), 500
+#@app.route('/detener_audio', methods=['POST'])
+#def detener_audio():
+    #"""Detiene la reproducción de audio"""
+    #try:
+      #  pygame.mixer.music.stop()
+       # return jsonify({'status': 'detenido'})
+    #except Exception as e:
+        #print(f"Error al detener audio: {e}")
+       # return jsonify({'error': 'Error al detener audio'}), 500
 
 if __name__ == '__main__':
     with app.app_context():
