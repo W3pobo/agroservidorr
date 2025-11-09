@@ -2547,6 +2547,14 @@ if __name__ == '__main__':
         db.create_all()
         crear_admin()  
         print("✅ Tablas creadas y administrador registrado 🚀")
-
     
     app.run(debug=True)
+else:
+    # Esto se ejecuta cuando se importa desde WSGI
+    with app.app_context():
+        try:
+            db.create_all()
+            crear_admin()
+            print("✅ Base de datos inicializada en producción")
+        except Exception as e:
+            print(f"⚠️ Error inicializando BD: {e}")
