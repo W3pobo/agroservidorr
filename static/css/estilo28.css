@@ -1,0 +1,370 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body { background-image: url('../images/background.jpg'); color: #333; }
+/* Se quitaron 'nav' y 'nav a' de aquí */
+html:not(.dark-mode) .container { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+html:not(.dark-mode) h2 { color: #0056b3; text-shadow: none; }
+html:not(.dark-mode) .contact-subtitle { color: #333; }
+html:not(.dark-mode) label { color: #0056b3; }
+html:not(.dark-mode) input, html:not(.dark-mode) textarea { background: rgba(255, 255, 255, 0.8); color: #333; border: 1px solid #ccc; }
+html:not(.dark-mode) .boton-enviar { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) .flash-message { background: #e8f5e9; color: #2E7D32; }
+html:not(.dark-mode) footer { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px); color: #555; border-top: 1px solid #ddd; box-shadow: none; }
+
+/* --- DARK MODE --- */
+html.dark-mode body { background-image: url('../images/background-login.png'); color: #f5f5f7; }
+/* Se quitaron 'nav' y 'nav a' de aquí */
+html.dark-mode .container { background: rgba(24, 26, 27, 0.65); backdrop-filter: blur(10px); border: 1.5px solid rgba(0,230,176,0.13); box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.25); }
+html.dark-mode h2 { color: #00e6b0; text-shadow: 0 2px 8px rgba(0,0,0,0.45); }
+html.dark-mode .contact-subtitle { color: #e0f7fa; }
+html.dark-mode label { color: #00e6b0; }
+html.dark-mode input, html.dark-mode textarea { background: rgba(24, 26, 27, 0.65); color: #f5f5f7; border: 1px solid #00e6b0; }
+html.dark-mode .boton-enviar { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode .flash-message { background: rgba(0,230,176,0.13); color: #00e6b0; }
+html.dark-mode footer { background: rgba(24, 26, 27, 0.65); backdrop-filter: blur(10px); color: #aaa; border-top: 1px solid #222; box-shadow: 0 -4px 24px rgba(0,0,0,0.18); }
+
+/* --- GENERIC STYLES --- */
+/* REGLAS DE NAV ANTIGUAS ELIMINADAS (lineas 75-81) */
+
+/* Estilos del Badge (copiados de otros CSS para consistencia) */
+.cart-quantity, .carrito-badge {
+    background: #00e6b0;
+    color: #181a1b;
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-left: 6px;
+    font-size: 0.85em;
+}
+
+.container { max-width: 500px; width: 100%; padding: 32px 30px 30px 30px; border-radius: 18px; text-align: center; margin: auto; margin-top: 60px; margin-bottom: 80px; transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease; }
+h2 {
+    font-size: 2.2em;
+    margin-bottom: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.contact-subtitle {
+    margin-bottom: 28px;
+    font-size: 1.25em;
+    font-weight: 500;
+    line-height: 1.5;
+}
+label {
+    display: block;
+    margin-top: 18px;
+    font-weight: bold;
+    text-align: left;
+    transition: color 0.3s ease;
+}
+input, textarea { width: 100%; padding: 12px; margin-top: 5px; border-radius: 8px; font-size: 1em; transition: all 0.3s ease-in-out; box-shadow: 0 2px 8px rgba(0,0,0,0.10); box-sizing: border-box; /* Añadido para padding correcto */ }
+input {
+    margin-bottom: 14px;
+}
+input:focus, textarea:focus { outline: none; box-shadow: 0px 4px 12px rgba(0,230,176,0.13); }
+
+.boton-enviar { display: block; width: 100%; font-size: 1.2em; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 20px; cursor: pointer; border: none; transition: all 0.3s ease-in-out; }
+.boton-enviar:hover { transform: scale(1.05); }
+
+.flash-message {
+    padding: 10px 0;
+    margin-bottom: 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+footer { text-align: center; padding: 18px 0 10px 0; font-size: 1em; letter-spacing: 1px; margin-top: auto; transition: background 0.3s ease, color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease; }
+
+/* --- ACCESSIBILITY BUTTONS --- */
+/* Se eliminaron las reglas de #grayscale-toggle de aquí */
+
+#back-to-top { 
+    position: fixed; 
+    z-index: 1001; 
+    border: none; 
+    border-radius: 50%; 
+    width: 60px; 
+    height: 60px; 
+    cursor: pointer; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    transition: opacity 0.3s, visibility 0.3s, transform 0.2s ease;
+    bottom: 25px; 
+    left: 25px; 
+    opacity: 0; 
+    visibility: hidden; 
+}
+#back-to-top:hover { transform: scale(1.1); }
+#back-to-top.visible { opacity: 1; visibility: visible; }
+
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html:not(.dark-mode) #back-to-top:hover { background-color: #FFC107; }
+html:not(.dark-mode) #back-to-top svg { stroke: #232526; }
+
+html.dark-mode #back-to-top { background-color: #FFD700; }
+html.dark-mode #back-to-top:hover { background-color: #FFC107; }
+html.dark-mode #back-to-top svg { stroke: #232526; }
+
+/* --- SIDE-PANEL / HAMBURGER STYLES --- */
+/* (Se conservan todas las reglas del panel lateral que ya tenías) */
+
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 300px;
+    max-width: 86vw;
+    transform: translateX(-110%);
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1);
+    z-index: 2200;
+    padding: 18px 14px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-right: 1px solid transparent;
+    color: inherit;
+}
+.side-panel.open { transform: translateX(0); }
+html:not(.dark-mode) .side-panel {
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(10px);
+    border-right-color: rgba(0,0,0,0.06);
+    color: #243043;
+    box-shadow: 10px 0 40px rgba(0,0,0,0.12);
+}
+html.dark-mode .side-panel {
+    background: rgba(12,14,15,0.72);
+    backdrop-filter: blur(12px);
+    border-right-color: rgba(255,255,255,0.03);
+    color: #e9f7f1;
+    box-shadow: 10px 0 40px rgba(0,0,0,0.45);
+}
+.side-header { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+.side-header h4 { margin:0; font-size:1.05rem; font-weight:700; }
+.side-close { background:transparent; border:none; font-size:20px; cursor:pointer; padding:6px; border-radius:8px; color:inherit; }
+.side-close:hover{ background: rgba(0,0,0,0.06); }
+.menu-list { display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+.menu-item {
+    display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:10px; text-decoration:none;
+    color:inherit; font-weight:700; background: transparent; cursor:pointer; border: 1px solid transparent;
+    /* Añadidos para botones */
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    font-family: inherit;
+}
+.menu-item img { width:26px; height:26px; object-fit:contain; }
+.menu-item:hover { background: rgba(0,0,0,0.04); }
+
+.carrito-badge {
+    margin-left:auto;
+    font-size:.85rem;
+}
+
+/* * ===================================================================
+ * ===== INICIO: BLOQUE DE NAVEGACIÓN CORREGIDO (de estilo35.css) =====
+ * ===================================================================
+*/
+
+/* --- NUEVA BARRA DE NAVEGACIÓN (Estática, para Hamburguesa) --- */
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: static; 
+    box-sizing: border-box;
+    padding: 8px 20px;
+    z-index: 100;
+}
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+}
+/* Areas (la clase .nav-left está en tu HTML) */
+.nav-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.nav-title { flex: 1 1 360px; text-align: center; font-weight:700; white-space:nowrap; }
+.nav-right { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+.nav-right-placeholder { width: 48px; } /* Ajustado a 48px para coincidir con el botón */
+
+/* Links de Nav (para botones/links genéricos si se añaden) */
+.nav-link, nav a, button.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.nav-link img, nav a img, button.nav-link img { width:26px; height:26px; object-fit:contain; }
+
+/* Desktop: centrar título */
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+}
+/* Mobile: título en su fila */
+@media (max-width: 900px) {
+    .nav-title { position: static; transform: none; order: 2; width: 100%; text-align: center; margin: 6px 0; pointer-events: auto; }
+    .nav-left { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+/* Small screens: ocultar texto */
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; }
+}
+
+/* --- ESTILOS DE NAV (LIGHT/DARK) - AÑADIDOS --- */
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+html:not(.dark-mode) .nav-title { color: #0056b3; } /* Ya existía, pero se confirma */
+
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark-mode .nav-title { color: #00e6b0; } /* Ya existía, pero se confirma */
+
+
+/* --- BOTÓN HAMBURGUESA --- */
+.nav-ellipsis.hamburger {
+    width: 48px; /* Ajustado a 48px */
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    color: inherit; 
+}
+.nav-ellipsis.hamburger .bar {
+    display: block;
+    width: 22px; /* Ajustado a 22px */
+    height: 2.8px; /* Ajustado a 2.8px */
+    background: currentColor; 
+    border-radius: 2px;
+    margin: 3px 0; /* Ajustado a 3px */
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+/* Ocultar cualquier enlace residual en la barra superior */
+.nav-left .nav-link, .nav-right .nav-link { display: none !important; }
+
+/*
+ * ===================================================================
+ * ===== FIN: BLOQUE DE NAVEGACIÓN CORREGIDO =====
+ * ===================================================================
+*/
+
+
+.logout-btn {
+    display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:12px; font-weight:700; cursor:pointer;
+    text-decoration:none; background: transparent; border: none; color:inherit;
+}
+.logout-btn img { width:26px; height:26px; object-fit:contain; }
+
+/* Anulación clave para .logout-btn dentro del panel */
+.side-panel .logout-btn {
+    font-weight: 700; /* Coincide con .menu-item */
+    padding: 10px 12px; /* Coincide con .menu-item */
+    gap: 12px; /* Coincide con .menu-item */
+}
+/* Anulación de hover para .logout-btn dentro del panel */
+.side-panel .logout-btn:hover {
+    background: rgba(0,0,0,0.04);
+}
+html:not(.dark-mode) .side-panel .logout-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+html.dark-mode .side-panel .logout-btn:hover {
+    background: rgba(255, 255, 255, 0.08); 
+}
+
+
+.side-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.28);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    z-index: 2100;
+}
+.side-overlay.open { opacity: 1; visibility: visible; }
+body.side-no-scroll { overflow: hidden; }
+
+/* Ocultar el botón flotante azul (de accesibilidad.js) si existe */
+#grayscale-toggle, .floating-blue { display:none !important; }
+
+@media(max-width:600px){
+    .side-panel { width: 86vw; }
+    .nav-title { font-size:1rem; }
+    .menu-item img { width:22px; height:22px; }
+    /* Media query para botones flotantes */
+    #back-to-top { width: 50px; height: 50px; bottom: 15px; left: 15px; }
+}

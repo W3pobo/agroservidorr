@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Factura AgronoMia</title>
+    <style>
+        /* Estilos base inspirados en tus CSS (ej. estilo30.css) */
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-size: 12pt;
+        }
+
+        /* Contenedor principal para la factura */
+        .container {
+            width: 90%;
+            margin: 40px auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            border-radius: 15px;
+            background-color: #ffffff; /* El PDF debe tener fondo sólido */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Esto podría no renderizarse en xhtml2pdf */
+        }
+
+        /* Encabezado (verde de estilo30.css) */
+        h2 {
+            color: #2E7D32; /* */
+            text-align: center;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+
+        p {
+            font-size: 11pt;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        /* Estilos de la tabla (de estilo30.css) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2E7D32; /* Verde oscuro para el header de la tabla */
+            color: white;
+            font-size: 12pt;
+        }
+
+        /* Fila de Total (de estilo30.css) */
+        .total {
+            font-weight: bold;
+            font-size: 14pt;
+            background-color: #F9FBE7; /* Fondo amarillo claro */
+            color: #333;
+        }
+        
+        /* Alinear el texto del total a la derecha */
+        .total-label {
+            text-align: right;
+        }
+
+        .footer-text {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10pt;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Factura AgronoMia</h2>
+        <p><strong>Pedido #:</strong> {{ pedido.id }}</p>
+        <p><strong>Fecha:</strong> {{ pedido.fecha.strftime('%d/%m/%Y %H:%M') }}</p>
+        <p><strong>Método de pago:</strong> {{ metodo_pago }}</p>
+        
+        <table>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Subtotal</th>
+            </tr>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.cantidad }}</td>
+                <td>${{ producto.precio }}</td>
+                <td>${{ producto.subtotal }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3" class="total total-label">Total:</td>
+                <td class="total">${{ total }}</td>
+            </tr>
+        </table>
+        
+        <p class="footer-text">¡Gracias por tu compra!</p>
+    </div>
+
+    </body>
+</html>

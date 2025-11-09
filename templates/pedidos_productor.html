@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos Recibidos | AgronoMia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo45.css') }}">
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div id="toast-container">
+          {% for category, message in messages %}
+            <div class="toast toast-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    <script src="{{ url_for('static', filename='js/accesibilidad.js') }}"></script>
+</head>
+<body>
+
+    <aside id="side-panel" class="side-panel" aria-hidden="true" aria-label="Menú lateral">
+        <div class="side-header">
+            <h4>Menú Productor</h4>
+            <button id="side-close" class="side-close" aria-label="Cerrar menú">✕</button>
+        </div>
+
+        <nav class="side-nav" aria-label="Navegación principal">
+            <div class="menu-list">
+                <a class="menu-item" href="#" onclick="history.back(); return false;" title="Volver">
+                    <img src="{{ url_for('static', filename='images/volver.png') }}" alt="">
+                    <span>Volver</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('inicio') }}">
+                    <img src="{{ url_for('static', filename='images/inicio.png') }}" alt="">
+                    <span>Inicio</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('productores') }}">
+                    <img src="{{ url_for('static', filename='images/productor.png') }}" alt="">
+                    <span>Productores</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('contacto') }}">
+                    <img src="{{ url_for('static', filename='images/contacto.png') }}" alt="">
+                    <span>Contacto</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('panel_productor') }}">
+                    <img src="{{ url_for('static', filename='images/panel.png') }}" alt="">
+                    <span>Panel Productor</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('panel_cliente') }}">
+                    <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="">
+                    <span>Mi Cuenta</span>
+                </a>
+                <button id="logout-side" type="button" class="menu-item logout-btn">
+                    <img src="{{ url_for('static', filename='images/cerrar.png') }}" alt="">
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+            </nav>
+    </aside>
+
+    <div id="side-overlay" class="side-overlay" tabindex="-1" aria-hidden="true"></div>
+
+    <nav>
+        <div class="nav-container">
+            <button id="nav-ellipsis-btn" class="nav-ellipsis hamburger" aria-haspopup="true" aria-expanded="false" aria-label="Abrir menú">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <div class="nav-title">Pedidos Recibidos</div>
+
+            <div class="nav-right-placeholder" aria-hidden="true"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2><span class="emoji">📦</span> Pedidos Recibidos</h2>
+        {% if pedidos %}
+            {% for pedido in pedidos %}
+            <div class="pedido">
+                <p><strong>Pedido #{{ pedido.id }}</strong></p>
+                <p><strong>Cliente:</strong> {{ pedido.cliente_nombre }}</p>
+                <p><strong>Fecha:</strong> {{ pedido.fecha.strftime('%d/%m/%Y %H:%M') }}</p>
+                <p><strong>Total de mis productos:</strong> ${{ "%.2f"|format(pedido.total_para_productor) }}</p>
+                <p><strong>Mis productos en este pedido:</strong> {{ pedido.productos_resumen }}</p>
+                <p><strong>Dirección de entrega:</strong> {{ pedido.direccion_entrega }}</p>
+                <button class="btn-entregado" data-pedido="{{ pedido.id }}">✅ Marcar como Entregado</button>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="pedido" style="text-align: center;">
+                <p>🎉 ¡Felicidades! No tienes pedidos pendientes por entregar.</p>
+            </div>
+        {% endif %}
+    </div>
+    <footer>
+        <p>© 2025 AgronoMia - Todos los derechos reservados</p>
+    </footer>
+
+    <button id="back-to-top" class="floating-btn" title="Volver Arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="#232526" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <div id="entregado-modal-bg">
+        <div id="entregado-modal">
+            <h2>¿Marcar como entregado?</h2>
+            <p>¿Estás seguro de que este pedido ya fue entregado?<br>Esta acción no se puede deshacer.</p>
+            <div class="modal-btns">
+                <form id="entregado-form" method="get" style="display:inline;">
+                    <button type="submit" class="modal-btn confirm">Sí, marcar como entregado</button>
+                </form>
+                <button class="modal-btn cancel" onclick="cerrarEntregadoModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- Lógica del Panel Lateral (Side Panel) ---
+        var side = document.getElementById('side-panel');
+        var overlay = document.getElementById('side-overlay');
+        var openBtn = document.getElementById('nav-ellipsis-btn'); // el botón hamburguesa
+        var closeBtn = document.getElementById('side-close');
+        var logoutSide = document.getElementById('logout-side'); // Botón de logout en el panel
+
+        function openSide(){
+            if(!side || !overlay) return;
+            side.classList.add('open');
+            overlay.classList.add('open');
+            side.setAttribute('aria-hidden','false');
+            overlay.setAttribute('aria-hidden','false');
+            document.body.classList.add('side-no-scroll');
+            var first = side.querySelector('.menu-item');
+            if(first) first.focus();
+        }
+        function closeSide(){
+            if(!side || !overlay) return;
+            side.classList.remove('open');
+            overlay.classList.remove('open');
+            side.setAttribute('aria-hidden','true');
+            overlay.setAttribute('aria-hidden','true');
+            document.body.classList.remove('side-no-scroll');
+            if(openBtn) openBtn.focus();
+        }
+
+        if(openBtn) openBtn.addEventListener('click', function(e){ e.preventDefault(); openSide(); });
+        if(closeBtn) closeBtn.addEventListener('click', function(e){ e.preventDefault(); closeSide(); });
+        if(overlay) overlay.addEventListener('click', closeSide);
+
+        document.addEventListener('keydown', function(e){
+            if(e.key === 'Escape') closeSide();
+        });
+
+        // --- Lógica de Cerrar Sesión (Logout) ---
+        function doLogout(e) {
+            if(e) e.preventDefault();
+            
+            fetch("{{ url_for('logout') }}", {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: { 'X-Requested-With':'XMLHttpRequest','Content-Type':'application/json' },
+                body: null
+            }).catch(function(){ 
+            })
+            .finally(function(){
+                try{ 
+                    history.replaceState(null, null, "{{ url_for('login') }}"); 
+                } catch(e) {}
+                window.location.replace("{{ url_for('login') }}");
+            });
+        }
+
+        if(logoutSide) {
+            logoutSide.addEventListener('click', doLogout);
+        }
+
+        // --- Lógica de Protección de Botón "Atrás" ---
+        try {
+            history.replaceState(null, null, window.location.href);
+            history.pushState({ protected: true }, null, window.location.href);
+            
+            window.addEventListener('popstate', function (event) {
+                if (event.state && event.state.protected) {
+                    window.location.replace("{{ url_for('login') }}");
+                }
+            });
+        } catch(e) {}
+
+        // --- Lógica de Focus Trap (Accesibilidad) ---
+        document.addEventListener('focus', function(ev){
+            if(!side || !side.classList.contains('open')) return;
+            if(!side.contains(ev.target)) {
+                var first = side.querySelector('.menu-item');
+                if(first) first.focus();
+            }
+        }, true);
+        
+        // --- Lógica de "Volver Arriba" ---
+        const backToTopButton = document.getElementById('back-to-top');
+        if (backToTopButton) {
+            window.onscroll = function() {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            };
+            backToTopButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+        
+        // NOTA: La lógica para los modales (ej: cerrarEntregadoModal)
+        // y los botones (ej: data-pedido) se asume que está en 'accesibilidad.js'
+
+    });
+    </script>
+    <script>
+    (function(){
+        const logoutUrl = "{{ url_for('logout') }}";
+        const loginUrl  = "{{ url_for('login') }}";
+    
+        function getCsrfHeaders(){
+            const meta = document.querySelector('meta[name=\"csrf-token\"], meta[name=\"csrf_token\"]');
+            const headers = { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' };
+            if (meta && meta.content) headers['X-CSRFToken'] = meta.content;
+            return headers;
+        }
+    
+        function doLogout(){
+            fetch(logoutUrl, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: getCsrfHeaders(),
+                body: null
+            }).catch(function(){})
+            .finally(function(){
+                try { history.replaceState(null, null, loginUrl); } catch(e){}
+                try { history.pushState({ loggedOut: true }, null, loginUrl); } catch(e){}
+                window.location.replace(loginUrl);
+            });
+        }
+    
+        document.addEventListener('click', function(e){
+            // Se escuchan todos los botones de logout definidos en panel_cliente
+            const btn = e.target.closest('.logout-btn, [data-logout], #base-logout, #logout-side, #logout-btn-menu, #panel-logout');
+            if (!btn) return;
+            e.preventDefault();
+            doLogout();
+        });
+    
+        document.addEventListener('submit', function(e){
+            if (e.target && e.target.classList && e.target.classList.contains('logout-form')) {
+                e.preventDefault();
+                doLogout();
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

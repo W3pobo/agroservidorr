@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Productores | AgronoMia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo48.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Registro Productores</h2>
+        <img src="{{ url_for('static', filename='images/AgronoMia.png') }}" alt="Logo AgronoMia" class="logo-agronomia">
+        <form action="{{ url_for('registro_productores') }}" method="POST">
+            <div class="campo-form">
+                <label for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre completo" required>
+            </div>
+            <div class="campo-form">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+            </div>
+            <div class="campo-form">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Contraseña" required
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$"
+                    title="Debe contener al menos 8 caracteres, una mayúscula, una minúscula y un carácter especial">
+            </div>
+            <button type="submit">Registrarse como Productor</button>
+        </form>
+        <div class="google-section">
+            <p>O regístrate más rápido con</p>
+            <a href="{{ url_for('login_google', rol='Productor') }}" class="google-btn">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo">
+                <span>Google</span>
+            </a>
+        </div>
+         <div class="login-link">
+            <p>¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión aquí</a></p>
+        </div>
+        </div>
+
+    <!-- Modales de notificación -->
+    <div id="correo-duplicado-modal-bg" class="modal-bg">
+        <div id="correo-duplicado-modal" class="modal-content">
+            <h2>Correo ya registrado</h2>
+            <p>El correo electrónico que ingresaste ya está registrado.<br>Por favor, usa otro correo o inicia sesión.</p>
+            <div class="modal-btn-container">
+                <button class="modal-btn confirm" onclick="cerrarCorreoDuplicadoModal()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="registro-exitoso-modal-bg" class="modal-bg">
+        <div id="registro-exitoso-modal" class="modal-content">
+            <h2>¡Registro exitoso!</h2>
+            <p>Tu cuenta ha sido creada correctamente.</p>
+            <div class="modal-btn-container">
+                <button class="modal-btn confirm" onclick="cerrarRegistroExitosoModal()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="registro-fallido-modal-bg" class="modal-bg">
+        <div id="registro-fallido-modal" class="modal-content">
+            <h2>Error en el registro</h2>
+            <p>Ocurrió un error al crear tu cuenta.<br>Por favor, intenta de nuevo más tarde.</p>
+            <div class="modal-btn-container">
+                <button class="modal-btn confirm" onclick="cerrarRegistroFallidoModal()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function abrirCorreoDuplicadoModal() {
+        var bg = document.getElementById('correo-duplicado-modal-bg');
+        bg.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    function cerrarCorreoDuplicadoModal() {
+        document.getElementById('correo-duplicado-modal-bg').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    function abrirRegistroExitosoModal() {
+        var bg = document.getElementById('registro-exitoso-modal-bg');
+        bg.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    function cerrarRegistroExitosoModal() {
+        document.getElementById('registro-exitoso-modal-bg').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    function abrirRegistroFallidoModal() {
+        var bg = document.getElementById('registro-fallido-modal-bg');
+        bg.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    function cerrarRegistroFallidoModal() {
+        document.getElementById('registro-fallido-modal-bg').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    
+    // Verificar si hay mensajes flash para mostrar
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if correo_duplicado %}
+            abrirCorreoDuplicadoModal();
+        {% endif %}
+        {% if registro_exitoso %}
+            abrirRegistroExitosoModal();
+        {% endif %}
+        {% if registro_fallido %}
+            abrirRegistroFallidoModal();
+        {% endif %}
+    });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/accesibilidad.js') }}"></script>
+</body>
+</html>

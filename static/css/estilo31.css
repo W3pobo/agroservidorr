@@ -1,0 +1,494 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body { background-image: url('../images/background.jpg'); color: #333; }
+/* Se eliminaron 'nav' y 'nav a' de aquí */
+html:not(.dark-mode) .container { background: rgba(255, 255, 255, 0.75); }
+html:not(.dark-mode) h2 { color: #0056b3; text-shadow: none; }
+html:not(.dark-mode) label { color: #0056b3; }
+html:not(.dark-mode) textarea { background-color: #fff; color: #333; border: 1.5px solid #ccc; }
+html:not(.dark-mode) button[type="submit"] { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) button[type="submit"]:hover { background: #0056b3; color: #fff; }
+html:not(.dark-mode) .chat-container { background: #f0f2f5; }
+html:not(.dark-mode) .mensaje { color: #050505; }
+html:not(.dark-mode) .mensaje.cliente { background-color: #d0e8ff; } /* Fondo azul (cliente) */
+html:not(.dark-mode) .mensaje.productor { background-color: #e4e6eb; } /* Fondo gris (productor) */
+html:not(.dark-mode) footer { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px); color: #555; border-top: 1px solid #ddd; }
+
+/* --- DARK MODE --- */
+html.dark-mode body { background-image: url('../images/background-login.png'); color: #f5f5f7; }
+/* Se eliminaron 'nav' y 'nav a' de aquí */
+html.dark-mode .container { background: rgba(24, 26, 27, 0.75); border: 1.5px solid rgba(0,230,176,0.13); }
+html.dark-mode h2 { color: #00e6b0; text-shadow: 0 2px 8px rgba(0,0,0,0.45); }
+html.dark-mode label { color: #00e6b0; }
+html.dark-mode textarea { background-color: #1c1e1f; color: #f5f5f7; border: 1.5px solid #00e6b0; }
+html.dark-mode button[type="submit"] { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode button[type="submit"]:hover { background: #00b88a; color: #fff; }
+html.dark-mode .chat-container { background: #1a1d1e; }
+html.dark-mode .mensaje { color: #fff; }
+html.dark-mode .mensaje.cliente { background-color: #004d40; } /* Fondo verde oscuro (cliente) */
+html.dark-mode .mensaje.productor { background-color: #37474f; } /* Fondo gris oscuro (productor) */
+html.dark-mode footer { background: rgba(24, 26, 27, 0.65); backdrop-filter: blur(10px); color: #aaa; border-top: 1px solid #222; }
+
+/* --- GENERIC STYLES --- */
+/* Se eliminaron 'nav', '.nav-left', '.nav-right', 'nav a', 'nav a img' de aquí */
+
+.main-content {
+    flex: 1 0 auto; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 40px 20px;
+}
+.container {
+    max-width: 800px; 
+    width: 100%; 
+    padding: 40px; 
+    border-radius: 22px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25); 
+}
+h2 {
+    text-align: center; 
+    margin-bottom: 1rem; 
+    font-size: 2em;
+}
+label { 
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: bold; 
+}
+textarea {
+    width: 100%; 
+    padding: 12px; 
+    border-radius: 8px; 
+    font-size: 1em;
+    box-sizing: border-box; 
+    resize: vertical;
+}
+button[type="submit"] {
+    width: 100%; 
+    padding: 12px; 
+    margin-top: 20px; 
+    border: none; 
+    border-radius: 8px;
+    font-size: 1.1em; 
+    font-weight: bold;
+    cursor: pointer; 
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+button[type="submit"]:hover { 
+    transform: scale(1.02); 
+}
+
+.chat-container { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
+    padding: 1rem; 
+    margin-bottom: 2rem; 
+    border-radius: 12px; 
+    max-height: 400px; 
+    overflow-y: auto; 
+}
+.mensaje { 
+    padding: 10px 15px; 
+    border-radius: 20px; 
+    max-width: 70%; 
+    line-height: 1.5; 
+}
+
+/* ===== MODIFICACIÓN CLAVE: Chat Invertido ===== */
+.mensaje.cliente { 
+    align-self: flex-end; /* Cliente (Tú) a la DERECHA */
+    border-bottom-right-radius: 4px; 
+}
+.mensaje.productor { 
+    align-self: flex-start; /* Productor (Otro) a la IZQUIERDA */
+    border-bottom-left-radius: 4px; 
+}
+/* ============================================= */
+
+.mensaje small { 
+    display: block; 
+    text-align: right; 
+    opacity: 0.7; 
+    font-size: 0.8em; 
+    margin-top: 5px; 
+}
+
+footer {
+    text-align: center; 
+    padding: 18px 0 10px 0; 
+}
+
+/* --- ACCESSIBILITY BUTTONS --- */
+/* Se eliminaron las reglas de #grayscale-toggle de aquí */
+#back-to-top { 
+    position: fixed; 
+    z-index: 1001; 
+    border: none; 
+    border-radius: 50%; 
+    width: 60px; 
+    height: 60px; 
+    cursor: pointer; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.3s, visibility 0.3s;
+    bottom: 25px; 
+    left: 25px; 
+    opacity: 0; 
+    visibility: hidden; 
+}
+#back-to-top:hover { transform: scale(1.1); }
+#back-to-top.visible { opacity: 1; visibility: visible; }
+
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html:not(.dark-mode) #back-to-top:hover { background-color: #FFC107; }
+html:not(.dark-mode) #back-to-top svg { stroke: #232526; }
+
+html.dark-mode #back-to-top { background-color: #FFD700; }
+html.dark-mode #back-to-top:hover { background-color: #FFC107; }
+html.dark-mode #back-to-top svg { stroke: #232526; }
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 600px) {
+    /* Se eliminó #grayscale-toggle de aquí */
+    #back-to-top { width: 50px; height: 50px; bottom: 15px; }
+    #back-to-top { left: 15px; }
+}
+
+
+/*
+ * ===================================================================
+ * ===== INICIO: ESTILOS PEGADOS (Panel Lateral de estilo29) =====
+ * ===================================================================
+*/
+
+/* --- NUEVA BARRA DE NAVEGACIÓN (Estática, para Hamburguesa) --- */
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: static; 
+    box-sizing: border-box;
+    padding: 8px 20px;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+/* Areas */
+.nav-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.nav-title { flex: 1 1 360px; text-align: center; font-weight:700; white-space:nowrap; }
+.nav-right { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+.nav-right-placeholder { width: 48px; }
+
+/* Links de Nav (para botones/links genéricos si se añaden) */
+.nav-link, nav a, button.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.nav-link img, nav a img, button.nav-link img { width:26px; height:26px; object-fit:contain; }
+
+/* Badge (para el carrito en el panel lateral) */
+.carrito-badge { 
+    display:inline-block; 
+    margin-left:6px; 
+    background:#00e6b0; 
+    color:#181a1b; 
+    padding:2px 8px; 
+    border-radius:12px; 
+    font-weight:700; 
+    font-size: 0.85em;
+}
+
+/* Desktop: centrar título */
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+}
+
+/* Mobile: título en su fila */
+@media (max-width: 900px) {
+    .nav-title { position: static; transform: none; order: 2; width: 100%; text-align: center; margin: 6px 0; pointer-events: auto; }
+    .nav-left { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+
+/* Small screens: ocultar texto (aunque aquí no hay texto) */
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; }
+}
+
+/* --- ESTILOS DE NAV (LIGHT/DARK) --- */
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+html:not(.dark-mode) .nav-title { color: #0056b3; }
+
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark-mode .nav-title { color: #00e6b0; }
+
+
+/* --- BOTÓN HAMBURGUESA --- */
+.nav-ellipsis.hamburger {
+    width: 48px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    color: inherit; /* Hereda el color (claro u oscuro) */
+}
+.nav-ellipsis.hamburger .bar {
+    display: block;
+    width: 22px;
+    height: 2.8px;
+    background: currentColor; /* Usa el color heredado */
+    border-radius: 2px;
+    margin: 3px 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+/* Ocultar cualquier enlace residual en la barra superior */
+.nav-left .nav-link, .nav-right .nav-link { display: none !important; }
+
+/* --- PANEL LATERAL (MENÚ) --- */
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 320px;
+    max-width: 86vw;
+    transform: translateX(-110%);
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 0.3s ease, color 0.3s ease;
+    z-index: 2200;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-bottom-right-radius: 8px;
+}
+.side-panel.open {
+    transform: translateX(0);
+}
+
+/* Panel en modo CLARO */
+html:not(.dark-mode) .side-panel {
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #333; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0,0,0,0.08);
+}
+html:not(.dark-mode) .side-panel .menu-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+html:not(.dark-mode) .side-panel .side-close:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* Panel en modo OSCURO */
+html.dark-mode .side-panel {
+    background: rgba(0, 0, 0, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+html.dark-mode .side-panel .menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+html.dark-mode .side-panel .side-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Contenido del Panel */
+.side-panel .side-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.side-panel .side-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+.side-panel .side-close {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    color: inherit; 
+}
+.side-panel .menu-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.side-panel .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    background: transparent;
+    border: none; /* Para botones */
+    width: 100%; /* Para botones */
+    text-align: left; /* Para botones */
+    font-size: 1em; /* Para botones */
+    font-family: inherit; /* Para botones */
+    cursor: pointer;
+}
+.side-panel .menu-item img { width: 22px; height: 22px; object-fit: contain; }
+.side-panel .menu-item span { display: inline-block; font-size: .98rem; }
+
+/* Overlay (fondo oscuro) */
+.side-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.28);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    z-index: 2100;
+}
+.side-overlay.open { opacity: 1; visibility: visible; }
+body.side-no-scroll { overflow: hidden; }
+
+@media (max-width: 640px) {
+    .side-panel { width: 100%; max-width: 100%; border-radius: 0 0 10px 0; }
+}
+.side-panel .menu-item span { white-space: nowrap; }
+
+/* --- ESTILOS DEL BOTÓN LOGOUT (Adaptados) --- */
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background 0.16s ease, transform 0.12s ease, border-color 0.12s ease;
+    border: 1px solid transparent;
+    color: inherit;
+    background: transparent;
+}
+.logout-btn img { width: 26px; height: 26px; object-fit: contain; display: inline-block; }
+
+/*
+ * ===== CLAVE: Anular estilos de .logout-btn DENTRO del panel =====
+ * Esto hace que el botón de cerrar sesión se vea igual que los otros enlaces
+ * (como "Volver" o "Carrito").
+*/
+.side-panel .logout-btn {
+    /* Anulación de estilos 'blur' */
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    color: inherit;
+    /* Adopción de estilos '.menu-item' */
+    font-weight: 600;
+    padding: 10px 12px; 
+    gap: 12px;          
+    width: 100%;
+    justify-content: flex-start;
+}
+
+/*
+ * ===== CLAVE: Anular hover/focus de .logout-btn DENTRO del panel =====
+ * Esto hace que el hover/focus sea el mismo que el de .menu-item
+*/
+html:not(.dark-mode) .side-panel .logout-btn:hover,
+html:not(.dark-mode) .side-panel .logout-btn:focus {
+    background: rgba(0, 0, 0, 0.05); /* igual a .menu-item:hover */
+    transform: none;
+    outline: none;
+}
+html.dark-mode .side-panel .logout-btn:hover,
+html.dark-mode .side-panel .logout-btn:focus {
+    background: rgba(255, 255, 255, 0.08); /* igual a .menu-item:hover */
+    transform: none;
+    outline: none;
+}

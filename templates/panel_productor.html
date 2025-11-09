@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Productor | AgronoMia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo43.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <span class="nav-title">Panel del Productor</span>
+            <div class="nav-logout">
+                <!-- Usar formulario POST para logout (evita cache de GET) -->
+                <form id="logout-form" class="logout-form" action="{{ url_for('logout') }}" method="post" style="display:inline;">
+                    <button type="submit" class="logout-btn" aria-label="Cerrar sesión">
+                        <img src="{{ url_for('static', filename='images/cerrar.png') }}" alt="Cerrar Sesión">
+                        <span class="logout-text">Cerrar Sesión</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container panel-productor">
+        <main class="panel-cards-fila">
+            <div class="panel-card">
+                <span class="panel-card-icon">🌱</span>
+                <div class="panel-card-content">
+                    <h3>Mis Productos</h3>
+                    <p>Gestiona tu inventario y actualiza precios fácilmente.</p>
+                </div>
+                <a class="btn-blur" href="{{ url_for('admin_productos_productor') }}">Administrar Productos</a>
+            </div>
+            <div class="panel-card">
+                <span class="panel-card-icon">📦</span>
+                <div class="panel-card-content">
+                    <h3>Pedidos Recibidos</h3>
+                    <p>Consulta y gestiona tus pedidos pendientes y entregados.</p>
+                </div>
+                <a class="btn-blur" href="{{ url_for('pedidos_productor') }}">Ver Pedidos</a>
+            </div>
+            <div class="panel-card">
+                <span class="panel-card-icon">🛒</span>
+                <div class="panel-card-content">
+                    <h3>Mercado</h3>
+                    <p>Explora los productos disponibles en la plataforma.</p>
+                </div>
+                <a class="btn-blur" href="{{ url_for('productos') }}">Ver Mercado</a>
+            </div>
+            <div class="panel-card">
+                <span class="panel-card-icon">✉️</span>
+                <div class="panel-card-content">
+                    <h3>Bandeja de Mensajes</h3>
+                    <p>Revisa y responde los mensajes que te han enviado.</p>
+                </div>
+                <a class="btn-blur" href="{{ url_for('bandeja_mensajes_productor') }}">Ver Bandeja</a>
+            </div>
+            <div class="panel-card">
+                <span class="panel-card-icon">👤</span>
+                <div class="panel-card-content">
+                    <h3>Mi Perfil</h3>
+                    <p>Actualiza tu información personal y foto de perfil.</p>
+                </div>
+                <a class="btn-blur" href="{{ url_for('perfil_productor') }}">Ver Perfil</a>
+            </div>
+        </main>
+    </div>
+    
+    <footer>
+        <p>© 2025 AgronoMia - Todos los derechos reservados</p>
+    </footer>
+
+    <button id="back-to-top" class="floating-btn" title="Volver Arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#232526" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <script src="{{ url_for('static', filename='js/accesibilidad.js') }}"></script>
+    <script>
+        // Evitar que el usuario vuelva a la página protegida usando el botón atrás.
+        // Si pulsa atrás, lo llevamos al login.
+        (function(){
+            history.replaceState(null, "", location.href);
+            // Añadimos estado extra para poder interceptar "back"
+            history.pushState({page:'protected'}, "", location.href);
+            window.addEventListener('popstate', function (e) {
+                // Cualquier intento de volver atrás redirige al login
+                window.location.replace("{{ url_for('login') }}");
+            }, { once: false });
+        })();
+    </script>
+</body>
+</html>

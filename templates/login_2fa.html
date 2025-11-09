@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación (2FA) | AgronoMia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo36.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Verificación Requerida</h2>
+        <img src="{{ url_for('static', filename='images/AgronoMia.png') }}" alt="Logo AgronoMia" class="logo-agronomia">
+        
+        <p style="text-align: center; color: #ccc; margin-bottom: 20px;">
+            Abre tu aplicación de autenticación e ingresa el código de 6 dígitos.
+        </p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('login_2fa') }}" method="POST">
+            <div class="campo-form">
+                <label for="otp_code">Código de 6 dígitos</label>
+                <input type="text" id="otp_code" name="otp_code" placeholder="123456" required 
+                       pattern="\d{6}" title="Debe ser un código de 6 dígitos"
+                       maxlength="6"
+                       inputmode="numeric">
+            </div>
+            <button type="submit">Verificar</button>
+        </form>
+         <div class="registro">
+            <a href="{{ url_for('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color:#cc4444; font-weight:bold; text-decoration:none; transition:color 0.3s;">Cancelar e ir a Login</a>
+        </div>
+        
+        <form id="logout-form" action="{{ url_for('logout') }}" method="POST" style="display: none;">
+         </form>
+    </div>
+</body>
+</html>

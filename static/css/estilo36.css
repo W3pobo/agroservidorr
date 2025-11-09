@@ -1,0 +1,120 @@
+/* /static/css/estilo36.css */
+
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'SamsungOne-Regular';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'SF-Pro-Text-Regular';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    transition: color 0.4s ease;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'GoogleSans-Regular', sans-serif; }
+html.font-samsung-one body { font-family: 'SamsungOne-Regular', serif; }
+html.font-sf-pro body { font-family: 'SF-Pro-Text-Regular', sans-serif; }
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body { background-image: url('/static/images/background.jpg'); }
+html:not(.dark-mode) .container { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+html:not(.dark-mode) h2 { color: #0056b3; text-shadow: none; }
+html:not(.dark-mode) label { color: #0056b3; }
+html:not(.dark-mode) input { background: rgba(255, 255, 255, 0.8); color: #333; border: 1px solid #ccc; }
+html:not(.dark-mode) button { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) button:hover { background-color: #0056b3; }
+html:not(.dark-mode) .registro { color: #333; background: rgba(255, 255, 255, 0.5); }
+html:not(.dark-mode) .registro a { color: #007bff; }
+html:not(.dark-mode) .registro a:hover { color: #0056b3; }
+html:not(.dark-mode) .error-login { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+html:not(.dark-mode) .separator { color: #6c757d; }
+html:not(.dark-mode) .separator::before, html:not(.dark-mode) .separator::after { border-bottom-color: #ccc; }
+
+/* --- DARK MODE --- */
+html.dark-mode body { background-image: url('/static/images/background-login.png'); }
+html.dark-mode .container { background: rgba(24, 26, 27, 0.48); backdrop-filter: blur(18px); border: 2px solid rgba(0,230,176,0.15); box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.32); }
+html.dark-mode h2 { color: #00e6b0; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
+html.dark-mode label { color: #00e6b0; }
+html.dark-mode input { background: rgba(24, 26, 27, 0.65); color: #f5f5f7; border: 1.5px solid #00e6b0; }
+html.dark-mode button { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode button:hover { background-color: #00b88a; color: #fff; }
+html.dark-mode .registro { color: #f5f5f7; background: rgba(24, 26, 27, 0.40); }
+html.dark-mode .registro a { color: #00e6b0; }
+html.dark-mode .registro a:hover { color: #00b88a; }
+html.dark-mode .error-login { color: #ff6b81; background: rgba(24,26,27,0.65); border: 1px solid #ff6b81; }
+html.dark-mode .separator { color: #f5f5f7; }
+html.dark-mode .separator::before, html.dark-mode .separator::after { border-bottom-color: #00e6b0; }
+
+/* --- GENERIC STYLES --- */
+body::before {
+    content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: inherit; background-size: cover; background-attachment: fixed; z-index: -1;
+}
+.container {
+    padding: 48px 40px 38px 40px; border-radius: 28px; text-align: center;
+    width: 100%; max-width: 420px; display: flex; flex-direction: column;
+    align-items: center; gap: 22px;
+    transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+}
+h2 { font-size: 2em; margin-bottom: 10px; letter-spacing: 1px; transition: color 0.3s, text-shadow 0.3s; }
+.logo-agronomia { width: 350px; margin-bottom: 18px; margin-top: 0; border-radius: 18px; }
+form { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.campo-form { width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+label { font-weight: 600; margin-bottom: 4px; font-size: 1.08em; letter-spacing: 0.5px; margin-left: 2px; transition: color 0.3s; }
+input, button { width: 100%; box-sizing: border-box; }
+input {
+    padding: 15px; margin-bottom: 0; border-radius: 10px; font-size: 1.08em; text-align: center;
+    transition: border 0.3s, box-shadow 0.3s, background 0.3s, color 0.3s;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+}
+input:focus { outline: none; box-shadow: 0px 4px 16px rgba(0,230,176,0.13); }
+button {
+    padding: 15px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.15em;
+    cursor: pointer; transition: background 0.3s, color 0.3s, transform 0.2s; margin-top: 8px;
+    box-shadow: 0 2px 10px rgba(0,230,176,0.10);
+}
+button:hover { transform: scale(1.04); box-shadow: 0px 4px 16px rgba(0,230,176,0.18); }
+.registro {
+    margin-top: 10px; font-size: 1em; width: 100%; text-align: center;
+    border-radius: 8px; padding: 10px 0 4px 0; transition: background 0.3s, color 0.3s;
+}
+.registro a { font-weight: bold; text-decoration: none; transition: color 0.3s; }
+.registro a:hover { text-decoration: underline; }
+.error-login {
+    border-radius: 8px; padding: 8px 12px; margin-top: 4px; font-size: 1em;
+    width: 100%; box-sizing: border-box; text-align: center;
+    box-shadow: 0 2px 10px rgba(255,107,129,0.08);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.oauth-section { margin-top: 25px; width: 100%; text-align: center; }
+.separator { display: flex; align-items: center; margin: 20px 0; transition: color 0.3s; }
+.separator::before, .separator::after { content: ""; flex: 1; border-bottom: 1px solid; transition: border-bottom-color 0.3s; }
+.separator span { padding: 0 15px; font-size: 0.9em; }
+.google-btn {
+    display: inline-flex; align-items: center; justify-content: center; background: white;
+    color: #757575; padding: 12px 24px; border-radius: 10px; text-decoration: none;
+    font-weight: bold; border: 1px solid #ddd; transition: all 0.3s; width: 100%; max-width: 300px;
+}
+.google-btn:hover { background: #f5f5f5; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.google-logo { width: 20px; height: 20px; margin-right: 12px; }
+
+@media (max-width: 600px) {
+    .container { padding: 18px 4vw 10px 4vw; max-width: 98vw; }
+    h2 { font-size: 1.3em; }
+    .logo-agronomia { width: 90vw; max-width: 320px; }
+}

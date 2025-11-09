@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; }
+        .container { padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: auto; }
+        h2 { color: #2E7D32; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .total { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>✅ ¡Gracias por tu compra en AgronoMia, {{ nombre }}!</h2>
+        <p>Tu pedido #{{ pedido_id }} ha sido confirmado y está siendo procesado.</p>
+        
+        <h3>Resumen de tu compra:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.cantidad }}</td>
+                    <td>${{ "%.2f"|format(producto.precio * producto.cantidad) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" class="total" style="text-align:right;">Total:</td>
+                    <td class="total">${{ "%.2f"|format(total) }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <p style="margin-top: 20px;">
+            Puedes ver el historial de tus pedidos en tu panel de cliente.
+        </p>
+        <p>Atentamente,<br>El equipo de AgronoMia</p>
+    </div>
+</body>
+</html>

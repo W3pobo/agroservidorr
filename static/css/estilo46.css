@@ -1,0 +1,855 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/* ===== INICIO: BLOQUE NAV RESPONSIVO (DE ESTILO29) ===== */
+nav {
+    position: sticky; /* <-- Barra pegajosa (no 'fixed' para no necesitar JS) */
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1400;
+    box-sizing: border-box;
+    padding: 12px 14px; /* <-- Permite que la barra crezca en altura */
+    display: block; /* <-- Permite que la altura se expanda con el contenido */
+    transition: background 0.3s ease, border 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-sizing: border-box;
+    flex-wrap: wrap; /* <-- CLAVE: permite que los items pasen a la siguiente fila */
+    padding: 4px 8px;
+}
+
+.nav-left, .nav-right { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    flex-wrap: wrap; 
+}
+
+/* Flex-basis agregado para mejor control del "wrap" */
+.nav-left  { order: 1; flex: 1 1 320px; justify-content: flex-start; }
+.nav-title { order: 2; flex: 0 1 360px; text-align: center; white-space: nowrap; }
+.nav-right { order: 3; flex: 1 1 320px; justify-content: flex-end; }
+
+.nav-title {
+    font-weight: 700;
+}
+
+/* Estilos de enlaces unificados (para <a> y <button>) */
+.nav-link, nav a, button.nav-link {
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 10px; 
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1.0rem; 
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.2px;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit; /* Hereda la fuente de body */
+}
+
+.nav-link img, nav a img, button.nav-link img { 
+    height: 26px; 
+    width: 26px; 
+    object-fit: contain; 
+}
+
+/* Badge (contador del carrito) */
+.carrito-badge {
+    display: inline-block;
+    margin-left: 6px;
+    background: #00e6b0;
+    color: #181a1b;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.88rem;
+}
+
+/* Responsive: título en su propia fila y grupos centrados en pantallas medias */
+@media (max-width: 900px) {
+    .nav-title { order: 2; flex-basis: 100%; margin: 6px 0; }
+    .nav-left  { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+
+/* Muy pequeñas: mostrar solo iconos para ahorrar espacio */
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; } /* Oculta texto, deja solo iconos */
+    .nav-container { padding: 6px 10px; gap: 8px; }
+    .nav-left, .nav-right { justify-content: center; }
+    .nav-title { font-size: 1rem; white-space: normal; }
+}
+/* ===== FIN BLOQUE NAV ===== */
+
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body {
+    background-image: url('../images/background.jpg');
+    color: #333;
+}
+
+/* NAV LIGHT MODE (Actualizado) */
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+html:not(.dark-mode) .nav-link,
+html:not(.dark-mode) nav a,
+html:not(.dark-mode) button.nav-link {
+    color: #333;
+}
+html:not(.dark-mode) .nav-link:hover,
+html:not(.dark-mode) nav a:hover,
+html:not(.dark-mode) button.nav-link:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #007bff;
+}
+html:not(.dark-mode) .nav-title { color: #007bff; }
+/* FIN NAV LIGHT MODE */
+
+
+html:not(.dark-mode) .container {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+html:not(.dark-mode) h2 { color: #0056b3; }
+html:not(.dark-mode) .perfil-card { background: #fff; border-color: #ddd; }
+html:not(.dark-mode) .perfil-header h3 { color: #0056b3; }
+html:not(.dark-mode) .perfil-header p { color: #555; }
+html:not(.dark-mode) .form-group label { color: #0056b3; }
+html:not(.dark-mode) .form-group input, html:not(.dark-mode) .form-group textarea { background: #fff; color: #333; border-color: #ccc; }
+html:not(.dark-mode) .btn-guardar { background: #007bff; color: #fff; }
+
+html:not(.dark-mode) footer {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    color: #555;
+    border-top: 1px solid #ddd;
+}
+
+/*
+ * ===== MODIFICACIÓN CLAVE (LIGHT MODE PANEL) =====
+ * Aquí definimos el fondo claro y texto oscuro para el panel lateral
+*/
+html:not(.dark-mode) .side-panel {
+    background: rgba(255, 255, 255, 0.85); /* <-- FONDO CLARO */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #333; /* <-- TEXTO OSCURO */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0,0,0,0.08);
+}
+/* Hovers para el panel en modo claro */
+html:not(.dark-mode) .side-panel .menu-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+html:not(.dark-mode) .side-panel .side-close:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+
+/* --- DARK MODE --- */
+html.dark-mode body {
+    background-image: url('../images/background-login.png');
+    color: #f5f5f7;
+}
+
+/* NAV DARK MODE (Actualizado) */
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark-mode .nav-link,
+html.dark-mode nav a,
+html.dark-mode button.nav-link {
+    color: #f5f5f7;
+}
+html.dark-mode .nav-link:hover,
+html.dark-mode nav a:hover,
+html.dark-mode button.nav-link:hover {
+    background: rgba(255,255,255,0.08);
+    color: #00e6b0;
+}
+html.dark-mode .nav-title { color: #00e6b0; }
+/* FIN NAV DARK MODE */
+
+html.dark-mode .container {
+    background: rgba(24, 26, 27, 0.72);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(0,230,176,0.13);
+    box-shadow: 0 8px 32px rgba(0,230,176,0.10);
+}
+
+html.dark-mode h2 { color: #00e6b0; }
+html.dark-mode .perfil-card { background: rgba(24, 26, 27, 0.92); border-color: rgba(0,230,176,0.10); }
+html.dark-mode .perfil-header h3 { color: #00e6b0; }
+html.dark-mode .perfil-header p { color: #e0f7fa; }
+html.dark-mode .form-group label { color: #00e6b0; }
+html.dark-mode .form-group input, html.dark-mode .form-group textarea { background: rgba(24, 26, 27, 0.65); color: #f5f5f7; border-color: #00e6b0; }
+html.dark-mode .btn-guardar { background: linear-gradient(90deg, #00e6b0 0%, #00b88a 100%); color: #181a1b; }
+
+html.dark-mode footer {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(10px);
+    color: #aaa;
+    border-top: 1px solid #222;
+}
+
+/*
+ * ===== MODIFICACIÓN CLAVE (DARK MODE PANEL) =====
+ * Aquí definimos el fondo oscuro y texto claro para el panel lateral
+*/
+html.dark-mode .side-panel {
+    background: rgba(0, 0, 0, 0.85); /* <-- FONDO NEGRO */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white; /* <-- TEXTO BLANCO */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+/* Hovers para el panel en modo oscuro */
+html.dark-mode .side-panel .menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+html.dark-mode .side-panel .side-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* --- GENERIC STYLES (for both modes) --- */
+.container { max-width: 800px; margin: 40px auto; padding: 40px; border-radius: 26px; flex: 1 0 auto; }
+h2 { margin-bottom: 32px; font-size: 2.1em; letter-spacing: 1px; font-weight: 800; text-align: center; }
+.perfil-card { border-radius: 18px; padding: 32px; }
+.perfil-header { text-align: center; margin-bottom: 32px; }
+.perfil-avatar { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 20px; overflow: hidden; border: 3px solid; display: flex; align-items: center; justify-content: center; }
+.perfil-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-placeholder { font-size: 3em; }
+.perfil-header h3 { font-size: 1.8em; margin-bottom: 8px; }
+.perfil-header p { font-size: 1.1em; }
+.perfil-form { display: flex; flex-direction: column; gap: 20px; }
+.form-group { display: flex; flex-direction: column; }
+.form-group label { font-weight: 600; margin-bottom: 8px; font-size: 1.1em; }
+.form-group input, .form-group textarea { padding: 12px 16px; border-radius: 10px; font-size: 1em; transition: border-color 0.2s, box-shadow 0.2s; }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.file-preview { margin-top: 10px; text-align: center; }
+.file-preview img { max-width: 200px; max-height: 200px; border-radius: 10px; border: 2px solid; }
+.btn-guardar { font-weight: 600; border: none; border-radius: 10px; padding: 16px; font-size: 1.1em; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 20px; }
+.btn-guardar:hover { transform: translateY(-2px); }
+footer { text-align: center; padding: 18px 0; font-size: 1em; letter-spacing: 1px; margin-top: auto; }
+
+/* --- ACCESSIBILITY --- */
+/* Se mantienen tus estilos de accesibilidad, incluyendo el menú de contraste */
+html.grayscale { filter: grayscale(100%); }
+
+#grayscale-toggle, #contrast-toggle, #back-to-top { position: fixed; z-index: 1001; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); display: flex; justify-content: center; align-items: center; transition: all 0.3s ease; }
+/* #grayscale-toggle se ocultará con la regla al final */
+#contrast-toggle { top: 170px; right: 25px; }
+#back-to-top { bottom: 25px; left: 25px; opacity: 0; visibility: hidden; }
+#back-to-top.visible { opacity: 1; visibility: visible; }
+
+#grayscale-toggle:hover, #contrast-toggle:hover, #back-to-top:hover { transform: scale(1.1); }
+
+.contrast-menu { position: fixed; top: 240px; right: 25px; z-index: 1000; border-radius: 15px; padding: 15px; width: 220px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); display: none; }
+.contrast-menu.active { display: block; }
+.contrast-option { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 12px 15px; margin: 8px 0; cursor: pointer; transition: all 0.3s ease; text-align: left; width: 100%; font-size: 0.95em; }
+.contrast-option:hover { transform: translateX(5px); }
+.contrast-title { font-weight: bold; margin-bottom: 10px; text-align: center; font-size: 1.1em; border-bottom: 1px solid; padding-bottom: 8px; }
+
+html:not(.dark-mode) #grayscale-toggle, html:not(.dark-mode) #contrast-toggle { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) #grayscale-toggle.active { background-color: #6c757d; }
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html:not(.dark-mode) .contrast-menu { background: rgba(255, 255, 255, 0.9); border-color: #007bff; }
+html:not(.dark-mode) .contrast-option { color: #333; }
+html:not(.dark-mode) .contrast-option.active { background: #007bff; color: #fff; border-color: #007bff; }
+html:not(.dark-mode) .contrast-title { color: #0056b3; border-color: #0056b3; }
+
+html.dark-mode #grayscale-toggle, html.dark-mode #contrast-toggle { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode #grayscale-toggle.active { background-color: #666; }
+html.dark-mode #back-to-top { background-color: #FFD700; }
+html.dark-mode .contrast-menu { background: rgba(24, 26, 27, 0.95); border-color: #00e6b0; }
+html.dark-mode .contrast-option { color: #f5f5f7; }
+html.dark-mode .contrast-option.active { background: #00e6b0; color: #181a1b; border-color: #00e6b0; }
+html.dark-mode .contrast-title { color: #00e6b0; border-color: #00e6b0; }
+
+body.contrast-high { filter: contrast(200%) brightness(120%); }
+body.contrast-very-high { filter: contrast(300%) brightness(140%); }
+body.contrast-inverted { filter: invert(100%) hue-rotate(180deg); }
+body.contrast-yellow-black { filter: sepia(100%) hue-rotate(45deg) contrast(150%); }
+body.contrast-blue-white { filter: hue-rotate(200deg) contrast(150%) brightness(130%); }
+
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 768px) { .container { margin: 20px; padding: 20px; } nav { padding: 0 15px; flex-direction: column; height: auto; padding: 10px; } .perfil-card { padding: 20px; } .perfil-avatar { width: 100px; height: 100px; } }
+@media (max-width: 480px) { h2 { font-size: 1.8em; } .perfil-header h3 { font-size: 1.5em; } .form-group input, .form-group textarea { padding: 10px; } .btn-guardar { padding: 14px; } }
+
+
+/* ===== Copiado de estilo29.css (Panel Lateral y Logout) ===== */
+
+/*
+ * ===== MODIFICACIÓN CLAVE (PANEL BASE) =====
+*/
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 320px;
+    max-width: 86vw;
+    transform: translateX(-110%); /* oculto por defecto */
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 0.3s ease, color 0.3s ease;
+    z-index: 2200;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-bottom-right-radius: 8px;
+}
+
+/* abierto */
+.side-panel.open {
+    transform: translateX(0);
+}
+
+/* encabezado del panel */
+.side-panel .side-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.side-panel .side-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+/* botón cerrar dentro del panel */
+.side-panel .side-close {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    color: inherit; /* Hereda el color del panel (claro u oscuro) */
+}
+/* (El hover se define ahora en las secciones light/dark) */
+
+/* items con icono + texto legible */
+.side-panel .menu-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.side-panel .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    background: transparent;
+}
+.side-panel .menu-item img { width: 22px; height: 22px; object-fit: contain; }
+.side-panel .menu-item span { display: inline-block; font-size: .98rem; }
+
+/* overlay que cubre el contenido cuando el panel está abierto */
+.side-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.28);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    z-index: 2100;
+}
+.side-overlay.open { opacity: 1; visibility: visible; }
+
+/* Evitar scroll del body cuando el panel está abierto */
+body.side-no-scroll { overflow: hidden; }
+
+/* En pantallas pequeñas el panel usa todo el ancho */
+@media (max-width: 640px) {
+    .side-panel { width: 100%; max-width: 100%; border-radius: 0 0 10px 0; }
+}
+
+/* Asegurar que el texto del menú se vea siempre */
+.nav-link .link-text, .side-panel .menu-item span { white-space: nowrap; }
+
+/* ===== Logout: apariencia igual al botón Carrito + efecto blur según modo ===== */
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background 0.16s ease, transform 0.12s ease, border-color 0.12s ease;
+    border: 1px solid transparent;
+    color: inherit;
+    background: transparent;
+}
+
+/* icono tamaño igual al carrito */
+.logout-btn img { width: 26px; height: 26px; object-fit: contain; display: inline-block; }
+
+/* Light mode: light blur background */
+html:not(.dark-mode) .logout-btn {
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(6px);
+    border-color: rgba(0,0,0,0.06);
+    color: #2b3748;
+}
+html:not(.dark-mode) .logout-btn:hover,
+html:not(.dark-mode) .logout-btn:focus {
+    background: rgba(255,255,255,0.92);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+/* Dark mode: dark blur background */
+html.dark-mode .logout-btn {
+    background: rgba(24,26,27,0.64);
+    backdrop-filter: blur(8px);
+    border-color: rgba(255,255,255,0.06);
+    color: #f5f5f7;
+}
+html.dark-mode .logout-btn:hover,
+html.dark-mode .logout-btn:focus {
+    background: rgba(24,26,27,0.8);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+/*
+ * ===== ESTA REGLA NO CAMBIA (YA ES CORRECTA) =====
+*/
+.side-panel .logout-btn {
+    /* ANULACIÓN: Quita el fondo blur y el borde del .logout-btn */
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    color: inherit;
+
+    /* Restablece los estilos de .menu-item para coherencia */
+    font-weight: 600;
+    padding: 10px 12px; /* <-- de .menu-item */
+    gap: 12px;          /* <-- de .menu-item */
+
+    /* Mantiene el layout de panel */
+    width: 100%;
+    justify-content: flex-start;
+}
+
+/* If logout appears in top nav keep it compact like carrito */
+.nav-container .logout-btn { width: auto; justify-content: center; }
+
+/* Ensure accessible focus ring */
+.logout-btn:focus {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+}
+/* ===== Fin estilos generales ===== */
+
+
+/* ===== Estilos responsivos de estilo29.css ===== */
+/* Nav en el flujo, centrado en desktop, reorganizable en móvil */
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: static;
+    box-sizing: border-box;
+    padding: 8px 20px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+/* Areas */
+.nav-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.nav-title { flex: 1 1 360px; text-align: center; font-weight:700; white-space:nowrap; }
+.nav-right { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+
+/* Nav links unified */
+.nav-link, nav a, button.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* icons */
+.nav-link img, nav a img, button.nav-link img { width:26px; height:26px; object-fit:contain; }
+
+/* Logout visual parity with carrito */
+button.logout-btn, .logout-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 10px;
+    border-radius:8px;
+}
+
+/* badge */
+.carrito-badge { display:inline-block; margin-left:6px; background:#00e6b0; color:#181a1b; padding:2px 8px; border-radius:12px; font-weight:700; }
+
+/* Desktop: absolutely center title, left/right groups at extremes */
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+    .nav-left, .nav-right { flex: 0 1 auto; }
+    .nav-left .nav-link, .nav-right .nav-link, .logout-form, button.logout-btn {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Mobile: title in its own row and groups centered */
+@media (max-width: 900px) {
+    .nav-title { position: static; transform: none; order: 2; width: 100%; text-align: center; margin: 6px 0; pointer-events: auto; }
+    .nav-left { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+
+/* Small screens: hide link text to save space */
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; }
+}
+
+/* ===== Full-bleed nav + footer y botones azules a ancho completo ===== */
+
+/* Hacer que la barra de navegación ocupe todo el ancho de la ventana
+   pero manteniendo el .nav-container centrado y responsivo */
+nav {
+    width: 100%;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+    padding: 8px 0;                       /* espacio vertical; el padding horizontal lo da .nav-container */
+    background: rgba(255,255,255,0.92);   /* o negocio de color según modo */
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    position: static;                     /* nav en el flujo (estática) */
+    z-index: 1200;
+}
+
+/* interno centrado y con padding horizontal para separar del borde */
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px;                      /* padding horizontal visible dentro del nav */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+/* Footer full-bleed similar al nav */
+footer {
+    width: 100%;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+    padding: 16px 0;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Contenido dentro del footer centrado y con el mismo max-width que la nav */
+footer > .footer-container,
+footer .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Evitar overflow horizontal por el fondo full-bleed en dispositivos con scrollbar */
+html, body { overflow-x: hidden; }
+
+/* Pequeñas mejoras responsive: en pantallas muy pequeñas reducir padding de nav/footer */
+@media (max-width: 600px) {
+    .nav-container, footer > .footer-container { padding: 0 12px; }
+    .container { padding: 20px 12px; }
+}
+
+/* ===== Floating ellipsis menu styles (add at end of file) ===== */
+.nav-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width:40px;
+    height:40px;
+    padding:6px;
+    border-radius:10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.nav-ellipsis .dot {
+    display:block;
+    width:6px;
+    height:6px;
+    background: #0b7dda;
+    border-radius:50%;
+    margin: 2px 0;
+}
+.nav-ellipsis { flex-direction: column; gap:2px; }
+
+/* floating menu */
+.nav-floating-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 12px;
+    min-width: 180px;
+    background: #fff;
+    color: #111;
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 1600;
+    box-sizing: border-box;
+}
+.nav-floating-menu.open { display: flex; }
+
+/* menu items */
+.nav-floating-menu .menu-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight:600;
+}
+.nav-floating-menu .menu-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+
+/* position anchor: ensure container is relative */
+.nav-right { position: relative; }
+
+/* Responsive: move floating menu to full-width dropdown on small screens */
+@media (max-width: 600px) {
+    .nav-floating-menu {
+        right: 50%;
+        left: 12px;
+        transform: translateX(0);
+        width: calc(100% - 40px);
+        min-width: 0;
+    }
+    .nav-ellipsis { width:36px; height:36px; }
+}
+
+/* ensure nav links and logout button look consistent inside menu */
+.nav-floating-menu .logout-btn { width:100%; text-align:left; padding-left: 10px; }
+
+/* small polish: hide dot text on very tight spaces */
+@media (max-width:520px) {
+    .nav-link .link-text { display: none; }
+}
+
+/* Hamburger grande (reemplaza los tres puntos visualmente) */
+.nav-ellipsis.hamburger {
+    width: 48px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Tres barras dentro del botón */
+.nav-ellipsis.hamburger .bar {
+    display: block;
+    width: 22px;
+    height: 2.8px;
+    background: currentColor;
+    border-radius: 2px;
+    margin: 3px 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+/* Asegurar color coherente en light/dark (hereda) */
+.nav-ellipsis.hamburger { color: inherit; }
+
+/* Floating menu: iconos + texto, más ancho y legible */
+.nav-floating-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 6px;
+    min-width: 220px;
+    background: rgba(255,255,255,0.98);
+    color: inherit;
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 1600;
+    box-sizing: border-box;
+}
+
+/* abrir */
+.nav-floating-menu.open { display: flex; }
+
+/* menu items with icons */
+.nav-floating-menu .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* menu item icon */
+.nav-floating-menu .menu-item img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: inline-block;
+}
+
+/* hover */
+.nav-floating-menu .menu-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+
+/* Anchor the floating menu to the nav-right area (nav container must be relative) */
+.nav-container { position: relative; }
+
+/* On small screens make menu full-width under nav */
+@media (max-width: 600px) {
+    .nav-floating-menu {
+        right: 50%;
+        left: 12px;
+        transform: translateX(-6%);
+        width: calc(100% - 40px);
+    }
+    .nav-ellipsis.hamburger { width:44px; height:40px; }
+}
+
+/* hide original nav buttons if any remain */
+.nav-left .nav-link, .nav-right .nav-link { display: none !important; }
+
+/* keep title centered in desktop */
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* REGLA PARA OCULTAR EL BOTÓN AZUL FLOTANTE */
+#grayscale-toggle { 
+    display: none !important; 
+    pointer-events: none !important; 
+}

@@ -1,0 +1,166 @@
+-- Script de Base de Datos para AgronoMia - Tienda de Semillas
+-- Conectarse a PostgreSQL: psql -U postgres
+-- Crear base de datos: CREATE DATABASE agronomia;
+-- Tabla de usuarios
+CREATE TABLE usuario (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    tipo_usuario VARCHAR(50) NOT NULL,
+    reset_token VARCHAR(100),
+    reset_token_expiration TIMESTAMP,
+    is_verified BOOLEAN DEFAULT FALSE NOT NULL  -- <-- COLUMNA AÑADIDA
+);
+-- Tabla de administradores
+CREATE TABLE administrador (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    reset_token VARCHAR(100),
+    reset_token_expiration TIMESTAMP
+);
+-- Tabla de categorías
+CREATE TABLE categoria (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+-- Tabla de productores
+CREATE TABLE productor (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    descripcion TEXT,
+    ubicacion VARCHAR(200),
+    imagen VARCHAR(200),
+    publicado BOOLEAN DEFAULT FALSE NOT NULL
+);
+-- Tabla de productos (semillas)
+CREATE TABLE producto (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT NOT NULL,
+    precio FLOAT NOT NULL,
+    imagen VARCHAR(200) NOT NULL,
+    categoria_id INTEGER REFERENCES categoria(id) NOT NULL,
+    productor_id INTEGER REFERENCES productor(id) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    tiempo_germinacion INTEGER,
+    epoca_siembra VARCHAR(100),
+    cantidad_semillas INTEGER
+);
+-- Tabla de pedidos
+CREATE TABLE pedido (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES usuario(id) NOT NULL,
+    total FLOAT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    estado VARCHAR(50) DEFAULT 'Pendiente'
+);
+-- Tabla de carrito
+CREATE TABLE carrito (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES usuario(id) NOT NULL,
+    producto_id INTEGER REFERENCES producto(id) NOT NULL,
+    cantidad INTEGER NOT NULL
+);
+-- Tabla de contacto
+CREATE TABLE contacto (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES usuario(id) NOT NULL,
+    mensaje TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    respuesta TEXT
+);
+-- Tabla de direcciones
+CREATE TABLE direccion (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES usuario(id) NOT NULL,
+    direccion VARCHAR(200) NOT NULL
+);
+-- Tabla de métodos de pago
+CREATE TABLE metodo_pago (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL
+);
+-- Tabla de pagos
+CREATE TABLE pago (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES usuario(id) NOT NULL,
+    pedido_id INTEGER REFERENCES pedido(id) NOT NULL,
+    metodo_pago_id INTEGER REFERENCES metodo_pago(id) NOT NULL,
+    monto FLOAT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    estado VARCHAR(50) DEFAULT 'Completado'
+);
+-- Tabla de items de pedido
+CREATE TABLE pedido_item (
+    id SERIAL PRIMARY KEY,
+    pedido_id INTEGER REFERENCES pedido(id) NOT NULL,
+    producto_id INTEGER REFERENCES producto(id) NOT NULL,
+    cantidad INTEGER NOT NULL
+);
+-- Tabla de tarjetas
+CREATE TABLE tarjeta (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES usuario(id),
+    numero VARCHAR(16) NOT NULL,
+    propietario VARCHAR(100) NOT NULL,
+    fecha_expiracion VARCHAR(5) NOT NULL
+);
+CREATE TABLE mensaje (
+    id SERIAL PRIMARY KEY,
+    producto_id INTEGER REFERENCES producto(id),
+    cliente_id INTEGER REFERENCES usuario(id) NOT NULL,
+    productor_id INTEGER REFERENCES productor(id) NOT NULL,
+    remitente_tipo VARCHAR(10) NOT NULL, -- 'cliente' o 'productor'
+    contenido TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    leido BOOLEAN DEFAULT FALSE
+);
+ALTER TABLE mensaje
+ADD COLUMN oculto_para_cliente BOOLEAN DEFAULT FALSE,
+ADD COLUMN oculto_para_productor BOOLEAN DEFAULT FALSE;
+-- Insertar datos iniciales
+
+-- Insertar categorías de semillas
+INSERT INTO categoria (nombre) VALUES 
+('Hortalizas'),
+('Hierbas y Aromáticas'),
+('Flores'),
+('Frutales'),
+('Granos y Cereales'),
+('Semillas Orgánicas'),
+('Semillas Exóticas'),
+('Plantas Medicinales'),
+('Semillas de Temporada'),
+('Microgreens y Germinados');
+
+-- Insertar administrador por defecto
+INSERT INTO administrador (nombre, email, password) VALUES 
+('Admin', 'admin@agronomia.com', 'securepassword');
+
+-- Crear índices para mejorar el rendimiento
+CREATE INDEX idx_producto_categoria ON producto(categoria_id);
+CREATE INDEX idx_producto_productor ON producto(productor_id);
+CREATE INDEX idx_producto_activo ON producto(activo);
+CREATE INDEX idx_pedido_usuario ON pedido(usuario_id);
+CREATE INDEX idx_pedido_estado ON pedido(estado);
+CREATE INDEX idx_carrito_usuario ON carrito(usuario_id);
+CREATE INDEX idx_contacto_usuario ON contacto(usuario_id);
+
+-- Verificar datos insertados
+SELECT 'Categorías insertadas: ' || COUNT(*) FROM categoria;
+SELECT 'Productores insertados: ' || COUNT(*) FROM productor;
+SELECT 'Productos insertados: ' || COUNT(*) FROM producto;
+SELECT 'Usuarios insertados: ' || COUNT(*) FROM usuario;
+
+
+
+-- Mostrar información de las semillas insertadas
+SELECT p.nombre, c.nombre as categoria, pr.nombre as productor, p.precio, p.cantidad_semillas
+FROM producto p
+JOIN categoria c ON p.categoria_id = c.id
+JOIN productor pr ON p.productor_id = pr.id
+ORDER BY c.nombre, p.nombre;

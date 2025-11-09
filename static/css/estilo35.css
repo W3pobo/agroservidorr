@@ -1,0 +1,400 @@
+/* /static/css/estilo35.css */
+
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'SamsungOne-Regular';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'SF-Pro-Text-Regular';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    margin: 0; padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    transition: color 0.4s ease;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'GoogleSans-Regular', sans-serif; }
+html.font-samsung-one body { font-family: 'SamsungOne-Regular', serif; }
+html.font-sf-pro body { font-family: 'SF-Pro-Text-Regular', sans-serif; }
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body { background-image: url('/static/images/background.jpg'); color: #333; }
+/* Se quitaron 'nav' y 'nav a' de aquí */
+html:not(.dark-mode) .logo-banner-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.2); }
+html:not(.dark-mode) .logo-banner-content h1 { color: #0056b3; }
+html:not(.dark-mode) .logo-banner-content p { color: #333; }
+html:not(.dark-mode) .info-card { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.2); }
+html:not(.dark-mode) .info-card h3 { color: #0056b3; }
+html:not(.dark-mode) .info-card p { color: #333; }
+html:not(.dark-mode) footer { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px); color: #555; border-top: 1px solid #ddd; }
+
+/* --- DARK MODE --- */
+html.dark-mode body { background-image: url('/static/images/background-login.png'); color: #f5f5f7; }
+/* Se quitaron 'nav' y 'nav a' de aquí */
+html.dark-mode .logo-banner-glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+html.dark-mode .logo-banner-content h1 { color: #00e6b0; }
+html.dark-mode .logo-banner-content p { color: #f5f5f7; }
+html.dark-mode .info-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+html.dark-mode .info-card h3 { color: #00e6b0; }
+html.dark-mode .info-card p { color: #f5f5f7; }
+html.dark-mode footer { background: rgba(24, 26, 27, 0.85); backdrop-filter: blur(10px); color: #aaa; border-top: 1px solid #222; }
+
+/* --- GENERIC STYLES --- */
+body::before {
+    content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: inherit; background-size: cover; background-attachment: fixed; z-index: -1;
+}
+
+/* Se eliminaron 'nav', '.nav-left', '.nav-right', 'nav a', 'nav a img' de aquí */
+/* Se eliminó '.cart-badge' de aquí (se reemplaza por '.carrito-badge' en el bloque del panel) */
+
+.main-content { flex: 1; }
+
+.logo-banner-glass {
+    padding: 40px; margin: 40px auto; max-width: 800px; text-align: center; border-radius: 20px;
+    transition: background 0.3s ease, border 0.3s ease;
+}
+.logo-banner-content h1 { margin: 20px 0; font-size: 2.5em; transition: color 0.3s ease; }
+.logo-banner-content p { font-size: 1.2em; line-height: 1.6; transition: color 0.3s ease; }
+.logo-img-main { max-width: 200px; height: auto; }
+
+.presentacion-grid-new {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px; padding: 20px; max-width: 1200px; margin: 0 auto;
+}
+.info-card {
+    padding: 30px; text-align: center; border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border 0.3s ease;
+}
+.info-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); }
+.icono-card { font-size: 3em; margin-bottom: 15px; }
+.info-card h3 { margin-bottom: 15px; font-size: 1.4em; transition: color 0.3s ease; }
+.info-card p { line-height: 1.6; font-size: 1em; transition: color 0.3s ease; }
+
+.alert { padding: 15px; margin: 20px auto; max-width: 800px; border-radius: 10px; text-align: center; font-weight: bold; }
+.alert-success { background: rgba(76, 175, 80, 0.2); color: #4CAF50; border: 1px solid #4CAF50; }
+.alert-error { background: rgba(244, 67, 54, 0.2); color: #f44336; border: 1px solid #f44336; }
+.alert-info { background: rgba(33, 150, 243, 0.2); color: #2196F3; border: 1px solid #2196F3; }
+.alert-warning { background: rgba(255, 152, 0, 0.2); color: #FF9800; border: 1px solid #FF9800; }
+
+footer {
+    text-align: center; padding: 20px 0; margin-top: auto;
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+/* Se eliminaron los estilos de '#logout-modal-bg' y '#logout-modal' de aquí */
+
+/* Botón Volver Arriba (de accesibilidad.js) */
+#back-to-top { 
+    position: fixed; 
+    z-index: 1001; 
+    border: none; 
+    border-radius: 50%; 
+    width: 60px; 
+    height: 60px; 
+    cursor: pointer; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    transition: all 0.3s ease;
+    bottom: 25px; 
+    left: 25px; 
+    opacity: 0; 
+    visibility: hidden; 
+}
+#back-to-top.visible { opacity: 1; visibility: visible; }
+#back-to-top:hover { transform: scale(1.1); }
+
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html:not(.dark-mode) #back-to-top:hover { background-color: #FFC107; }
+html:not(.dark-mode) #back-to-top svg { stroke: #232526; }
+
+html.dark-mode #back-to-top { background-color: #FFD700; }
+html.dark-mode #back-to-top:hover { background-color: #FFC107; }
+html.dark-mode #back-to-top svg { stroke: #232526; }
+
+@media (max-width: 600px) {
+    #back-to-top { width: 50px; height: 50px; bottom: 15px; left: 15px; }
+}
+
+/*
+ * ===================================================================
+ * ===== INICIO: ESTILOS PEGADOS (Panel Lateral de estilo29) =====
+ * ===================================================================
+*/
+
+/* --- NUEVA BARRA DE NAVEGACIÓN (Estática, para Hamburguesa) --- */
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: static; 
+    box-sizing: border-box;
+    padding: 8px 20px;
+    z-index: 100;
+}
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+}
+.nav-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.nav-title { flex: 1 1 360px; text-align: center; font-weight:700; white-space:nowrap; }
+.nav-right { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+.nav-right-placeholder { width: 48px; }
+.nav-link, nav a, button.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.nav-link img, nav a img, button.nav-link img { width:26px; height:26px; object-fit:contain; }
+
+/* Usamos .carrito-badge para unificar */
+.carrito-badge { 
+    display:inline-block; 
+    margin-left:6px; 
+    background:#00e6b0; 
+    color:#181a1b; 
+    padding:2px 8px; 
+    border-radius:12px; 
+    font-weight:700; 
+    font-size: 0.85em;
+}
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+}
+@media (max-width: 900px) {
+    .nav-title { position: static; transform: none; order: 2; width: 100%; text-align: center; margin: 6px 0; pointer-events: auto; }
+    .nav-left { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; }
+}
+
+/* --- ESTILOS DE NAV (LIGHT/DARK) --- */
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+html:not(.dark-mode) .nav-title { color: #0056b3; }
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.85); /* Coincide con el dark-mode original */
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark-mode .nav-title { color: #00e6b0; }
+
+/* --- BOTÓN HAMBURGUESA --- */
+.nav-ellipsis.hamburger {
+    width: 48px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    color: inherit; 
+}
+.nav-ellipsis.hamburger .bar {
+    display: block;
+    width: 22px;
+    height: 2.8px;
+    background: currentColor; 
+    border-radius: 2px;
+    margin: 3px 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.nav-left .nav-link, .nav-right .nav-link { display: none !important; }
+
+/* --- PANEL LATERAL (MENÚ) --- */
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 320px;
+    max-width: 86vw;
+    transform: translateX(-110%);
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 0.3s ease, color 0.3s ease;
+    z-index: 2200;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-bottom-right-radius: 8px;
+}
+.side-panel.open {
+    transform: translateX(0);
+}
+html:not(.dark-mode) .side-panel {
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #333; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0,0,0,0.08);
+}
+html:not(.dark-mode) .side-panel .menu-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+html:not(.dark-mode) .side-panel .side-close:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+html.dark-mode .side-panel {
+    background: rgba(0, 0, 0, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+html.dark-mode .side-panel .menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+html.dark-mode .side-panel .side-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+.side-panel .side-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.side-panel .side-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+.side-panel .side-close {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    color: inherit; 
+}
+.side-panel .menu-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.side-panel .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    background: transparent;
+    border: none; 
+    width: 100%; 
+    text-align: left; 
+    font-size: 1em; 
+    font-family: inherit; 
+    cursor: pointer;
+}
+.side-panel .menu-item img { width: 22px; height: 22px; object-fit: contain; }
+.side-panel .menu-item span { display: inline-block; font-size: .98rem; }
+.side-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.28);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    z-index: 2100;
+}
+.side-overlay.open { opacity: 1; visibility: visible; }
+body.side-no-scroll { overflow: hidden; }
+@media (max-width: 640px) {
+    .side-panel { width: 100%; max-width: 100%; border-radius: 0 0 10px 0; }
+}
+.side-panel .menu-item span { white-space: nowrap; }
+
+/* --- ESTILOS DEL BOTÓN LOGOUT (Adaptados) --- */
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background 0.16s ease, transform 0.12s ease, border-color 0.12s ease;
+    border: 1px solid transparent;
+    color: inherit;
+    background: transparent;
+}
+.logout-btn img { width: 26px; height: 26px; object-fit: contain; display: inline-block; }
+
+.side-panel .logout-btn {
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    color: inherit;
+    font-weight: 600;
+    padding: 10px 12px; 
+    gap: 12px;          
+    width: 100%;
+    justify-content: flex-start;
+}
+html:not(.dark-mode) .side-panel .logout-btn:hover,
+html:not(.dark-mode) .side-panel .logout-btn:focus {
+    background: rgba(0, 0, 0, 0.05);
+    transform: none;
+    outline: none;
+}
+html.dark-mode .side-panel .logout-btn:hover,
+html.dark-mode .side-panel .logout-btn:focus {
+    background: rgba(255, 255, 255, 0.08); 
+    transform: none;
+    outline: none;
+}

@@ -1,0 +1,150 @@
+html, body {
+    height: 100%;
+}
+body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: url('../images/background-login.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #f5f5f7;
+    display: flex;
+    flex-direction: column;
+}
+nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 32px;
+}
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+nav a {
+    color: #f5f5f7;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+nav a img {
+    height: 28px;
+    width: 28px;
+    vertical-align: middle;
+}
+nav a:hover {
+    background: rgba(255,255,255,0.08);
+    color: #00e6b0;
+}
+.container {
+    max-width: 600px;
+    margin: 70px auto 40px auto;
+    background: rgba(24, 26, 27, 0.82);
+    backdrop-filter: blur(12px);
+    padding: 38px 38px 30px 38px;
+    border-radius: 22px;
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    border: 1.5px solid rgba(0,230,176,0.13);
+    flex: 1 0 auto;
+}
+h2 {
+    color: #00e6b0;
+    margin-bottom: 25px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+}
+.mensaje-exito {
+    font-size: 1.2em;
+    color: #00e6b0;
+    margin-bottom: 18px;
+    font-weight: bold;
+}
+h3 {
+    color: #2E7D32;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+table {
+    width: 100%;
+    margin-bottom: 18px;
+    background: rgba(24, 26, 27, 0.92);
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #f5f5f7;
+    box-shadow: 0 2px 12px rgba(0,230,176,0.07);
+}
+th, td {
+    padding: 12px 8px;
+}
+th {
+    background: #00e6b0;
+    color: #181a1b;
+    font-weight: 700;
+    font-size: 1.05em;
+}
+tr:nth-child(even) {
+    background: rgba(0,230,176,0.07);
+}
+tr:last-child td {
+    border-bottom: none;
+}
+.volver {
+    display: inline-block;
+    background: #232526;
+    color: #00e6b0;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 12px 36px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1.5px solid #00e6b0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+    margin-top: 18px;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    letter-spacing: 1px;
+}
+.volver:hover {
+    background: #00e6b0;
+    color: #181a1b;
+    transform: scale(1.04);
+}
+footer {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(10px);
+    color: #aaa;
+    text-align: center;
+    padding: 18px 0 10px 0;
+    font-size: 1em;
+    letter-spacing: 1px;
+    margin-top: auto;
+    border-top: 1px solid #222;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.18);
+}
+@media (max-width: 800px) {
+    .container {
+        max-width: 98vw;
+        margin: 70px 1vw 40px 1vw;
+        padding: 10px;
+    }
+}

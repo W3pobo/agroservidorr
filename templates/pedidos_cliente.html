@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Pedidos | AgronoMia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo44.css') }}">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div id="toast-container">
+          {% for category, message in messages %}
+            <div class="toast toast-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="{{ url_for('inicio') }}">
+                <img src="{{ url_for('static', filename='images/inicio.png') }}" alt="Inicio">Inicio
+            </a>
+            <a href="{{ url_for('productos') }}">
+                <img src="{{ url_for('static', filename='images/mercado.png') }}" alt="Mercado">Mercado
+            </a>
+            <a href="{{ url_for('contacto') }}">
+                <img src="{{ url_for('static', filename='images/Contacto.png') }}" alt="Contacto">Contacto
+            </a>
+        </div>
+        <div class="nav-right">
+            {% if tipo_usuario == 'cliente' %}
+                <a href="{{ url_for('carrito') }}">
+                <img src="{{ url_for('static', filename='images/carrito.png') }}" alt="Carrito">Carrito
+                    {% if cantidad_carrito and cantidad_carrito > 0 %}
+                        <span style="background:#FFD700;color:#2E7D32;padding:2px 8px;border-radius:12px;font-weight:bold;margin-left:4px;">
+                            {{ cantidad_carrito }}
+                        </span>
+                    {% endif %}
+                </a>
+                <a href="{{ url_for('panel_cliente') }}">
+                    <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="Mi Cuenta">Mi Cuenta
+                </a>
+            {% elif tipo_usuario == 'Productor' %}
+                <a href="{{ url_for('panel_productor') }}">
+                    <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="Mi Cuenta">Mi Cuenta
+                </a>
+            {% endif %}
+            {% if tipo_usuario %}
+                <a href="{{ url_for('logout') }}">
+                    <img src="{{ url_for('static', filename='images/cerrar.png') }}" alt="Cerrar">Cerrar Sesión
+                </a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Iniciar Sesión</a>
+            {% endif %}
+            </div>
+        </nav>
+
+    {% block content %}
+    <div class="container">
+        <h2>📦 Mis Pedidos</h2>
+
+        {% if pedidos %}
+            {% for pedido in pedidos %}
+                <div class="pedido">
+                    <p>Pedido #{{ pedido.id }}</p>
+                    <p>Total: ${{ pedido.total }}</p>
+                    <button class="boton-ver-detalle" onclick="window.location.href='{{ url_for('detalle_pedido', pedido_id=pedido.id) }}'">Ver Detalles</button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No tienes pedidos recientes.</p>
+        {% endif %}
+    </div>
+    {% endblock %}
+
+    <footer>
+        <p>© 2025 AgronoMia - Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        if (window.performance && window.performance.navigation.type === 2) {
+            window.location.reload();
+        }
+    </script>
+<button id="grayscale-toggle" title="Activar/Desactivar Escala de Grises">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+        <path d="M12 8v8"/>
+        <path d="M8 12h8"/>
+    </svg>
+</button>
+    <script src="{{ url_for('static', filename='js/accesibilidad.js') }}"></script>
+</body>
+</html>

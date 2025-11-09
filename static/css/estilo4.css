@@ -1,0 +1,432 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/*
+ * ===== ANTIGUA BARRA DE NAVEGACIÓN ELIMINADA =====
+ * Se quitaron las reglas de 'nav', '.nav-left', '.nav-right',
+ * 'nav a' y 'nav a img' que estaban aquí.
+ * Serán reemplazadas por las nuevas reglas al final del archivo.
+*/
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body {
+    background-image: url('../images/background.jpg');
+    color: #333;
+}
+
+/* Se quitaron 'nav', 'nav a', 'nav a:hover' de aquí */
+
+html:not(.dark-mode) .container { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(14px); border-color: rgba(0,0,0,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+html:not(.dark-mode) h2, html:not(.dark-mode) .producto-nombre, html:not(.dark-mode) .producto-semillas-info h4 { color: #0056b3; }
+html:not(.dark-mode) .producto-item { background: #fff; border-color: #ddd; }
+html:not(.dark-mode) .producto-descripcion { color: #666; }
+html:not(.dark-mode) .producto-detalles-grid { border-color: #eee; }
+html:not(.dark-mode) .producto-semillas-info { background-color: #f8f9fa; }
+html:not(.dark-mode) .boton-carrito { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) .search-input { background-color: #fff; color: #333; border-color: #ccc; }
+html:not(.dark-mode) .category-button { background-color: #f8f9fa; color: #007bff; }
+html:not(.dark-mode) .category-button.active { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) footer { background: rgba(255, 255, 255, 0.65); color: #555; border-top-color: #ddd; }
+
+/* --- DARK MODE --- */
+html.dark-mode body { background-image: url('../images/background-login.png'); color: #f5f5f7; }
+
+/* Se quitaron 'nav', 'nav a', 'nav a:hover' de aquí */
+
+html.dark-mode .container { background: rgba(24, 26, 27, 0.72); backdrop-filter: blur(18px); border-color: rgba(0,230,176,0.13); box-shadow: 0 8px 32px rgba(0,230,176,0.10); }
+html.dark-mode h2, html.dark-mode .producto-nombre, html.dark-mode .producto-semillas-info h4 { color: #00e6b0; }
+html.dark-mode .producto-item { background: linear-gradient(145deg, #232526, #2c2f31); border-color: rgba(0,230,176,0.1); }
+html.dark-mode .producto-descripcion { color: #b0bec5; }
+html.dark-mode .producto-detalles-grid { border-color: #37474f; }
+html.dark-mode .producto-semillas-info { background-color: rgba(0, 0, 0, 0.2); }
+html.dark-mode .boton-carrito { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode .search-input { background-color: #232526; color: #e8e3e3; border-color: #444; }
+html.dark-mode .category-button { background-color: #232526; color: #00e6b0; }
+html.dark-mode .category-button.active { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode footer { background: rgba(24, 26, 27, 0.65); color: #aaa; border-top-color: #222; }
+
+/* --- GENERIC STYLES --- */
+.container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; /* Añadido para empujar footer */ }
+h2 { text-align: center; margin-bottom: 2rem; font-size: 2.2rem; }
+.productos-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+.producto-item { border-radius: 12px; padding: 1.5rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; border: 1px solid; }
+.producto-item:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); }
+.producto-item img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
+.producto-info { flex-grow: 1; display: flex; flex-direction: column; }
+.producto-nombre { font-size: 1.25em; margin-top: 0; margin-bottom: 0.5rem; font-weight: 600; }
+.producto-descripcion { font-size: 0.9em; line-height: 1.5; margin-bottom: 1rem; flex-grow: 1; }
+.producto-detalles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0.75rem 0; border-top: 1px solid; border-bottom: 1px solid; margin-bottom: 1rem; }
+.detalle-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95em; }
+.detalle-icon { font-size: 1.2em; }
+.producto-semillas-info { border-radius: 8px; padding: 0.75rem 1rem; margin-top: auto; }
+.producto-semillas-info h4 { margin: 0 0 0.5rem 0; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
+.producto-semillas-info ul { list-style: none; padding: 0; margin: 0; font-size: 0.85em; }
+.producto-semillas-info li { margin-bottom: 0.25rem; }
+.boton-carrito { border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 1rem; transition: background-color 0.3s; }
+.search-container { display: flex; justify-content: center; margin-bottom: 2rem; }
+.search-input { padding: 0.7rem 1rem; border: 2px solid; border-radius: 6px; width: 300px; transition: border-color 0.3s; }
+.search-input:focus { outline: none; }
+.category-buttons { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.category-button { border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; transition: background-color 0.3s, color 0.3s; }
+footer { text-align: center; padding: 2rem; margin-top: 3rem; }
+
+/* --- ACCESSIBILITY --- */
+html.grayscale { filter: grayscale(100%); }
+
+/* Se quitaron reglas de #grayscale-toggle */
+#back-to-top { 
+    position: fixed; 
+    z-index: 1001; 
+    border: none; 
+    border-radius: 50%; 
+    width: 60px; 
+    height: 60px; 
+    cursor: pointer; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    transition: all 0.3s ease; 
+    bottom: 25px; 
+    left: 25px; 
+    opacity: 0; 
+    visibility: hidden; 
+}
+#back-to-top.visible { opacity: 1; visibility: visible; }
+#back-to-top:hover { transform: scale(1.1); }
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html.dark-mode #back-to-top { background-color: #FFD700; }
+
+
+/*
+ * ===================================================================
+ * ===== INICIO: ESTILOS PEGADOS (Panel Lateral de estilo29) =====
+ * ===================================================================
+*/
+
+/* --- NUEVA BARRA DE NAVEGACIÓN (Estática, para Hamburguesa) --- */
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: static; /* Cambiado de 'sticky' para que fluya con la página */
+    box-sizing: border-box;
+    padding: 8px 20px;
+    z-index: 100;
+    /* Los fondos (light/dark) se aplican abajo */
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+/* Areas */
+.nav-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.nav-title { flex: 1 1 360px; text-align: center; font-weight:700; white-space:nowrap; }
+.nav-right { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+.nav-right-placeholder { width: 48px; /* Espacio para equivaler al botón hamburguesa */ }
+
+/* Links de Nav (para botones/links genéricos si se añaden) */
+.nav-link, nav a, button.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.nav-link img, nav a img, button.nav-link img { width:26px; height:26px; object-fit:contain; }
+
+/* Badge (para el carrito en el panel lateral) */
+.carrito-badge { 
+    display:inline-block; 
+    margin-left:6px; 
+    background:#00e6b0; 
+    color:#181a1b; 
+    padding:2px 8px; 
+    border-radius:12px; 
+    font-weight:700; 
+    font-size: 0.85em;
+}
+
+/* Desktop: centrar título */
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+}
+
+/* Mobile: título en su fila */
+@media (max-width: 900px) {
+    .nav-title { position: static; transform: none; order: 2; width: 100%; text-align: center; margin: 6px 0; pointer-events: auto; }
+    .nav-left { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+
+/* Small screens: ocultar texto (aunque aquí no hay texto) */
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; }
+}
+
+/* --- ESTILOS DE NAV (LIGHT/DARK) --- */
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+html:not(.dark-mode) .nav-title { color: #0056b3; }
+
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark-mode .nav-title { color: #00e6b0; }
+
+
+/* --- BOTÓN HAMBURGUESA --- */
+.nav-ellipsis.hamburger {
+    width: 48px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    color: inherit; /* Hereda el color (claro u oscuro) */
+}
+.nav-ellipsis.hamburger .bar {
+    display: block;
+    width: 22px;
+    height: 2.8px;
+    background: currentColor; /* Usa el color heredado */
+    border-radius: 2px;
+    margin: 3px 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+/* Ocultar cualquier enlace residual en la barra superior */
+.nav-left .nav-link, .nav-right .nav-link { display: none !important; }
+
+/* --- PANEL LATERAL (MENÚ) --- */
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 320px;
+    max-width: 86vw;
+    transform: translateX(-110%);
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 0.3s ease, color 0.3s ease;
+    z-index: 2200;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-bottom-right-radius: 8px;
+}
+.side-panel.open {
+    transform: translateX(0);
+}
+
+/* Panel en modo CLARO */
+html:not(.dark-mode) .side-panel {
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #333; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0,0,0,0.08);
+}
+html:not(.dark-mode) .side-panel .menu-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+html:not(.dark-mode) .side-panel .side-close:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* Panel en modo OSCURO */
+html.dark-mode .side-panel {
+    background: rgba(0, 0, 0, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+html.dark-mode .side-panel .menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+html.dark-mode .side-panel .side-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Contenido del Panel */
+.side-panel .side-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.side-panel .side-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+.side-panel .side-close {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    color: inherit; 
+}
+.side-panel .menu-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.side-panel .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    background: transparent;
+    border: none; /* Para botones */
+    width: 100%; /* Para botones */
+    text-align: left; /* Para botones */
+    font-size: 1em; /* Para botones */
+    font-family: inherit; /* Para botones */
+    cursor: pointer;
+}
+.side-panel .menu-item img { width: 22px; height: 22px; object-fit: contain; }
+.side-panel .menu-item span { display: inline-block; font-size: .98rem; }
+
+/* Overlay (fondo oscuro) */
+.side-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.28);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    z-index: 2100;
+}
+.side-overlay.open { opacity: 1; visibility: visible; }
+body.side-no-scroll { overflow: hidden; }
+
+@media (max-width: 640px) {
+    .side-panel { width: 100%; max-width: 100%; border-radius: 0 0 10px 0; }
+}
+.side-panel .menu-item span { white-space: nowrap; }
+
+/* --- ESTILOS DEL BOTÓN LOGOUT (Adaptados) --- */
+/* Botón Logout (Base) */
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background 0.16s ease, transform 0.12s ease, border-color 0.12s ease;
+    border: 1px solid transparent;
+    color: inherit;
+    background: transparent;
+}
+.logout-btn img { width: 26px; height: 26px; object-fit: contain; display: inline-block; }
+
+/*
+ * ===== CLAVE: Anular estilos de .logout-btn DENTRO del panel =====
+ * Esto hace que el botón de cerrar sesión se vea igual que los otros enlaces
+ * (como "Volver" o "Carrito").
+*/
+.side-panel .logout-btn {
+    /* Anulación de estilos 'blur' */
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    color: inherit;
+    /* Adopción de estilos '.menu-item' */
+    font-weight: 600;
+    padding: 10px 12px; 
+    gap: 12px;          
+    width: 100%;
+    justify-content: flex-start;
+}
+
+/*
+ * ===== CLAVE: Anular hover/focus de .logout-btn DENTRO del panel =====
+ * Esto hace que el hover/focus sea el mismo que el de .menu-item
+*/
+html:not(.dark-mode) .side-panel .logout-btn:hover,
+html:not(.dark-mode) .side-panel .logout-btn:focus {
+    background: rgba(0, 0, 0, 0.05); /* igual a .menu-item:hover */
+    transform: none;
+    outline: none;
+}
+html.dark-mode .side-panel .logout-btn:hover,
+html.dark-mode .side-panel .logout-btn:focus {
+    background: rgba(255, 255, 255, 0.08); /* igual a .menu-item:hover */
+    transform: none;
+    outline: none;
+}

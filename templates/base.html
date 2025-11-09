@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AgronoMia{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo26.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('inicio') }}">
+            <img src="{{ url_for('static', filename='images/mercado.png') }}" alt="Mercado" style="height:28px;vertical-align:middle;margin-right:8px;">
+            Mercado
+        </a>
+        <a href="{{ url_for('productores') }}">
+            <img src="{{ url_for('static', filename='images/productores.png') }}" alt="Productores" style="height:28px;vertical-align:middle;margin-right:8px;">
+            Productores
+        </a>
+        <a href="{{ url_for('contacto') }}">
+            <img src="{{ url_for('static', filename='images/contacto.png') }}" alt="Contacto" style="height:28px;vertical-align:middle;margin-right:8px;">
+            Contacto
+        </a>
+        <a href="{{ url_for('carrito') }}">
+            <img src="{{ url_for('static', filename='images/carrito.png') }}" alt="Carrito" style="height:28px;vertical-align:middle;margin-right:8px;">
+            Carrito
+            {% if session.get('cart_count') %}
+                <span class="cart-badge">{{ session['cart_count'] }}</span>
+            {% endif %}
+        </a>
+        {% if session.get('usuario_id') %}
+            <a href="{{ url_for('perfil') }}">
+                <img src="{{ url_for('static', filename='images/user.png') }}" alt="Mi Cuenta" style="height:28px;vertical-align:middle;margin-right:8px;">
+                Mi Cuenta
+            </a>
+            <a href="{{ url_for('logout') }}" style="color:#ff5c5c;">
+                <img src="{{ url_for('static', filename='images/logout.png') }}" alt="Cerrar Sesión" style="height:28px;vertical-align:middle;margin-right:8px;">
+                Cerrar Sesión
+            </a>
+        {% else %}
+            <a href="{{ url_for('login') }}">
+                <img src="{{ url_for('static', filename='images/login.png') }}" alt="Iniciar Sesión" style="height:28px;vertical-align:middle;margin-right:8px;">
+                Iniciar Sesión
+            </a>
+        {% endif %}
+    </nav>
+    <!-- Logout seguro: POST + reemplazo de historial para evitar volver atrás -->
+    <script>
+    (function(){
+        const logoutUrl = "{{ url_for('logout') }}";
+        const loginUrl  = "{{ url_for('login') }}";
+
+        function getCsrfHeaders(){
+            const meta = document.querySelector('meta[name="csrf-token"], meta[name="csrf_token"]');
+            const headers = { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' };
+            if (meta && meta.content) headers['X-CSRFToken'] = meta.content;
+            return headers;
+        }
+
+        function doLogout(){
+            fetch(logoutUrl, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: getCsrfHeaders(),
+                body: null
+            }).catch(function(){})
+            .finally(function(){
+                try { history.replaceState(null, null, loginUrl); } catch(e){}
+                try { history.pushState({ loggedOut: true }, null, loginUrl); } catch(e){}
+                window.location.replace(loginUrl);
+            });
+        }
+
+        // Delegación: captura cualquier click en botones/enlaces de logout
+        document.addEventListener('click', function(e){
+            const btn = e.target.closest('.logout-btn, [data-logout], #base-logout, #logout-side, #logout-btn-menu, #panel-logout');
+            if (!btn) return;
+            e.preventDefault();
+            doLogout();
+        });
+
+        // Interceptar submit de formularios logout si existieran
+        document.addEventListener('submit', function(e){
+            if (e.target && e.target.classList && e.target.classList.contains('logout-form')) {
+                e.preventDefault();
+                doLogout();
+            }
+        });
+
+        // Protege "Atrás" después del logout
+        window.addEventListener('popstate', function(e){
+            if (e.state && e.state.loggedOut) {
+                window.location.replace(loginUrl);
+            }
+        });
+    })();
+    </script>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <p>© 2025 AgronoMia - Todos los derechos reservados</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/accesibilidad.js') }}"></script>
+</body>
+</html>

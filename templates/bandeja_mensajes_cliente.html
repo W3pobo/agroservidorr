@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bandeja de Entrada | AgronoMia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo24.css') }}">
+</head>
+<body>
+
+    <aside id="side-panel" class="side-panel" aria-hidden="true" aria-label="Menú lateral">
+        <div class="side-header">
+            <h4>Menú</h4>
+            <button id="side-close" class="side-close" aria-label="Cerrar menú">✕</button>
+        </div>
+
+        <nav class="side-nav" aria-label="Navegación principal">
+            <div class="menu-list">
+                
+                <a class="menu-item" href="#" onclick="history.back(); return false;" title="Volver">
+                    <img src="{{ url_for('static', filename='images/volver.png') }}" alt="">
+                    <span>Volver</span>
+                </a>
+                
+                <a class="menu-item" href="{{ url_for('inicio') }}">
+                    <img src="{{ url_for('static', filename='images/inicio.png') }}" alt="">
+                    <span>Inicio</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('productos') }}">
+                    <img src="{{ url_for('static', filename='images/mercado.png') }}" alt="">
+                    <span>Mercado</span>
+                </a>
+                 <a class="menu-item" href="{{ url_for('productores') }}">
+                    <img src="{{ url_for('static', filename='images/productor.png') }}" alt="">
+                    <span>Productores</span>
+                </a>
+                
+                <a class="menu-item" href="{{ url_for('contacto') }}">
+                    <img src="{{ url_for('static', filename='images/contacto.png') }}" alt="">
+                    <span>Contáctanos</span>
+                </a>
+
+                <a class="menu-item" href="{{ url_for('panel_cliente') }}">
+                    <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="">
+                    <span>Mi Cuenta</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('carrito') }}">
+                    <img src="{{ url_for('static', filename='images/carrito.png') }}" alt="">
+                    <span>Carrito</span>
+                    {% if cantidad_carrito and cantidad_carrito > 0 %}
+                        <span class="carrito-badge">{{ cantidad_carrito }}</span>
+                    {% endif %}
+                </a>
+
+                <button id="logout-side" type="button" class="menu-item logout-btn">
+                    <img src="{{ url_for('static', filename='images/cerrar.png') }}" alt="">
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </nav>
+    </aside>
+
+    <div id="side-overlay" class="side-overlay" tabindex="-1" aria-hidden="true"></div>
+    <nav>
+        <div class="nav-container">
+            <button id="nav-ellipsis-btn" class="nav-ellipsis hamburger" aria-haspopup="true" aria-expanded="false" aria-label="Abrir menú">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="nav-title">Bandeja de Entrada</div>
+            <div class="nav-right-placeholder" aria-hidden="true"></div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>✉️ Bandeja de Entrada</h2>
+        
+        <div class="vista-botones">
+            <a href="{{ url_for('bandeja_mensajes_cliente') }}" class="vista-btn {% if not vista_archivados %}active{% endif %}">Activas</a>
+            <a href="{{ url_for('bandeja_mensajes_cliente', ver='archivados') }}" class="vista-btn {% if vista_archivados %}active{% endif %}">Archivadas</a>
+        </div>
+
+        <h3>Conversaciones con Productores</h3>
+        {% if conversaciones_productor %}
+            {% for conv in conversaciones_productor %}
+                <div class="conversacion-item">
+                    <a href="{{ url_for('conversacion_cliente', productor_id=conv.productor_id, producto_id=conv.producto_id) }}" class="mensaje-item-link" style="flex-grow: 1;">
+                        <div class="mensaje-item">
+                            <p>
+                                Conversación sobre <strong>{{ conv.producto_nombre }}</strong> con <strong>{{ conv.productor_nombre }}</strong>
+                                {% if conv.unread_count and conv.unread_count > 0 %}
+                                    <span class="badge-contador">{{ conv.unread_count }}</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </a>
+                    {% if vista_archivados %}
+                        <form action="{{ url_for('desarchivar_conversacion', id_uno=conv.productor_id, id_dos=conv.producto_id) }}" method="POST" style="margin-left: 10px;">
+                            <button type="submit" class="ocultar-btn" style="background: #009ee3;" title="Restaurar">Restaurar</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('ocultar_conversacion', id_uno=conv.productor_id, id_dos=conv.producto_id) }}" method="POST" style="margin-left: 10px;">
+                            <button type="submit" class="ocultar-btn" title="Archivar">Archivar</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align:center;">No tienes conversaciones en esta vista.</p>
+        {% endif %}
+
+       <h3>Mensajes con el Administrador</h3>
+       
+       <a href="{{ url_for('contacto') }}" class="boton-nuevo-mensaje">Contáctanos</a>
+        
+        {% if mensajes_admin %}
+            {% for mensaje in mensajes_admin %}
+                <div class="mensaje-item">
+                    <div class="mensaje-info">
+                        <strong>Tú:</strong>
+                        <p>{{ mensaje.mensaje }}</p>
+                        <small>{{ mensaje.fecha.strftime('%d/%m/%Y %H:%M') }}</small>
+                    </div>
+                    {% if mensaje.respuesta %}
+                        <div class="respuesta-admin">
+                            <strong>Respuesta del Admin:</strong>
+                            <p>{{ mensaje.respuesta }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No tienes mensajes con el administrador.</p>
+        {% endif %}
+        
+        </div>
+    <footer>
+        <p>&copy; 2024 AgronoMia. Todos los derechos reservados.</p>
+    </footer>
+
+    <button id="back-to-top" class="floating-btn" title="Volver Arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="#232526" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- Lógica del Panel Lateral (Side Panel) ---
+        var side = document.getElementById('side-panel');
+        var overlay = document.getElementById('side-overlay');
+        var openBtn = document.getElementById('nav-ellipsis-btn');
+        var closeBtn = document.getElementById('side-close');
+        var logoutSide = document.getElementById('logout-side');
+
+        function openSide(){
+            if(!side || !overlay) return;
+            side.classList.add('open');
+            overlay.classList.add('open');
+            side.setAttribute('aria-hidden','false');
+            overlay.setAttribute('aria-hidden','false');
+            document.body.classList.add('side-no-scroll');
+            var first = side.querySelector('.menu-item'); // Foco en "Volver"
+            if(first) first.focus();
+        }
+        function closeSide(){
+            if(!side || !overlay) return;
+            side.classList.remove('open');
+            overlay.classList.remove('open');
+            side.setAttribute('aria-hidden','true');
+            overlay.setAttribute('aria-hidden','true');
+            document.body.classList.remove('side-no-scroll');
+            if(openBtn) openBtn.focus();
+        }
+
+        if(openBtn) openBtn.addEventListener('click', function(e){ e.preventDefault(); openSide(); });
+        if(closeBtn) closeBtn.addEventListener('click', function(e){ e.preventDefault(); closeSide(); });
+        if(overlay) overlay.addEventListener('click', closeSide);
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeSide(); });
+
+        // --- Lógica de Cerrar Sesión (Logout) ---
+        function doLogout(e) {
+            if(e) e.preventDefault();
+            
+            fetch("{{ url_for('logout') }}", {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: { 'X-Requested-With':'XMLHttpRequest','Content-Type':'application/json' },
+                body: null
+            }).catch(function(){ 
+                // Ignorar errores, igual redirigir
+            })
+            .finally(function(){
+                // Reemplaza historial y redirige
+                try{ history.replaceState(null, null, "{{ url_for('login') }}"); } catch(e) {}
+                window.location.replace("{{ url_for('login') }}");
+            });
+        }
+        if(logoutSide) {
+            logoutSide.addEventListener('click', doLogout);
+        }
+
+        // --- Lógica de Protección de Botón "Atrás" ---
+        try {
+            history.replaceState(null, null, window.location.href);
+            history.pushState({ protected: true }, null, window.location.href);
+            window.addEventListener('popstate', function (event) {
+                if (event.state && event.state.protected) {
+                    window.location.replace("{{ url_for('login') }}");
+                }
+            });
+        } catch(e) {}
+
+        // --- Lógica de Focus Trap (Accesibilidad) ---
+        document.addEventListener('focus', function(ev){
+            if(!side || !side.classList.contains('open')) return;
+            if(!side.contains(ev.target)) {
+                var first = side.querySelector('.menu-item');
+                if(first) first.focus();
+            }
+        }, true);
+        
+        // --- Lógica de "Volver Arriba" (Conservada) ---
+        const backToTopButton = document.getElementById('back-to-top');
+        if (backToTopButton) {
+            window.onscroll = function() {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            };
+            backToTopButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/* --- ESTILOS DE BARRA DE NAVEGACIÓN UNIFICADOS --- */
+nav {
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background 0.3s ease, border 0.3s ease;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+nav a {
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+nav a img {
+    height: 28px;
+    width: 28px;
+    vertical-align: middle;
+}
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body {
+    background-image: url('../images/background.jpg');
+    color: #333;
+}
+
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+html:not(.dark-mode) nav a {
+    color: #333;
+}
+
+html:not(.dark-mode) nav a:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #007bff;
+}
+
+html:not(.dark-mode) .container {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+html:not(.dark-mode) h2 {
+    color: #0056b3;
+    text-shadow: none;
+}
+
+html:not(.dark-mode) label {
+    color: #0056b3;
+}
+
+html:not(.dark-mode) input, 
+html:not(.dark-mode) select, 
+html:not(.dark-mode) textarea {
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+html:not(.dark-mode) button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+}
+
+html:not(.dark-mode) .volver {
+    color: #0056b3;
+}
+
+html:not(.dark-mode) footer {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    color: #555;
+    border-top: 1px solid #ddd;
+    box-shadow: none;
+}
+
+
+/* --- DARK MODE --- */
+html.dark-mode body {
+    background-image: url('../images/background-login.png');
+    color: #f5f5f7;
+}
+
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html.dark-mode nav a {
+    color: #f5f5f7;
+}
+
+html.dark-mode nav a:hover {
+    background: rgba(255,255,255,0.08);
+    color: #00e6b0;
+}
+
+html.dark-mode .container {
+    background: rgba(24, 26, 27, 0.72);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(0,230,176,0.13);
+    box-shadow: 0 8px 32px rgba(0,230,176,0.10), 0 2px 8px rgba(0,0,0,0.18);
+}
+
+html.dark-mode h2 {
+    color: #00e6b0;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+html.dark-mode label {
+    color: #00e6b0;
+}
+
+html.dark-mode input, 
+html.dark-mode select, 
+html.dark-mode textarea {
+    background: rgba(30, 34, 36, 0.96);
+    color: #f5f5f7;
+    border: 1.5px solid #00e6b0;
+}
+
+html.dark-mode button[type="submit"] {
+    background-color: #00e6b0;
+    color: #181a1b;
+}
+
+html.dark-mode .volver {
+    color: #00e6b0;
+}
+
+html.dark-mode footer {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(10px);
+    color: #aaa;
+    border-top: 1px solid #222;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.18);
+}
+
+
+/* --- GENERIC STYLES (for both modes) --- */
+.container {
+    max-width: 550px;
+    width: 100%;
+    padding: 38px 32px;
+    border-radius: 20px;
+    text-align: left;
+    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+h2 {
+    margin-top: 0; 
+    margin-bottom: 2rem; 
+    text-align: center;
+    font-size: 2em; 
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+form { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
+}
+
+label {
+    font-weight: 600; 
+    margin-bottom: 4px;
+    font-size: 1em; 
+    display: block;
+    transition: color 0.3s ease;
+}
+
+input, select, textarea {
+    width: 100%; 
+    padding: 12px; 
+    border-radius: 8px; 
+    font-size: 1em; 
+    transition: border 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s; 
+    box-sizing: border-box;
+}
+
+textarea { 
+    resize: vertical; 
+    min-height: 80px; 
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+button[type="submit"] {
+    font-size: 1.15em;
+    padding: 14px 0; 
+    border-radius: 8px; 
+    font-weight: bold; 
+    margin-top: 1rem;
+    border: none; 
+    cursor: pointer; 
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    letter-spacing: 1px;
+}
+
+button[type="submit"]:hover { 
+    transform: scale(1.03); 
+}
+
+.volver {
+    display: block; 
+    text-align: center; 
+    margin-top: 1.5rem; 
+    font-weight: bold; 
+    text-decoration: none; 
+    transition: color 0.2s;
+}
+
+.volver:hover { 
+    text-decoration: underline; 
+}
+
+footer {
+    text-align: center; 
+    padding: 18px 0;
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+/* --- ACCESSIBILITY BUTTONS --- */
+#grayscale-toggle {
+    position: fixed;
+    top: 100px;
+    right: 25px;
+    z-index: 1001;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+#grayscale-toggle:hover { transform: scale(1.1); }
+
+html:not(.dark-mode) #grayscale-toggle { background-color: #007bff; }
+html:not(.dark-mode) #grayscale-toggle:hover { background-color: #0056b3; }
+html:not(.dark-mode) #grayscale-toggle.active { background-color: #6c757d; }
+html:not(.dark-mode) #grayscale-toggle svg { stroke: #fff; }
+
+
+html.dark-mode #grayscale-toggle { background-color: #00e6b0; }
+html.dark-mode #grayscale-toggle:hover { background-color: #00ffc4; }
+html.dark-mode #grayscale-toggle.active { background-color: #666; }
+html.dark-mode #grayscale-toggle svg { stroke: #181a1b; }
+
+
+#back-to-top {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    z-index: 1001;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.3s ease, visibility 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+#back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+#back-to-top:hover { transform: scale(1.1); }
+
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html:not(.dark-mode) #back-to-top:hover { background-color: #FFC107; }
+html:not(.dark-mode) #back-to-top svg { stroke: #232526; }
+
+html.dark-mode #back-to-top { background-color: #FFD700; }
+html.dark-mode #back-to-top:hover { background-color: #FFC107; }
+html.dark-mode #back-to-top svg { stroke: #232526; }
+
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 24px;
+    }
+    nav {
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 5px;
+    }
+    .nav-left, .nav-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .container {
+        width: 98%;
+        padding: 24px 12px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    #grayscale-toggle, #back-to-top {
+        width: 50px;
+        height: 50px;
+        bottom: 15px;
+    }
+    #grayscale-toggle { right: 15px; top: auto; }
+    #back-to-top { left: 15px; }
+}

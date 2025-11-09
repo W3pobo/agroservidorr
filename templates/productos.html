@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgronoMia - Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo4.css') }}">
+    
+    <script src="{{ url_for('static', filename='js/accesibilidad.js') }}"></script>
+    
+    <style>
+        /* === ESTILOS DE ACCESIBILIDAD UNIFICADOS (COMO EN PANEL_CLIENTE.HTML) === */
+        html.grayscale {
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%); /* Para mayor compatibilidad de navegadores */
+        }
+        
+        /* === ESTILOS PARA BOTÓN FLOTANTE "VOLVER ARRIBA" === */
+        .floating-btn {
+            position: fixed;
+            z-index: 1001;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.3s ease, visibility 0.3s;
+        }
+        .floating-btn:hover { transform: scale(1.1); }
+
+        #back-to-top {
+            bottom: 25px;
+            left: 25px;
+            background-color: #FFD700; /* Color dorado para distinguirlo */
+            opacity: 0;
+            visibility: hidden;
+        }
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        #back-to-top:hover {
+            background-color: #FFC107;
+        }
+        /* Media query para dispositivos pequeños */
+        @media (max-width: 600px) {
+            #back-to-top { width: 50px; height: 50px; bottom: 15px; left: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside id="side-panel" class="side-panel" aria-hidden="true" aria-label="Menú lateral">
+        <div class="side-header">
+            <h4>Menú</h4>
+            <button id="side-close" class="side-close" aria-label="Cerrar menú">✕</button>
+        </div>
+
+        <nav class="side-nav" aria-label="Navegación principal">
+            <div class="menu-list">
+                
+                <a class="menu-item" href="#" onclick="history.back(); return false;" title="Volver">
+                    <img src="{{ url_for('static', filename='images/volver.png') }}" alt="">
+                    <span>Volver</span>
+                </a>
+                
+                <a class="menu-item" href="{{ url_for('inicio') }}">
+                    <img src="{{ url_for('static', filename='images/inicio.png') }}" alt="Inicio">
+                    <span>Inicio</span>
+                </a>
+                
+                {% if tipo_usuario != 'Administrador' %}
+                <a class="menu-item" href="{{ url_for('productores') }}">
+                    <img src="{{ url_for('static', filename='images/productor.png') }}" alt="Productores">
+                    <span>Productores</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('contacto') }}">
+                    <img src="{{ url_for('static', filename='images/contacto.png') }}" alt="Contacto">
+                    <span>Contacto</span>
+                </a>
+                {% endif %}
+
+                {% if tipo_usuario == 'Cliente' %}
+                    <a class="menu-item" href="{{ url_for('carrito') }}">
+                        <img src="{{ url_for('static', filename='images/carrito.png') }}" alt="Carrito">
+                        <span>Carrito</span>
+                        {% if cantidad_carrito and cantidad_carrito > 0 %}
+                            <span class="carrito-badge">{{ cantidad_carrito }}</span>
+                        {% endif %}
+                    </a>
+                    <a class="menu-item" href="{{ url_for('panel_cliente') }}">
+                        <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="Mi Cuenta">
+                        <span>Mi Cuenta</span>
+                    </a>
+                {% elif tipo_usuario == 'Administrador' %}
+                    <a class="menu-item" href="{{ url_for('panel_admin') }}">
+                        <img src="{{ url_for('static', filename='images/admin.png') }}" alt="Panel Admin">
+                        <span>Panel Admin</span>
+                    </a>
+                {% elif tipo_usuario == 'Productor' %}
+                    <a class="menu-item" href="{{ url_for('panel_productor') }}">
+                        <img src="{{ url_for('static', filename='images/panel.png') }}" alt="Panel Productor">
+                        <span>Panel Productor</span>
+                    </a>
+                    <a class="menu-item" href="{{ url_for('perfil_productor') }}">
+                        <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="Mi Cuenta">
+                        <span>Mi Cuenta</span>
+                    </a>
+                {% endif %}
+                
+                {% if tipo_usuario %}
+                    <button id="logout-side" type="button" class="menu-item logout-btn">
+                        <img src="{{ url_for('static', filename='images/cerrar.png') }}" alt="">
+                        <span>Cerrar Sesión</span>
+                    </button>
+                {% else %}
+                     <a class="menu-item" href="{{ url_for('login') }}">
+                        <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="Login">
+                        <span>Iniciar Sesión</span>
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+    </aside>
+
+    <div id="side-overlay" class="side-overlay" tabindex="-1" aria-hidden="true"></div>
+    <nav>
+        <div class="nav-container">
+            <button id="nav-ellipsis-btn" class="nav-ellipsis hamburger" aria-haspopup="true" aria-expanded="false" aria-label="Abrir menú">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <div class="nav-title">Nuestros Productos</div>
+
+            <div class="nav-right-placeholder" aria-hidden="true"></div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>🌿 Nuestros Productos</h2>
+        {% if tipo_usuario != 'Administrador' %}
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Buscar productos por nombre...">
+            </div>
+            <div class="category-buttons">
+                <button class="category-button active" data-category="all">Todos</button>
+                {% for categoria in categorias %}
+                    <button class="category-button" data-category="{{ categoria.id }}">{{ categoria.nombre }}</button>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="productos-lista">
+            {% for producto in productos %}
+                <div class="producto-item" data-name="{{ producto.nombre|lower }}" data-description="{{ producto.descripcion|lower }}" data-category="{{ producto.categoria_id }}">
+                    <img src="{{ url_for('static', filename='images/' + producto.imagen) if producto.imagen else url_for('static', filename='images/default.png') }}" alt="{{ producto.nombre }}">
+                    <div class="producto-info">
+                        <h3 class="producto-nombre">{{ producto.nombre }}</h3>
+                        <p class="producto-descripcion">{{ producto.descripcion }}</p>
+                        <div class="producto-detalles-grid">
+                            <div class="detalle-item">
+                                <span class="detalle-icon">💰</span>
+                                <span class="detalle-texto">${{ "%.2f"|format(producto.precio) }}</span>
+                            </div>
+                            {% if producto.productor %}
+                            <div class="detalle-item">
+                                <span class="detalle-icon">👨‍🌾</span>
+                                <span class="detalle-texto">{{ producto.productor.nombre }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if producto.tiempo_germinacion or producto.epoca_siembra or producto.cantidad_semillas %}
+                        <div class="producto-semillas-info">
+                            <h4>Detalles de la Semilla</h4>
+                            <ul>
+                                {% if producto.tiempo_germinacion %}<li>Germinación: Aprox. {{ producto.tiempo_germinacion }} días</li>{% endif %}
+                                {% if producto.epoca_siembra %}<li>Época de Siembra: {{ producto.epoca_siembra }}</li>{% endif %}
+                                {% if producto.cantidad_semillas %}<li>Contenido: Aprox. {{ producto.cantidad_semillas }} semillas</li>{% endif %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if tipo_usuario == 'Cliente' %}
+                        <form action="{{ url_for('agregar_carrito', producto_id=producto.id) }}" method="POST">
+                            <button class="boton-carrito" type="submit">🛒 Agregar al carrito</button>
+                        </form>
+                    {% elif tipo_usuario == 'Administrador' %}
+                        <div class="admin-actions">
+                            <a href="{{ url_for('actualizar_producto_admin', producto_id=producto.id) }}" class="boton-actualizar">✏️ Actualizar</a>
+                            <form action="{{ url_for('eliminar_producto_admin', producto_id=producto.id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar este producto? La acción es permanente.')">
+                                <button type="submit" class="boton-eliminar">🗑️ Eliminar</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 AgronoMia - Todos los derechos reservados</p>
+    </footer>
+
+    <button id="back-to-top" class="floating-btn" title="Volver Arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="#232526" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Lógica para el buscador y filtros de categoría (Conservada) ---
+            const searchInput = document.getElementById('search-input');
+            const categoryButtons = document.querySelectorAll('.category-button');
+            const productos = document.querySelectorAll('.producto-item');
+
+            function filterProducts() {
+                const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+                const activeButton = document.querySelector('.category-button.active');
+                const activeCategory = activeButton ? activeButton.dataset.category : 'all';
+                productos.forEach(producto => {
+                    const name = producto.dataset.name;
+                    const category = producto.dataset.category;
+                    const matchesSearch = name.includes(searchTerm);
+                    const matchesCategory = activeCategory === 'all' || category === activeCategory;
+                    if (matchesSearch && matchesCategory) {
+                        producto.style.display = 'flex';
+                    } else {
+                        producto.style.display = 'none';
+                    }
+                });
+            }
+
+            if(searchInput) {
+                searchInput.addEventListener('input', filterProducts);
+            }
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    filterProducts();
+                });
+            });
+
+            // --- Funcionalidad para el botón "Volver Arriba" (Conservada) ---
+            const backToTopButton = document.getElementById('back-to-top');
+            if (backToTopButton) {
+                window.onscroll = function() {
+                    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                        backToTopButton.classList.add('visible');
+                    } else {
+                        backToTopButton.classList.remove('visible');
+                    }
+                };
+                backToTopButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+            
+            // --- Lógica del Panel Lateral (NUEVA) ---
+            var side = document.getElementById('side-panel');
+            var overlay = document.getElementById('side-overlay');
+            var openBtn = document.getElementById('nav-ellipsis-btn');
+            var closeBtn = document.getElementById('side-close');
+            
+            function openSide(){
+                if(!side || !overlay) return;
+                side.classList.add('open');
+                overlay.classList.add('open');
+                side.setAttribute('aria-hidden','false');
+                overlay.setAttribute('aria-hidden','false');
+                document.body.classList.add('side-no-scroll');
+                var first = side.querySelector('.menu-item');
+                if(first) first.focus();
+            }
+            function closeSide(){
+                if(!side || !overlay) return;
+                side.classList.remove('open');
+                overlay.classList.remove('open');
+                side.setAttribute('aria-hidden','true');
+                overlay.setAttribute('aria-hidden','true');
+                document.body.classList.remove('side-no-scroll');
+                if(openBtn) openBtn.focus();
+            }
+
+            if(openBtn) openBtn.addEventListener('click', function(e){ e.preventDefault(); openSide(); });
+            if(closeBtn) closeBtn.addEventListener('click', function(e){ e.preventDefault(); closeSide(); });
+            if(overlay) overlay.addEventListener('click', closeSide);
+            document.addEventListener('keydown', function(e){
+                if(e.key === 'Escape') closeSide();
+            });
+
+            // --- Lógica de Cerrar Sesión (NUEVA) ---
+            var logoutSide = document.getElementById('logout-side'); // Apunta al nuevo botón
+            
+            function doLogout(e) {
+                if(e) e.preventDefault();
+                
+                fetch("{{ url_for('logout') }}", {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: { 'X-Requested-With':'XMLHttpRequest','Content-Type':'application/json' },
+                    body: null
+                }).catch(function(){ 
+                    // Ignorar errores, igual redirigir
+                })
+                .finally(function(){
+                    // Reemplaza historial y redirige
+                    try{ history.replaceState(null, null, "{{ url_for('login') }}"); } catch(e) {}
+                    window.location.replace("{{ url_for('login') }}");
+                });
+            }
+            if(logoutSide) {
+                logoutSide.addEventListener('click', doLogout);
+            }
+
+            // --- Lógica de Protección de Botón "Atrás" (NUEVA) ---
+            // Solo se aplica si el usuario está logueado
+            {% if tipo_usuario %}
+            try {
+                history.replaceState(null, null, window.location.href);
+                history.pushState({ protected: true }, null, window.location.href);
+                window.addEventListener('popstate', function (event) {
+                    if (event.state && event.state.protected) {
+                        // Forzar salida al login
+                        window.location.replace("{{ url_for('login') }}");
+                    }
+                });
+            } catch(e) {
+                // El manejo de historial puede fallar
+            }
+            {% endif %}
+
+            // --- Lógica de Focus Trap (NUEVA) ---
+            document.addEventListener('focus', function(ev){
+                if(!side || !side.classList.contains('open')) return;
+                if(!side.contains(ev.target)) {
+                    var first = side.querySelector('.menu-item');
+                    if(first) first.focus();
+                }
+            }, true);
+
+        });
+    </script>
+    
+    <script>
+(function(){
+    const logoutUrl = "{{ url_for('logout') }}";
+    const loginUrl  = "{{ url_for('login') }}";
+
+    function getCsrfHeaders(){
+        const meta = document.querySelector('meta[name=\"csrf-token\"], meta[name=\"csrf_token\"]');
+        const headers = { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' };
+        if (meta && meta.content) headers['X-CSRFToken'] = meta.content;
+        return headers;
+    }
+
+    function doLogout(){
+        fetch(logoutUrl, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: getCsrfHeaders(),
+            body: null
+        }).catch(function(){})
+        .finally(function(){
+            try { history.replaceState(null, null, loginUrl); } catch(e){}
+            try { history.pushState({ loggedOut: true }, null, loginUrl); } catch(e){}
+            window.location.replace(loginUrl);
+        });
+    }
+
+    document.addEventListener('click', function(e){
+        const btn = e.target.closest('.logout-btn, [data-logout], #base-logout, #logout-side, #logout-btn-menu, #panel-logout');
+        if (!btn) return;
+        e.preventDefault();
+        doLogout();
+    });
+
+    document.addEventListener('submit', function(e){
+        if (e.target && e.target.classList && e.target.classList.contains('logout-form')) {
+            e.preventDefault();
+            doLogout();
+        }
+    });
+})();
+</script>
+    
+    </body>
+</html>

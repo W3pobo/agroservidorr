@@ -1,0 +1,439 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/* --- ESTILOS DE BARRA DE NAVEGACIÓN UNIFICADOS --- */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 72px; /* ajustar si tu nav tiene otra altura */
+    display: flex;
+    align-items: center;
+    z-index: 1200;
+    padding: 0 20px;
+    box-sizing: border-box;
+    backdrop-filter: blur(8px);
+}
+
+.nav-container{
+    width:100%; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    position:relative;
+}
+
+/* ESTILO AÑADIDO/MODIFICADO: Título "Panel del Productor" */
+.nav-title {
+    font-weight: 700; /* Más negrita */
+    font-size: 1.6em; /* Un poco más grande */
+    letter-spacing: 0.8px; /* Espaciado entre letras */
+}
+
+.nav-logout {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1250;
+    display: flex;
+    align-items: center;
+}
+
+/* Botón de logout (aplica tanto en modo claro como oscuro) */
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+/* Imagen del botón: tamaño controlado y no desborda */
+.logout-btn img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Texto dentro del botón: se oculta en pantallas muy pequeñas si hace falta */
+.logout-text {
+    display: inline-block;
+}
+
+/* Hover / foco accesible */
+.logout-btn:hover,
+.logout-btn:focus {
+    background: rgba(0,0,0,0.06);
+    outline: none;
+}
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body {
+    background-image: url('../images/background.jpg');
+    color: #333;
+}
+
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+html:not(.dark-mode) .nav-title{ /* Usar .nav-title para el color */
+    color: #0056b3;
+}
+
+html:not(.dark-mode) .nav-logout a {
+    color: #333;
+}
+
+html:not(.dark-mode) .nav-logout a:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #007bff;
+}
+
+html:not(.dark-mode) .container {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+html:not(.dark-mode) h2, html:not(.dark-mode) h3 { color: #0056b3; }
+html:not(.dark-mode) .panel-card p { color: #333; }
+html:not(.dark-mode) .btn-blur { background-color: #007bff; color: #fff; }
+
+html:not(.dark-mode) footer {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    color: #555;
+    border-top: 1px solid #ddd;
+}
+
+
+/* --- DARK MODE --- */
+html.dark-mode body {
+    background-image: url('../images/background-login.png');
+    color: #f5f5f7;
+}
+
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html.dark-mode .nav-title{ /* Usar .nav-title para el color */
+    color:#00e6b0; 
+}
+
+html.dark-mode .nav-logout a {
+    color: #f5f5f7;
+}
+
+html.dark-mode .nav-logout a:hover {
+    background: rgba(255,255,255,0.08);
+    color: #00e6b0;
+}
+
+html.dark-mode .container {
+    background: rgba(24, 26, 27, 0.72);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(0,230,176,0.13);
+    box-shadow: 0 8px 32px rgba(0,230,176,0.10);
+}
+
+html.dark-mode h2, html.dark-mode h3 { color: #00e6b0; }
+html.dark-mode .panel-card p { color: #e0f7fa; }
+html.dark-mode .btn-blur { background: #00e6b0; color: #181a1b; }
+
+html.dark-mode footer {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(10px);
+    color: #aaa;
+    border-top: 1px solid #222;
+}
+
+
+/* --- GENERIC STYLES (for both modes) --- */
+.container {
+    /* Aumentado el ancho máximo y hecho totalmente fluido */
+    max-width: 1400px;                /* más espacio en pantallas grandes */
+    width: calc(100% - 48px);         /* mantiene márgenes laterales en viewports pequeños */
+    margin: 20px auto 90px auto;
+    padding: 36px;                    /* espacio interior consistente */
+    border-radius: 16px;
+    text-align: center;
+    flex: 1 0 auto;
+    box-sizing: border-box;
+}
+
+/* Si quieres reglas específicas para el panel del productor las hereda del .container */
+.container.panel-productor {
+    max-width: 1400px;
+    padding: 40px;
+    margin: 90px auto 60px auto;
+}
+
+.panel-cards-fila {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+/* Modificaciones para .panel-card */
+.panel-card {
+    display: flex;
+    flex-direction: row;
+    /* Ajuste clave: distribuye el espacio y empuja el botón a la derecha */
+    justify-content: space-between; 
+    align-items: center; /* Centra verticalmente los elementos */
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    /* Reducir padding horizontal para menos "aire" y mejor alineación */
+    padding: 18px 24px; 
+    border-radius: 16px;
+    box-shadow: 0px 5px 18px rgba(0, 0, 0, 0.13);
+    border: 1.5px solid;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 0;
+    text-align: left;
+    /* Reducir gap para que el icono y texto estén más juntos */
+    gap: 12px; 
+}
+
+.panel-card:hover {
+    transform: translateY(-4px) scale(1.02);
+}
+
+.panel-card-icon {
+    font-size: 2.2em;
+    /* Eliminar margin-bottom, la alineación vertical ya lo maneja */
+    margin-bottom: 0; 
+    /* Asegura que el icono no tenga más que su tamaño */
+    flex-shrink: 0; 
+}
+
+.panel-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1 1 auto; /* Permite que el contenido tome el espacio disponible */
+}
+
+.panel-card h3 {
+    margin: 0; /* Eliminar márgenes por defecto */
+    font-size: 1.13em;
+    font-weight: 700;
+}
+
+.panel-card p {
+    margin: 0; /* Eliminar márgenes por defecto */
+    font-size: 1em;
+}
+
+.btn-blur {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    margin-top: 0;
+    /* Eliminar margin-left para que space-between haga su trabajo */
+    margin-left: 0; 
+    white-space: nowrap;
+    /* aling-self puede ser stretch en móviles, pero en desktop flex lo maneja */
+    align-self: center; /* Centra verticalmente el botón si la tarjeta es alta */
+    box-shadow: 0 2px 10px rgba(0,230,176,0.10);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-blur:hover {
+    transform: scale(1.04);
+}
+
+footer { text-align: center; padding: 18px 0; margin-top: auto; }
+
+/* Ajustes específicos para panel del productor */
+.container.panel-productor {
+    max-width: 1400px;
+    padding: 40px;
+    margin: 90px auto 60px auto;
+}
+
+/* Usar grid para que las tarjetas se adapten a cualquier tamaño */
+.panel-cards-fila {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: start;
+    box-sizing: border-box;
+}
+
+/* Tarjeta: asegurar que no crezca demasiado y mantener consistencia */
+.panel-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 22px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0,0,0,0.06);
+    background: rgba(255,255,255,0.7);
+    min-height: 92px;
+}
+
+/* Asegura buena presentación en columna para móviles */
+@media (max-width: 900px) {
+    nav { height: 64px; }
+    body { padding-top: 64px; }
+    .nav-logout { right: 12px; }
+    .logout-text { display: none; } /* solo icono en móviles */
+    .container { padding: 18px; width: calc(100% - 28px); margin: 80px auto 100px auto; }
+}
+
+/* Pequeñas pantallas muy estrechas */
+@media (max-width: 420px) {
+    .container { padding: 14px; margin: 60px 10px 120px 10px; border-radius: 10px; }
+    .panel-card { padding: 12px; }
+    .nav-title { font-size: 1.05em; }
+}
+
+/* --- ACCESSIBILITY --- */
+html.grayscale { filter: grayscale(100%); }
+
+#grayscale-toggle, #contrast-toggle, #back-to-top {
+    position: fixed;
+    z-index: 1001;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+#grayscale-toggle { top: 100px; right: 25px; }
+#contrast-toggle { top: 170px; right: 25px; }
+#back-to-top { bottom: 25px; left: 25px; opacity: 0; visibility: hidden; }
+#back-to-top.visible { opacity: 1; visibility: visible; }
+
+#grayscale-toggle:hover, #contrast-toggle:hover, #back-to-top:hover { transform: scale(1.1); }
+
+.contrast-menu { position: fixed; top: 240px; right: 25px; z-index: 1000; border-radius: 15px; padding: 15px; width: 220px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); display: none; }
+.contrast-menu.active { display: block; }
+.contrast-option { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 12px 15px; margin: 8px 0; cursor: pointer; transition: all 0.3s ease; text-align: left; width: 100%; font-size: 0.95em; }
+.contrast-option:hover { transform: translateX(5px); }
+.contrast-title { font-weight: bold; margin-bottom: 10px; text-align: center; font-size: 1.1em; border-bottom: 1px solid; padding-bottom: 8px; }
+
+html:not(.dark-mode) #grayscale-toggle, html:not(.dark-mode) #contrast-toggle { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) #grayscale-toggle.active { background-color: #6c757d; }
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html:not(.dark-mode) .contrast-menu { background: rgba(255, 255, 255, 0.9); border-color: #007bff; }
+html:not(.dark-mode) .contrast-option { color: #333; }
+html:not(.dark-mode) .contrast-option.active { background: #007bff; color: #fff; border-color: #007bff; }
+html:not(.dark-mode) .contrast-title { color: #0056b3; border-color: #0056b3; }
+
+html.dark-mode #grayscale-toggle, html.dark-mode #contrast-toggle { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode #grayscale-toggle.active { background-color: #666; }
+html.dark-mode #back-to-top { background-color: #FFD700; }
+html.dark-mode .contrast-menu { background: rgba(24, 26, 27, 0.95); border-color: #00e6b0; }
+html.dark-mode .contrast-option { color: #f5f5f7; }
+html.dark-mode .contrast-option.active { background: #00e6b0; color: #181a1b; border-color: #00e6b0; }
+html.dark-mode .contrast-title { color: #00e6b0; border-color: #00e6b0; }
+
+body.contrast-high { filter: contrast(200%) brightness(120%); }
+body.contrast-very-high { filter: contrast(300%) brightness(140%); }
+body.contrast-inverted { filter: invert(100%) hue-rotate(180deg); }
+body.contrast-yellow-black { filter: sepia(100%) hue-rotate(45deg) contrast(150%); }
+body.contrast-blue-white { filter: hue-rotate(200deg) contrast(150%) brightness(130%); }
+
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 900px) {
+    nav { height: 64px; }
+    body { padding-top: 64px; }
+    .nav-logout { right: 12px; }
+    .logout-text { display: none; } /* solo icono en móviles */
+    .container { padding: 18px; width: calc(100% - 28px); margin: 80px auto 100px auto; }
+}
+
+@media (max-width: 600px) {
+    nav { flex-direction: column; height: auto; padding: 10px 5px; }
+    .nav-container { flex-direction: column; gap: 10px; }
+    /* Ajustes para que el título se vea bien en móviles */
+    .nav-title { font-size: 1.3em; text-align: center; } 
+    .nav-logout {
+        position: static;
+        transform: none;
+        margin-left: auto;
+        order: 2;
+    }
+    .logout-text { display: none; } /* solo icono en móviles */
+    nav { padding: 8px 12px; }
+    .container { width: 98%; padding: 24px 12px; margin: 20px auto; }
+    #grayscale-toggle, #contrast-toggle, #back-to-top { width: 50px; height: 50px; }
+    #grayscale-toggle { top: auto; bottom: 150px; right: 15px; }
+    #contrast-toggle { top: auto; bottom: 85px; right: 15px; }
+    #back-to-top { bottom: 20px; left: 15px; }
+    .contrast-menu { top: auto; bottom: 145px; right: 15px; width: 200px; }
+}

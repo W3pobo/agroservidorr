@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habilitar 2FA | AgronoMia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo50.css') }}">
+    
+    <script src="{{ url_for('static', filename='js/accesibilidad.js') }}"></script>
+    
+    </head>
+<body>
+
+    <aside id="side-panel" class="side-panel" aria-hidden="true" aria-label="Menú lateral">
+        <div class="side-header">
+            <h4>Menú</h4>
+            <button id="side-close" class="side-close" aria-label="Cerrar menú">✕</button>
+        </div>
+
+        <nav class="side-nav" aria-label="Navegación principal">
+            
+            {% if session.tipo_usuario == 'Productor' %}
+            
+            <div class="menu-list">
+                <a class="menu-item" href="#" onclick="history.back(); return false;" title="Volver">
+                    <img src="{{ url_for('static', filename='images/volver.png') }}" alt="">
+                    <span>Volver</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('inicio') }}">
+                    <img src="{{ url_for('static', filename='images/inicio.png') }}" alt="">
+                    <span>Inicio</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('productores') }}">
+                    <img src="{{ url_for('static', filename='images/productor.png') }}" alt="">
+                    <span>Productores</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('contacto') }}">
+                    <img src="{{ url_for('static', filename='images/contacto.png') }}" alt="">
+                    <span>Contacto</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('panel_productor') }}">
+                    <img src="{{ url_for('static', filename='images/panel.png') }}" alt="">
+                    <span>Panel Productor</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('perfil_productor') }}"> <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="">
+                    <span>Mi Cuenta</span>
+                </a>
+                <button id="logout-side" type="button" class="menu-item logout-btn">
+                    <img src="{{ url_for('static', filename='images/cerrar.png') }}" alt="">
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+            
+            {% else %} 
+            
+            <div class="menu-list">
+                <a class="menu-item" href="#" onclick="history.back(); return false;" title="Volver">
+                    <img src="{{ url_for('static', filename='images/volver.png') }}" alt="">
+                    <span>Volver</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('inicio') }}">
+                    <img src="{{ url_for('static', filename='images/inicio.png') }}" alt="">
+                    <span>Inicio</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('productos') }}">
+                    <img src="{{ url_for('static', filename='images/mercado.png') }}" alt="">
+                    <span>Mercado</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('contacto') }}">
+                    <img src="{{ url_for('static', filename='images/contacto.png') }}" alt="">
+                    <span>Contacto</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('panel_cliente') }}"> <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="">
+                    <span>Mi Cuenta</span>
+                </a>
+                <a class="menu-item" href="{{ url_for('carrito') }}">
+                    <img src="{{ url_for('static', filename='images/carrito.png') }}" alt="">
+                    <span>Carrito</span>
+                    {% if cantidad_carrito and cantidad_carrito > 0 %}
+                        <span class="carrito-badge">{{ cantidad_carrito }}</span>
+                    {% endif %}
+                </a>
+
+                <button id="logout-side" type="button" class="menu-item logout-btn">
+                    <img src="{{ url_for('static', filename='images/cerrar.png') }}" alt="">
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+            
+            {% endif %}
+            </nav>
+    </aside>
+
+    <div id="side-overlay" class="side-overlay" tabindex="-1" aria-hidden="true"></div>
+
+    <nav>
+        <div class="nav-container">
+            <button id="nav-ellipsis-btn" class="nav-ellipsis hamburger" aria-haspopup="true" aria-expanded="false" aria-label="Abrir menú">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="nav-title">Habilitar 2FA</div>
+            <div class="nav-right-placeholder" aria-hidden="true"></div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="perfil-card">
+            <h2>Habilitar Autenticación (2FA)</h2>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <p style="text-align: left;">
+                1. Escanea el código QR con tu app de autenticación (Google Authenticator, Authy, etc.).
+            </p>
+            
+            <div class="qr-code" style="text-align: center;">
+                <img src="data:image/png;base64,{{ qr_code_data }}" alt="Escanea este código QR">
+            </div>
+            
+            <p style="text-align: left; margin-top: 15px;">
+                Si no puedes escanear, ingresa esta clave manualmente:
+            </p>
+            <div class="secret-key">
+                {{ otp_secret }}
+            </div>
+            
+            <hr style="border-color: #555; margin: 25px 0; opacity: 0.3;">
+            
+            <p style="text-align: left;">
+                2. Ingresa el código de 6 dígitos de tu app para verificar y completar la configuración.
+            </p>
+
+            <form action="{{ url_for('verificar_2fa') }}" method="POST" class="perfil-form" style="gap: 10px;">
+                <div class="form-group" style="margin-bottom: 10px;">
+                    <label for="otp_code">Código de Verificación</label>
+                    <input type="text" id="otp_code" name="otp_code" placeholder="123456" required 
+                           pattern="\d{6}" title="Debe ser un código de 6 dígitos"
+                           maxlength="6"
+                           inputmode="numeric"
+                           style="text-align: center; font-size: 1.2em; letter-spacing: 2px;">
+                </div>
+                <button type="submit" class="btn-guardar">Habilitar 2FA</button>
+            </form>
+            
+            </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 AgronoMia - Todos los derechos reservados</p>
+    </footer>
+
+    <button id="back-to-top" class="floating-btn" title="Volver Arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="#232526" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- Lógica del Panel Lateral (Side Panel) ---
+        var side = document.getElementById('side-panel');
+        var overlay = document.getElementById('side-overlay');
+        var openBtn = document.getElementById('nav-ellipsis-btn'); // el botón hamburguesa
+        var closeBtn = document.getElementById('side-close');
+        var logoutSide = document.getElementById('logout-side'); // Botón de logout en el panel
+
+        function openSide(){
+            if(!side || !overlay) return;
+            side.classList.add('open');
+            overlay.classList.add('open');
+            side.setAttribute('aria-hidden','false');
+            overlay.setAttribute('aria-hidden','false');
+            document.body.classList.add('side-no-scroll');
+            var first = side.querySelector('.menu-item');
+            if(first) first.focus();
+        }
+        function closeSide(){
+            if(!side || !overlay) return;
+            side.classList.remove('open');
+            overlay.classList.remove('open');
+            side.setAttribute('aria-hidden','true');
+            overlay.setAttribute('aria-hidden','true');
+            document.body.classList.remove('side-no-scroll');
+            if(openBtn) openBtn.focus();
+        }
+
+        if(openBtn) openBtn.addEventListener('click', function(e){ e.preventDefault(); openSide(); });
+        if(closeBtn) closeBtn.addEventListener('click', function(e){ e.preventDefault(); closeSide(); });
+        if(overlay) overlay.addEventListener('click', closeSide);
+
+        document.addEventListener('keydown', function(e){
+            if(e.key === 'Escape') closeSide();
+        });
+
+        // --- Lógica de Cerrar Sesión (Logout) ---
+        function doLogout(e) {
+            if(e) e.preventDefault();
+            
+            fetch("{{ url_for('logout') }}", {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: { 'X-Requested-With':'XMLHttpRequest','Content-Type':'application/json' },
+                body: null
+            }).catch(function(){ 
+            })
+            .finally(function(){
+                try{ 
+                    history.replaceState(null, null, "{{ url_for('login') }}"); 
+                } catch(e) {}
+                window.location.replace("{{ url_for('login') }}");
+            });
+        }
+
+        if(logoutSide) {
+            logoutSide.addEventListener('click', doLogout);
+        }
+
+        // --- Lógica de Protección de Botón "Atrás" ---
+        try {
+            history.replaceState(null, null, window.location.href);
+            history.pushState({ protected: true }, null, window.location.href);
+            
+            window.addEventListener('popstate', function (event) {
+                if (event.state && event.state.protected) {
+                    window.location.replace("{{ url_for('login') }}");
+                }
+            });
+        } catch(e) {}
+
+        // --- Lógica de Focus Trap (Accesibilidad) ---
+        document.addEventListener('focus', function(ev){
+            if(!side || !side.classList.contains('open')) return;
+            if(!side.contains(ev.target)) {
+                var first = side.querySelector('.menu-item');
+                if(first) first.focus();
+            }
+        }, true);
+        
+        // --- Lógica de "Volver Arriba" ---
+        const backToTopButton = document.getElementById('back-to-top');
+        if (backToTopButton) {
+            window.onscroll = function() {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            };
+            backToTopButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    });
+    </script>
+    <script>
+    (function(){
+        const logoutUrl = "{{ url_for('logout') }}";
+        const loginUrl  = "{{ url_for('login') }}";
+    
+        function getCsrfHeaders(){
+            const meta = document.querySelector('meta[name=\"csrf-token\"], meta[name=\"csrf_token\"]');
+            const headers = { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' };
+            if (meta && meta.content) headers['X-CSRFToken'] = meta.content;
+            return headers;
+        }
+    
+        function doLogout(){
+            fetch(logoutUrl, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: getCsrfHeaders(),
+                body: null
+            }).catch(function(){})
+            .finally(function(){
+                try { history.replaceState(null, null, loginUrl); } catch(e){}
+                try { history.pushState({ loggedOut: true }, null, loginUrl); } catch(e){}
+                window.location.replace(loginUrl);
+            });
+        }
+    
+        document.addEventListener('click', function(e){
+            const btn = e.target.closest('.logout-btn, [data-logout], #base-logout, #logout-side, #logout-btn-menu, #panel-logout');
+            if (!btn) return;
+            e.preventDefault();
+            doLogout();
+        });
+    
+        document.addEventListener('submit', function(e){
+            if (e.target && e.target.classList && e.target.classList.contains('logout-form')) {
+                e.preventDefault();
+                doLogout();
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

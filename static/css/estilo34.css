@@ -1,0 +1,517 @@
+/* /static/css/estilo34.css */
+
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'SamsungOne-Regular';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'SF-Pro-Text-Regular';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%; margin: 0; padding: 0; scroll-behavior: smooth;
+}
+body {
+    min-height: 100vh;
+    display: flex; flex-direction: column; position: relative;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'GoogleSans-Regular', sans-serif; }
+html.font-samsung-one body { font-family: 'SamsungOne-Regular', serif; }
+html.font-sf-pro body { font-family: 'SF-Pro-Text-Regular', sans-serif; }
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body { background-image: url('/static/images/background.jpg'); color: #333; }
+html:not(.dark-mode) nav { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
+html:not(.dark-mode) nav a { color: #333; }
+html:not(.dark-mode) nav a:hover { background: rgba(0, 0, 0, 0.05); color: #007bff; }
+html:not(.dark-mode) .container { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+html:not(.dark-mode) h2 { color: #0056b3; text-shadow: none; }
+html:not(.dark-mode) .pedido { background: rgba(255, 255, 255, 0.85); border-color: #ddd; color: #333; }
+html:not(.dark-mode) .pedido strong { color: #0056b3; }
+html:not(.dark-mode) .lista-items { border-top-color: #eee; }
+html:not(.dark-mode) .volver { background: #007bff; color: #fff; border-color: #007bff; }
+html:not(.dark-mode) .volver:hover { background: #0056b3; }
+html:not(.dark-mode) footer { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px); color: #555; border-top: 1px solid #ddd; }
+
+/* --- DARK MODE --- */
+html.dark-mode body { background-image: url('/static/images/background-login.png'); color: #f5f5f7; }
+html.dark-mode nav { background: rgba(24, 26, 27, 0.65); backdrop-filter: blur(10px); box-shadow: 0 4px 24px rgba(0,0,0,0.25); }
+html.dark-mode nav a { color: #f5f5f7; }
+html.dark-mode nav a:hover { background: rgba(255,255,255,0.08); color: #00e6b0; }
+html.dark-mode .container { background: rgba(24, 26, 27, 0.65); backdrop-filter: blur(10px); border: 1.5px solid rgba(0,230,176,0.13); box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.25); }
+html.dark-mode h2 { color: #00e6b0; text-shadow: 0 2px 8px rgba(0,0,0,0.45); }
+html.dark-mode .pedido { background: rgba(24, 26, 27, 0.82); border-color: rgba(0,230,176,0.10); color: #f5f5f7; }
+html.dark-mode .pedido strong { color: #00e6b0; }
+html.dark-mode .lista-items { border-top-color: rgba(0,230,176,0.15); }
+html.dark-mode .volver { background: #232526; color: #00e6b0; border-color: #00e6b0; }
+html.dark-mode .volver:hover { background: #00e6b0; color: #181a1b; }
+html.dark-mode footer { background: rgba(24, 26, 27, 0.65); backdrop-filter: blur(10px); color: #aaa; border-top: 1px solid #222; }
+
+/* --- GENERIC STYLES --- */
+body::before {
+    content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: inherit; /* Hereda el background-image del body */
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: -1;
+}
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: static; /* nav en el flujo del documento */
+    box-sizing: border-box;
+    padding: 8px 20px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    z-index: 100;
+}
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+/* Left / title / right areas */
+.nav-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.nav-title { flex: 1 1 360px; text-align: center; font-weight:700; color: inherit; white-space:nowrap; }
+.nav-right { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+
+/* Links inside nav */
+.nav-link, nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
+}
+
+/* small icons */
+.nav-link img, nav a img { width:26px; height:26px; object-fit:contain; }
+
+/* Logout smaller */
+button.logout-btn {
+    padding: 6px 8px;
+    gap: 6px;
+    font-size: 0.95rem;
+}
+button.logout-btn img { width:20px; height:20px; }
+
+/* carrito badge small */
+.carrito-badge { display:inline-block; margin-left:6px; background:#00e6b0; color:#181a1b; padding:2px 8px; border-radius:12px; font-weight:700; }
+
+/* Responsive: title on its own row and groups centered on narrow screens */
+@media (max-width: 900px) {
+    .nav-title { order: 2; flex-basis: 100%; margin: 6px 0; }
+    .nav-left  { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+
+/* Very small: hide link text to save space */
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; }
+}
+
+.container {
+    flex: 1 0 auto; max-width: 1400px; margin: 60px auto 40px auto;
+    padding: 32px 60px 30px 60px; border-radius: 18px; text-align: center;
+    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+h2 {
+    margin-bottom: 28px; letter-spacing: 1px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Centrar el título de la página dentro del contenedor */
+.container h2 {
+    text-align: center;
+}
+
+.pedido {
+    border-radius: 14px; box-shadow: 0px 4px 18px rgba(0,0,0,0.18); margin-bottom: 22px;
+    padding: 18px 22px; text-align: left; border: 1px solid;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+.pedido span { font-weight: bold; }
+.pedido .estado-entregado { color: #00e6b0 !important; }
+.pedido .estado-pendiente { color: #D32F2F !important; }
+.lista-items {
+    list-style: none; padding: 10px 0 0 5px; margin-top: 10px;
+    border-top: 1px solid;
+    transition: border-color 0.3s;
+}
+.lista-items li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
+.contactar-btn {
+    background: #00e6b0; color: #181a1b; text-decoration: none; padding: 6px 16px;
+    border-radius: 7px; font-weight: bold; font-size: 0.9em;
+    transition: background 0.2s, color 0.2s;
+}
+.contactar-btn:hover { background: #00b88a; color: #fff; }
+.volver {
+    display: inline-block; margin: 32px auto 0 auto; font-weight: bold; font-size: 1.1em;
+    padding: 12px 36px; border-radius: 10px; text-decoration: none; border: 1.5px solid;
+    transition: background 0.2s, color 0.2s, transform 0.15s, border-color 0.2s;
+}
+.volver:hover { transform: scale(1.04); }
+
+footer {
+    text-align: center; padding: 18px 0 10px 0; margin-top: auto;
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+/* Unificar apariencia del botón de logout con los enlaces/nav-link (igual que carrito) */
+button.logout-btn,
+.logout-btn {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: transparent;        /* mismo comportamiento que .nav-link */
+    border: none;
+    color: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.16s ease, transform 0.12s ease;
+}
+
+/* Icono igual tamaño que el del carrito */
+button.logout-btn img,
+.logout-btn img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    display: inline-block;
+}
+
+/* Hover / focus igual que enlaces de la nav */
+button.logout-btn:hover,
+button.logout-btn:focus,
+.logout-btn:hover,
+.logout-btn:focus {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+/* Ocultar texto en móviles igual que otros enlaces para ahorrar espacio */
+@media (max-width: 520px) {
+    .logout-text { display: none; }
+}
+
+/* Centrar título y botones en la barra de navegación (responsive) */
+.nav-container { position: relative; align-items: center; }
+
+/* En pantallas grandes: título absolutamente centrado; grupos alineados a los extremos */
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+        text-align: center;
+        pointer-events: none; /* evita que el título interfiera con clicks */
+    }
+
+    /* Asegurar que los grupos queden en los extremos pero centrando sus items verticalmente */
+    .nav-left, .nav-right {
+        flex: 0 1 auto;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* Forzar que los botones dentro de los grupos se centren entre sí */
+    .nav-left .nav-link, .nav-right .nav-link, .logout-form, button.logout-btn {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* En pantallas pequeñas: volver al flujo normal (titulo en su propia fila) */
+@media (max-width: 900px) {
+    .nav-title {
+        position: static;
+        transform: none;
+        order: 2;
+        width: 100%;
+        text-align: center;
+        margin: 6px 0;
+        pointer-events: auto;
+    }
+    .nav-left, .nav-right {
+        /* Se borraron 'order: 1' y 'order: 3' conflictivos */
+        width: 100%;
+        justify-content: center;
+    }
+    .nav-container { gap: 8px; }
+}
+
+/* Asegurar que los iconos y textos no se desborden */
+.nav-link img, button.logout-btn img { max-width: 28px; height: auto; }
+.nav-link .link-text, .logout-text { white-space: nowrap; }
+
+/* Pequeño ajuste: reducir 'pointer-events:none' en título si necesitas seleccionar texto */
+@media (min-width: 1200px) {
+    .nav-title { pointer-events: auto; }
+}
+
+
+/* * ===== INICIO: ESTILOS PEGADOS DE ESTILO29 (Panel Lateral) =====
+ * Todo lo que sigue es de estilo29.css y es necesario
+ * para que el panel lateral y el botón de hamburguesa funcionen.
+*/
+
+/* Hamburger grande (botón de menú) */
+.nav-ellipsis.hamburger {
+    width: 48px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.nav-ellipsis.hamburger .bar {
+    display: block;
+    width: 22px;
+    height: 2.8px;
+    background: currentColor;
+    border-radius: 2px;
+    margin: 3px 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.nav-ellipsis.hamburger { color: inherit; }
+
+/* Ocultar los enlaces de la nav original (que ya no están en el HTML) */
+.nav-left .nav-link, .nav-right .nav-link { 
+    display: none !important; 
+}
+
+/* Centrar el título en desktop cuando solo está el hamburguesa */
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+
+/* --- Panel Lateral (Menú) --- */
+
+/* Base del panel (sin fondo/color, se define por modo) */
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 320px;
+    max-width: 86vw;
+    transform: translateX(-110%); /* oculto por defecto */
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 0.3s ease, color 0.3s ease;
+    z-index: 2200;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-bottom-right-radius: 8px;
+}
+/* Panel en modo CLARO */
+html:not(.dark-mode) .side-panel {
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #333; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0,0,0,0.08);
+}
+html:not(.dark-mode) .side-panel .menu-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+html:not(.dark-mode) .side-panel .side-close:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* Panel en modo OSCURO */
+html.dark-mode .side-panel {
+    background: rgba(0, 0, 0, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+html.dark-mode .side-panel .menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+html.dark-mode .side-panel .side-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* Contenido del panel */
+.side-panel.open {
+    transform: translateX(0);
+}
+.side-panel .side-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.side-panel .side-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+.side-panel .side-close {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    color: inherit; 
+}
+.side-panel .menu-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.side-panel .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    background: transparent;
+}
+.side-panel .menu-item img { width: 22px; height: 22px; object-fit: contain; }
+.side-panel .menu-item span { display: inline-block; font-size: .98rem; }
+
+/* Overlay (fondo oscuro) */
+.side-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.28);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    z-index: 2100;
+}
+.side-overlay.open { opacity: 1; visibility: visible; }
+body.side-no-scroll { overflow: hidden; }
+
+@media (max-width: 640px) {
+    .side-panel { width: 100%; max-width: 100%; border-radius: 0 0 10px 0; }
+}
+.nav-link .link-text, .side-panel .menu-item span { white-space: nowrap; }
+
+
+/* --- Estilos del Botón Logout (de estilo29) --- */
+/* Esta regla es genérica para .logout-btn, que tu CSS ya tiene, */
+/* pero la de .side-panel es la importante */
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background 0.16s ease, transform 0.12s ease, border-color 0.12s ease;
+    border: 1px solid transparent;
+    color: inherit;
+    background: transparent;
+}
+.logout-btn img { width: 26px; height: 26px; object-fit: contain; display: inline-block; }
+
+/* Light mode (botón blur por defecto) */
+html:not(.dark-mode) .logout-btn {
+    /* Estas reglas se aplican si el botón está fuera del panel */
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(6px);
+    border-color: rgba(0,0,0,0.06);
+    color: #2b3748;
+}
+html:not(.dark-mode) .logout-btn:hover,
+html:not(.dark-mode) .logout-btn:focus {
+    background: rgba(255,255,255,0.92);
+    transform: translateY(-1px);
+    outline: none;
+}
+/* Dark mode (botón blur por defecto) */
+html.dark-mode .logout-btn {
+    /* Estas reglas se aplican si el botón está fuera del panel */
+    background: rgba(24,26,27,0.64);
+    backdrop-filter: blur(8px);
+    border-color: rgba(255,255,255,0.06);
+    color: #f5f5f7;
+}
+html.dark-mode .logout-btn:hover,
+html.dark-mode .logout-btn:focus {
+    background: rgba(24,26,27,0.8);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+/*
+ * ===== CLAVE: Anular estilos de .logout-btn DENTRO del panel =====
+ * Esto hace que el botón de cerrar sesión se vea igual que los otros enlaces del menú.
+*/
+.side-panel .logout-btn {
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    color: inherit;
+    font-weight: 600;
+    padding: 10px 12px; 
+    gap: 12px;          
+    width: 100%;
+    justify-content: flex-start;
+}
+
+/* * ===== CLAVE: Anular hover/focus de .logout-btn DENTRO del panel =====
+ * Esto hace que el hover/focus sea el mismo que el de .menu-item
+*/
+html:not(.dark-mode) .side-panel .logout-btn:hover,
+html:not(.dark-mode) .side-panel .logout-btn:focus {
+    background: rgba(0, 0, 0, 0.05); /* igual a .menu-item:hover */
+    transform: none;
+}
+html.dark-mode .side-panel .logout-btn:hover,
+html.dark-mode .side-panel .logout-btn:focus {
+    background: rgba(255, 255, 255, 0.08); /* igual a .menu-item:hover */
+    transform: none;
+}

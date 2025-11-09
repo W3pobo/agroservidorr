@@ -1,0 +1,457 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body { background-image: url('../images/background.jpg'); color: #333; }
+/* nav antigua eliminada */
+html:not(.dark-mode) .container { background: rgba(255, 255, 255, 0.7); }
+html:not(.dark-mode) h2 { color: #0056b3; text-shadow: none; }
+html:not(.dark-mode) table { background: rgba(255, 255, 255, 0.92); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+html:not(.dark-mode) th { background-color: #007bff; color: white; }
+html:not(.dark-mode) td { color: #333; border-bottom: 1px solid #ddd; }
+html:not(.dark-mode) .btn-delete { background: #dc3545; color: white; }
+html:not(.dark-mode) .btn-delete:hover { background: #c82333; }
+html:not(.dark-mode) .btn-edit { background: #ffc107; color: #212529; }
+html:not(.dark-mode) .btn-edit:hover { background: #e0a800; }
+html:not(.dark-mode) .btn-publish { background: #28a745; color: white; }
+html:not(.dark-mode) .btn-publish:hover { background: #218838; }
+html:not(.dark-mode) .btn-save { background: #28a745; color: white; }
+html:not(.dark-mode) .btn-save:hover { background: #218838; }
+html:not(.dark-mode) .btn-cancel { background: #6c757d; color: white; }
+html:not(.dark-mode) .btn-cancel:hover { background: #5a6268; }
+html:not(.dark-mode) .edit-form input, html:not(.dark-mode) .edit-form textarea { background: #fff; color: #333; border: 1px solid #ccc; }
+html:not(.dark-mode) footer { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px); color: #555; border-top: 1px solid #ddd; }
+
+/* --- DARK MODE --- */
+html.dark-mode body { background-image: url('../images/background-login.png'); color: #f5f5f7; }
+/* nav antigua eliminada */
+html.dark-mode .container { background: rgba(24, 26, 27, 0.70); }
+html.dark-mode h2 { color: #00e6b0; text-shadow: 0 2px 12px rgba(0,0,0,0.25); }
+html.dark-mode table { background: rgba(24, 26, 27, 0.92); box-shadow: 0 2px 10px rgba(0,230,176,0.10); }
+html.dark-mode th { background-color: #00b88a; color: #181a1b; }
+html.dark-mode td { color: #e0f7fa; border-bottom: 1px solid #233; }
+html.dark-mode .btn-delete { background-color: #dc3545; color: white; }
+html.dark-mode .btn-delete:hover { background-color: #c82333; }
+html.dark-mode .btn-edit { background-color: #ffc107; color: #181a1b; }
+html.dark-mode .btn-edit:hover { background-color: #e0a800; }
+html.dark-mode .btn-publish { background-color: #28a745; color: white; }
+html.dark-mode .btn-publish:hover { background-color: #218838; }
+html.dark-mode .btn-save { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode .btn-save:hover { background-color: #00b88a; }
+html.dark-mode .btn-cancel { background-color: #6c757d; color: white; }
+html.dark-mode .btn-cancel:hover { background-color: #5a6268; }
+html.dark-mode .edit-form input, html.dark-mode .edit-form textarea { background-color: #232526; color: #e8e6e3; border: 1px solid #00e6b0; }
+html.dark-mode footer { background: rgba(24, 26, 27, 0.70); color: #aaa; border-top: 1px solid #222; box-shadow: 0 -4px 24px rgba(0,0,0,0.18); }
+
+/* --- GENERIC STYLES --- */
+/* Estilos de nav antigua ELIMINADOS */
+
+.container {
+    max-width: 1300px;
+    width: 100%;
+    margin: 60px auto 40px;
+    padding: 38px 28px;
+    border-radius: 26px;
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.25);
+    flex: 1;
+    box-sizing: border-box;
+}
+h2 {
+    margin-bottom: 28px;
+    font-size: 2em;
+    letter-spacing: 1px;
+    font-weight: 800;
+    text-align: center;
+}
+.table-wrapper {
+    overflow-x: auto;
+}
+table {
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+th, td {
+    padding: 14px 10px;
+    text-align: left;
+    font-size: 1em;
+}
+th {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.foto-prod {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.actions-cell {
+    white-space: nowrap;
+}
+.btn-delete, .btn-edit, .btn-save, .btn-cancel, .btn-publish {
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+.edit-form input, .edit-form textarea {
+    width: 95%;
+    padding: 8px;
+    border-radius: 6px;
+}
+.edit-prod-row {
+    display: none;
+}
+.edit-form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 18px 0 10px 0;
+    font-size: 1em;
+    letter-spacing: 1px;
+    margin-top: auto;
+}
+
+/* --- ACCESSIBILITY BUTTONS --- */
+/* Botón azul flotante ELIMINADO */
+#grayscale-toggle {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+#back-to-top { bottom: 25px; left: 25px; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; position: fixed; z-index: 1001; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); display: flex; justify-content: center; align-items: center; }
+#back-to-top:hover { transform: scale(1.1); }
+#back-to-top.visible { opacity: 1; visibility: visible; }
+
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html:not(.dark-mode) #back-to-top:hover { background-color: #FFC107; }
+html:not(.dark-mode) #back-to-top svg { stroke: #232526; }
+
+html.dark-mode #back-to-top { background-color: #FFD700; }
+html.dark-mode #back-to-top:hover { background-color: #FFC107; }
+html.dark-mode #back-to-top svg { stroke: #232526; }
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 600px) {
+    #back-to-top { width: 50px; height: 50px; bottom: 15px; }
+    #back-to-top { left: 15px; }
+}
+
+
+/*
+ * ===================================================================
+ * ===== INICIO: ESTILOS PEGADOS (Panel Lateral de estilo29) =====
+ * ===================================================================
+*/
+
+/* --- NUEVA BARRA DE NAVEGACIÓN (Estática, para Hamburguesa) --- */
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: static; 
+    box-sizing: border-box;
+    padding: 8px 20px;
+    z-index: 100;
+}
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+}
+.nav-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.nav-title { flex: 1 1 360px; text-align: center; font-weight:700; white-space:nowrap; }
+.nav-right { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+.nav-right-placeholder { width: 48px; }
+.nav-link, nav a, button.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.nav-link img, nav a img, button.nav-link img { width:26px; height:26px; object-fit:contain; }
+
+/* Badge (para el carrito en el panel lateral) */
+.carrito-badge { 
+    display:inline-block; 
+    margin-left:6px; 
+    background:#00e6b0; 
+    color:#181a1b; 
+    padding:2px 8px; 
+    border-radius:12px; 
+    font-weight:700; 
+    font-size: 0.85em;
+}
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+}
+@media (max-width: 900px) {
+    .nav-title { position: static; transform: none; order: 2; width: 100%; text-align: center; margin: 6px 0; pointer-events: auto; }
+    .nav-left { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; }
+}
+
+/* --- ESTILOS DE NAV (LIGHT/DARK) - AÑADIDOS --- */
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+html:not(.dark-mode) .nav-title { color: #0056b3; }
+html:not(.dark-mode) .nav-ellipsis.hamburger { color: #333; } 
+
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark-mode .nav-title { color: #00e6b0; }
+html.dark-mode .nav-ellipsis.hamburger { color: #f5f5f7; } 
+
+
+/* --- BOTÓN HAMBURGUESA --- */
+.nav-ellipsis.hamburger {
+    width: 48px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    color: inherit; 
+}
+.nav-ellipsis.hamburger .bar {
+    display: block;
+    width: 22px;
+    height: 2.8px;
+    background: currentColor; 
+    border-radius: 2px;
+    margin: 3px 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+/* Ocultar cualquier enlace residual en la barra superior */
+.nav-left .nav-link, .nav-right .nav-link { display: none !important; }
+
+/* --- PANEL LATERAL (MENÚ) --- */
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 320px;
+    max-width: 86vw;
+    transform: translateX(-110%);
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 0.3s ease, color 0.3s ease;
+    z-index: 2200;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-bottom-right-radius: 8px;
+}
+.side-panel.open {
+    transform: translateX(0);
+}
+html:not(.dark-mode) .side-panel {
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #333; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0,0,0,0.08);
+}
+html:not(.dark-mode) .side-panel .menu-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+html:not(.dark-mode) .side-panel .side-close:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+html.dark-mode .side-panel {
+    background: rgba(0, 0, 0, 0.85); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white; 
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+html.dark-mode .side-panel .menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+html.dark-mode .side-panel .side-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+.side-panel .side-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.side-panel .side-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+.side-panel .side-close {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    color: inherit; 
+}
+.side-panel .menu-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.side-panel .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    background: transparent;
+    border: none; 
+    width: 100%; 
+    text-align: left; 
+    font-size: 1em; 
+    font-family: inherit; 
+    cursor: pointer;
+}
+.side-panel .menu-item img { width: 22px; height: 22px; object-fit: contain; }
+.side-panel .menu-item span { display: inline-block; font-size: .98rem; }
+.side-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.28);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    z-index: 2100;
+}
+.side-overlay.open { opacity: 1; visibility: visible; }
+body.side-no-scroll { overflow: hidden; }
+@media (max-width: 640px) {
+    .side-panel { width: 100%; max-width: 100%; border-radius: 0 0 10px 0; }
+}
+.side-panel .menu-item span { white-space: nowrap; }
+
+/* --- ESTILOS DEL BOTÓN LOGOUT (Adaptados) --- */
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background 0.16s ease, transform 0.12s ease, border-color 0.12s ease;
+    border: 1px solid transparent;
+    color: inherit;
+    background: transparent;
+}
+.logout-btn img { width: 26px; height: 26px; object-fit: contain; display: inline-block; }
+
+.side-panel .logout-btn {
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    color: inherit;
+    font-weight: 600;
+    padding: 10px 12px; 
+    gap: 12px;          
+    width: 100%;
+    justify-content: flex-start;
+}
+html:not(.dark-mode) .side-panel .logout-btn:hover,
+html:not(.dark-mode) .side-panel .logout-btn:focus {
+    background: rgba(0, 0, 0, 0.05);
+    transform: none;
+    outline: none;
+}
+html.dark-mode .side-panel .logout-btn:hover,
+html.dark-mode .side-panel .logout-btn:focus {
+    background: rgba(255, 255, 255, 0.08); 
+    transform: none;
+    outline: none;
+}

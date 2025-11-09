@@ -1,0 +1,983 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/* ===== INICIO: BLOQUE NAV RESPONSIVO (DE ESTILO29) ===== */
+nav {
+    position: sticky; /* <-- Barra pegajosa (no 'fixed' para no necesitar JS) */
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1400;
+    box-sizing: border-box;
+    padding: 12px 14px; /* <-- Permite que la barra crezca en altura */
+    display: block; /* <-- Permite que la altura se expanda con el contenido */
+    transition: background 0.3s ease, border 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-sizing: border-box;
+    flex-wrap: wrap; /* <-- CLAVE: permite que los items pasen a la siguiente fila */
+    padding: 4px 8px;
+}
+
+.nav-left, .nav-right { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    flex-wrap: wrap; 
+}
+
+/* Flex-basis agregado para mejor control del "wrap" */
+.nav-left  { order: 1; flex: 1 1 320px; justify-content: flex-start; }
+.nav-title { order: 2; flex: 0 1 360px; text-align: center; white-space: nowrap; }
+.nav-right { order: 3; flex: 1 1 320px; justify-content: flex-end; }
+
+.nav-title {
+    font-weight: 700;
+}
+
+/* Estilos de enlaces unificados (para <a> y <button>) */
+.nav-link, nav a, button.nav-link {
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 10px; 
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1.0rem; 
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.2px;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit; /* Hereda la fuente de body */
+}
+
+.nav-link img, nav a img, button.nav-link img { 
+    height: 26px; 
+    width: 26px; 
+    object-fit: contain; 
+}
+
+/* Badge (contador del carrito) */
+.carrito-badge {
+    display: inline-block;
+    margin-left: 6px;
+    background: #00e6b0;
+    color: #181a1b;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.88rem;
+}
+
+/* Responsive: título en su propia fila y grupos centrados en pantallas medias */
+@media (max-width: 900px) {
+    .nav-title { order: 2; flex-basis: 100%; margin: 6px 0; }
+    .nav-left  { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+
+/* Muy pequeñas: mostrar solo iconos para ahorrar espacio */
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; } /* Oculta texto, deja solo iconos */
+    .nav-container { padding: 6px 10px; gap: 8px; }
+    .nav-left, .nav-right { justify-content: center; }
+    .nav-title { font-size: 1rem; white-space: normal; }
+}
+/* ===== FIN BLOQUE NAV ===== */
+
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body {
+    background-image: url('../images/background.jpg');
+    color: #333;
+}
+
+/* NAV LIGHT MODE (Actualizado) */
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+html:not(.dark-mode) .nav-link,
+html:not(.dark-mode) nav a,
+html:not(.dark-mode) button.nav-link {
+    color: #333;
+}
+html:not(.dark-mode) .nav-link:hover,
+html:not(.dark-mode) nav a:hover,
+html:not(.dark-mode) button.nav-link:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #007bff;
+}
+html:not(.dark-mode) .nav-title { color: #007bff; }
+/* FIN NAV LIGHT MODE */
+
+
+html:not(.dark-mode) .container {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+html:not(.dark-mode) h2 {
+    color: #0056b3;
+    text-shadow: none;
+}
+
+html:not(.dark-mode) form label {
+    color: #0056b3;
+}
+
+html:not(.dark-mode) form input,
+html:not(.dark-mode) form textarea,
+html:not(.dark-mode) form select {
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+html:not(.dark-mode) form input:focus,
+html:not(.dark-mode) form textarea:focus,
+html:not(.dark-mode) form select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+html:not(.dark-mode) form button {
+    background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+    color: #fff;
+}
+
+html:not(.dark-mode) form button:hover {
+    background: linear-gradient(90deg, #0056b3 0%, #007bff 100%);
+    color: #fff;
+}
+
+html:not(.dark-mode) .volver {
+    color: #0056b3;
+}
+html:not(.dark-mode) .volver:hover {
+    color: #007bff;
+}
+
+html:not(.dark-mode) footer {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    color: #555;
+    border-top: 1px solid #ddd;
+    box-shadow: none;
+}
+
+/*
+ * ===== MODIFICACIÓN CLAVE (LIGHT MODE PANEL) =====
+*/
+html:not(.dark-mode) .side-panel {
+    background: rgba(255, 255, 255, 0.85); /* <-- FONDO CLARO */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #333; /* <-- TEXTO OSCURO */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0,0,0,0.08);
+}
+/* Hovers para el panel en modo claro */
+html:not(.dark-mode) .side-panel .menu-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+html:not(.dark-mode) .side-panel .side-close:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+
+/* --- DARK MODE --- */
+html.dark-mode body {
+    background-image: url('../images/background-login.png');
+    color: #f5f5f7;
+}
+
+/* NAV DARK MODE (Actualizado) */
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark-mode .nav-link,
+html.dark-mode nav a,
+html.dark-mode button.nav-link {
+    color: #f5f5f7;
+}
+html.dark-mode .nav-link:hover,
+html.dark-mode nav a:hover,
+html.dark-mode button.nav-link:hover {
+    background: rgba(255,255,255,0.08);
+    color: #00e6b0;
+}
+html.dark-mode .nav-title { color: #00e6b0; }
+/* FIN NAV DARK MODE */
+
+html.dark-mode .container {
+    background: rgba(24, 26, 27, 0.72);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(0,230,176,0.13);
+    box-shadow: 0 8px 32px rgba(0,230,176,0.10), 0 2px 8px rgba(0,0,0,0.18);
+}
+
+html.dark-mode h2 {
+    color: #00e6b0;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+html.dark-mode form label {
+    color: #00e6b0;
+}
+
+html.dark-mode form input,
+html.dark-mode form textarea,
+html.dark-mode form select {
+    background: rgba(30, 34, 36, 0.96);
+    color: #f5f5f7;
+    border: 2px solid #00e6b0;
+}
+
+html.dark-mode form input:focus,
+html.dark-mode form textarea:focus,
+html.dark-mode form select:focus {
+    border-color: #00e6b0;
+    box-shadow: 0px 4px 16px rgba(0,230,176,0.13);
+}
+
+html.dark-mode form button {
+    background: linear-gradient(90deg, #00e6b0 0%, #00b88a 100%);
+    color: #181a1b;
+}
+
+html.dark-mode form button:hover {
+    background: linear-gradient(90deg, #00b88a 0%, #00e6b0 100%);
+    color: #fff;
+}
+
+html.dark-mode .volver {
+    color: #00e6b0;
+}
+html.dark-mode .volver:hover {
+    color: #fff;
+}
+
+html.dark-mode footer {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(10px);
+    color: #aaa;
+    border-top: 1px solid #222;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.18);
+}
+
+/*
+ * ===== MODIFICACIÓN CLAVE (DARK MODE PANEL) =====
+*/
+html.dark-mode .side-panel {
+    background: rgba(0, 0, 0, 0.85); /* <-- FONDO NEGRO */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white; /* <-- TEXTO BLANCO */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+/* Hovers para el panel en modo oscuro */
+html.dark-mode .side-panel .menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+html.dark-mode .side-panel .side-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* --- GENERIC STYLES (for both modes) --- */
+.container {
+    max-width: 900px;
+    width: 95%;
+    margin: 40px auto;
+    border-radius: 26px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+h2 {
+    margin-bottom: 28px;
+    text-align: center;
+    font-size: 2em;
+    font-family: inherit;
+    letter-spacing: 1px;
+    font-weight: 800;
+    transition: color 0.3s ease;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    gap: 18px; /* <-- Añadido de estilo23.css para espaciado de formulario */
+}
+
+form label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    text-align: left;
+    width: 100%;
+    letter-spacing: 0.5px;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 16px 18px;
+    margin-bottom: 0; /* <-- Anulado, 'gap' en el form se encarga */
+    border-radius: 14px;
+    font-size: 1.08em;
+    transition: border 0.2s, box-shadow 0.2s, background 0.3s, color 0.3s;
+    box-sizing: border-box;
+    font-family: inherit;
+    outline: none;
+}
+
+form button {
+    color: #181a1b;
+    font-weight: 600;
+    border: none;
+    padding: 14px 0;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 1.08em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+    margin-top: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+form button:hover {
+    transform: scale(1.03);
+}
+
+.imagen-actual {
+    margin-bottom: 18px;
+    text-align: center;
+    width: 100%;
+}
+
+.imagen-actual img {
+    max-width: 120px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.volver {
+    display: block;
+    margin: 18px auto 0 auto;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: color 0.2s;
+    font-size: 1.1em;
+}
+
+.volver:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 18px 0 10px 0;
+    font-size: 1em;
+    letter-spacing: 1px;
+    margin-top: auto;
+    position: static;
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+/* --- BOTÓN FLOTANTE AZUL ELIMINADO --- */
+/* #grayscale-toggle { ... } */
+
+
+/* --- BOTÓN VOLVER ARRIBA (MANTENIDO) --- */
+#back-to-top {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    z-index: 1001;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.3s ease, visibility 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+#back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+#back-to-top:hover { transform: scale(1.1); }
+
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html:not(.dark-mode) #back-to-top:hover { background-color: #FFC107; }
+html:not(.dark-mode) #back-to-top svg { stroke: #232526; }
+
+html.dark-mode #back-to-top { background-color: #FFD700; }
+html.dark-mode #back-to-top:hover { background-color: #FFC107; }
+html.dark-mode #back-to-top svg { stroke: #232526; }
+
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 24px;
+    }
+    nav {
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 5px;
+    }
+    .nav-left, .nav-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .container {
+        width: 98%;
+        padding: 24px 12px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    #back-to-top {
+        width: 50px;
+        height: 50px;
+        bottom: 15px;
+        left: 15px;
+    }
+}
+
+/* ===== Copiado de estilo29.css (Panel Lateral y Logout) ===== */
+
+/*
+ * ===== MODIFICACIÓN CLAVE (PANEL BASE) =====
+*/
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 320px;
+    max-width: 86vw;
+    transform: translateX(-110%); /* oculto por defecto */
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1), background 0.3s ease, color 0.3s ease;
+    z-index: 2200;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-bottom-right-radius: 8px;
+}
+
+/* abierto */
+.side-panel.open {
+    transform: translateX(0);
+}
+
+/* encabezado del panel */
+.side-panel .side-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.side-panel .side-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+/* botón cerrar dentro del panel */
+.side-panel .side-close {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    color: inherit; /* Hereda el color del panel (claro u oscuro) */
+}
+/* (El hover se define ahora en las secciones light/dark) */
+
+/* items con icono + texto legible */
+.side-panel .menu-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.side-panel .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    background: transparent;
+    /* Para botones (como logout) */
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-size: 1em;
+    font-family: inherit;
+    cursor: pointer;
+}
+.side-panel .menu-item img { width: 22px; height: 22px; object-fit: contain; }
+.side-panel .menu-item span { display: inline-block; font-size: .98rem; }
+
+/* overlay que cubre el contenido cuando el panel está abierto */
+.side-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.28);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    z-index: 2100;
+}
+.side-overlay.open { opacity: 1; visibility: visible; }
+
+/* Evitar scroll del body cuando el panel está abierto */
+body.side-no-scroll { overflow: hidden; }
+
+/* En pantallas pequeñas el panel usa todo el ancho */
+@media (max-width: 640px) {
+    .side-panel { width: 100%; max-width: 100%; border-radius: 0 0 10px 0; }
+}
+
+/* Asegurar que el texto del menú se vea siempre */
+.nav-link .link-text, .side-panel .menu-item span { white-space: nowrap; }
+
+/* ===== Logout: apariencia igual al botón Carrito + efecto blur según modo ===== */
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background 0.16s ease, transform 0.12s ease, border-color 0.12s ease;
+    border: 1px solid transparent;
+    color: inherit;
+    background: transparent;
+}
+
+/* icono tamaño igual al carrito */
+.logout-btn img { width: 26px; height: 26px; object-fit: contain; display: inline-block; }
+
+/* Light mode: light blur background */
+html:not(.dark-mode) .logout-btn {
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(6px);
+    border-color: rgba(0,0,0,0.06);
+    color: #2b3748;
+}
+html:not(.dark-mode) .logout-btn:hover,
+html:not(.dark-mode) .logout-btn:focus {
+    background: rgba(255,255,255,0.92);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+/* Dark mode: dark blur background */
+html.dark-mode .logout-btn {
+    background: rgba(24,26,27,0.64);
+    backdrop-filter: blur(8px);
+    border-color: rgba(255,255,255,0.06);
+    color: #f5f5f7;
+}
+html:dark-mode .logout-btn:hover,
+html:dark-mode .logout-btn:focus {
+    background: rgba(24,26,27,0.8);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+/*
+ * ===== ESTA REGLA NO CAMBIA (YA ES CORRECTA) =====
+*/
+.side-panel .logout-btn {
+    /* ANULACIÓN: Quita el fondo blur y el borde del .logout-btn */
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    color: inherit;
+
+    /* Restablece los estilos de .menu-item para coherencia */
+    font-weight: 600;
+    padding: 10px 12px; /* <-- de .menu-item */
+    gap: 12px;          /* <-- de .menu-item */
+
+    /* Mantiene el layout de panel */
+    width: 100%;
+    justify-content: flex-start;
+}
+
+/* If logout appears in top nav keep it compact like carrito */
+.nav-container .logout-btn { width: auto; justify-content: center; }
+
+/* Ensure accessible focus ring */
+.logout-btn:focus {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+}
+/* ===== Fin estilos generales ===== */
+
+
+/* ===== Estilos responsivos de estilo29.css ===== */
+/* Nav en el flujo, centrado en desktop, reorganizable en móvil */
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: static;
+    box-sizing: border-box;
+    padding: 8px 20px;
+    /* background: rgba(255,255,255,0.9); */ /* Definido en light/dark */
+    /* backdrop-filter: blur(8px); */ /* Definido en light/dark */
+    /* border-bottom: 1px solid rgba(0,0,0,0.06); */ /* Definido en light/dark */
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+/* Areas */
+.nav-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+/* .nav-title { flex: 1 1 360px; text-align: center; font-weight:700; white-space:nowrap; } */ /* Definido arriba */
+.nav-right { display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+.nav-right-placeholder { width: 48px; } /* Espacio para el botón hamburguesa */
+
+
+/* Nav links unified */
+/* .nav-link, nav a, button.nav-link { ... } */ /* Definido arriba */
+
+/* icons */
+/* .nav-link img, nav a img, button.nav-link img { ... } */ /* Definido arriba */
+
+/* Logout visual parity with carrito */
+button.logout-btn, .logout-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 10px;
+    border-radius:8px;
+}
+
+/* badge */
+/* .carrito-badge { ... } */ /* Definido arriba */
+
+/* Desktop: absolutely center title, left/right groups at extremes */
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+    .nav-left, .nav-right { flex: 0 1 auto; }
+    .nav-left .nav-link, .nav-right .nav-link, .logout-form, button.logout-btn {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Mobile: title in its own row and groups centered */
+@media (max-width: 900px) {
+    .nav-title { position: static; transform: none; order: 2; width: 100%; text-align: center; margin: 6px 0; pointer-events: auto; }
+    .nav-left { order: 1; justify-content: center; width: 100%; }
+    .nav-right { order: 3; justify-content: center; width: 100%; }
+}
+
+/* Small screens: hide link text to save space */
+@media (max-width: 520px) {
+    .link-text, .logout-text { display: none; }
+}
+
+/* ===== Full-bleed nav + footer y botones azules a ancho completo ===== */
+
+/* Hacer que la barra de navegación ocupe todo el ancho de la ventana
+   pero manteniendo el .nav-container centrado y responsivo */
+nav {
+    width: 100%;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+    padding: 8px 0;                       /* espacio vertical; el padding horizontal lo da .nav-container */
+    /* background: rgba(255,255,255,0.92); */   /* o negocio de color según modo */
+    /* backdrop-filter: blur(8px); */
+    /* border-bottom: 1px solid rgba(0,0,0,0.06); */
+    position: static;                     /* nav en el flujo (estática) */
+    z-index: 1200;
+}
+
+/* interno centrado y con padding horizontal para separar del borde */
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px;                      /* padding horizontal visible dentro del nav */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+/* Footer full-bleed similar al nav */
+footer {
+    width: 100%;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+    padding: 16px 0;
+    /* background: rgba(255,255,255,0.85); */
+    /* backdrop-filter: blur(8px); */
+    /* border-top: 1px solid rgba(0,0,0,0.06); */
+}
+
+/* Contenido dentro del footer centrado y con el mismo max-width que la nav */
+footer > .footer-container,
+footer .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Evitar overflow horizontal por el fondo full-bleed en dispositivos con scrollbar */
+html, body { overflow-x: hidden; }
+
+/* Pequeñas mejoras responsive: en pantallas muy pequeñas reducir padding de nav/footer */
+@media (max-width: 600px) {
+    .nav-container, footer > .footer-container { padding: 0 12px; }
+    /* .container { padding: 20px 12px; } */ /* Definido en media query anterior */
+}
+
+
+/* Hamburger grande (reemplaza los tres puntos visualmente) */
+.nav-ellipsis.hamburger {
+    width: 48px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Tres barras dentro del botón */
+.nav-ellipsis.hamburger .bar {
+    display: block;
+    width: 22px;
+    height: 2.8px;
+    background: currentColor;
+    border-radius: 2px;
+    margin: 3px 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+/* Asegurar color coherente en light/dark (hereda) */
+.nav-ellipsis.hamburger { color: inherit; }
+
+
+/* hide original nav buttons if any remain */
+.nav-left .nav-link, .nav-right .nav-link { display: none !important; }
+
+/* keep title centered in desktop */
+@media (min-width: 901px) {
+    .nav-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+
+/* --- INICIO: ESTILOS AÑADIDOS PARA admin_mensajes.html --- */
+/* (Estos estilos no afectan a la página de formulario, pero se incluyen 
+   en el archivo unificado para que 'admin_mensajes.html' funcione) */
+.mensaje-item {
+    padding: 20px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.mensaje-info { flex: 1; }
+.mensaje-info p { margin: 4px 0; }
+
+.mensaje-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 120px; /* Evita que los botones se compriman demasiado */
+}
+
+.respuesta-form {
+    /* display: none; */ /* Se controla por JS e inline style */
+    width: 100%;
+    margin-top: 12px;
+    border-top: 1px solid;
+    padding-top: 12px;
+}
+.respuesta-form textarea { 
+    margin-bottom: 8px; 
+    /* Estilos heredados de 'form textarea' */
+}
+.respuesta-form button {
+    /* Estilos heredados de 'form button' */
+    width: auto;
+    padding: 10px 16px;
+    font-size: 0.95em;
+}
+
+
+.no-mensajes {
+    padding: 20px;
+    text-align: center;
+    font-style: italic;
+    border-radius: 14px;
+}
+
+.eliminar-btn, .responder-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-size: 0.9em;
+    width: 100%;
+}
+
+/* --- LIGHT MODE (Mensajes) --- */
+html:not(.dark-mode) .mensaje-item {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+html:not(.dark-mode) .no-mensajes {
+    background: rgba(0,0,0,0.02);
+    color: #777;
+}
+html:not(.dark-mode) .respuesta-form { border-top-color: #ddd; }
+html:not(.dark-mode) .eliminar-btn { background-color: #dc3545; color: #fff; }
+html:not(.dark-mode) .responder-btn { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) .eliminar-btn:hover { background-color: #c82333; }
+html:not(.dark-mode) .responder-btn:hover { background-color: #0056b3; }
+
+/* --- DARK MODE (Mensajes) --- */
+html.dark-mode .mensaje-item {
+    background: rgba(30, 34, 36, 0.9);
+    border: 1px solid rgba(0,230,176,0.1);
+}
+html.dark-mode .no-mensajes {
+    background: rgba(0,0,0,0.1);
+    color: #999;
+}
+html.dark-mode .respuesta-form { border-top-color: #444; }
+html.dark-mode .eliminar-btn { background-color: #e57373; color: #181a1b; }
+html.dark-mode .responder-btn { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode .eliminar-btn:hover { background-color: #ef9a9a; }
+html:dark-mode .responder-btn:hover { background-color: #69f0ae; }
+/* --- FIN: ESTILOS AÑADIDOS --- */

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restablecer Contraseña | AgronoMia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo36.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Restablecer Contraseña</h2>
+        <img src="{{ url_for('static', filename='images/AgronoMia.png') }}" alt="Logo AgronoMia" class="logo-agronomia">
+        
+        <p style="text-align: center; color: #ccc; margin-bottom: 20px;">
+            Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
+        </p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('solicitar_reset') }}" method="POST">
+            <div class="campo-form">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+            </div>
+            <button type="submit">Enviar Enlace</button>
+        </form>
+        <div class="registro">
+            <a href="{{ url_for('login') }}" style="color:#00e6b0; font-weight:bold; text-decoration:none; transition:color 0.3s;">Volver a Iniciar Sesión</a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/accesibilidad.js') }}"></script>
+</body>
+</html>

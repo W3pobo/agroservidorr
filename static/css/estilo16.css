@@ -1,0 +1,226 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/* --- ESTILOS DE BARRA DE NAVEGACIÓN UNIFICADOS --- */
+nav {
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background 0.3s ease, border 0.3s ease;
+}
+
+.nav-left, .nav-right { display: flex; align-items: center; gap: 25px; }
+nav a {
+    text-decoration: none; font-weight: 500;
+    padding: 10px 18px; border-radius: 8px; transition: background 0.2s, color 0.2s;
+    font-size: 1.1em; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px;
+}
+nav a img { height: 28px; width: 28px; vertical-align: middle; }
+
+/* --- LIGHT MODE --- */
+html:not(.dark-mode) body {
+    background-image: url('../images/background.jpg');
+    color: #333;
+}
+
+html:not(.dark-mode) nav {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+html:not(.dark-mode) nav a {
+    color: #333;
+}
+
+html:not(.dark-mode) nav a:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #007bff;
+}
+
+html:not(.dark-mode) .container {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+html:not(.dark-mode) h2 { color: #0056b3; }
+html:not(.dark-mode) label { color: #0056b3; }
+html:not(.dark-mode) input, html:not(.dark-mode) textarea { background: #fff; color: #333; border-color: #ccc; }
+html:not(.dark-mode) .boton-guardar { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) .boton-regresar-panel { color: #0056b3; }
+
+html:not(.dark-mode) footer {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    color: #555;
+    border-top: 1px solid #ddd;
+}
+
+
+/* --- DARK MODE --- */
+html.dark-mode body {
+    background-image: url('../images/background-login.png');
+    color: #f5f5f7;
+}
+
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html.dark-mode nav a {
+    color: #f5f5f7;
+}
+
+html.dark-mode nav a:hover {
+    background: rgba(255,255,255,0.08);
+    color: #00e6b0;
+}
+
+html.dark-mode .container {
+    background: rgba(24, 26, 27, 0.72);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(0,230,176,0.13);
+    box-shadow: 0 8px 32px rgba(0,230,176,0.10);
+}
+
+html.dark-mode h2 { color: #00e6b0; }
+html.dark-mode label { color: #00e6b0; }
+html.dark-mode input, html.dark-mode textarea { background: rgba(30, 34, 36, 0.96); color: #f5f5f7; border-color: #00e6b0; }
+html.dark-mode .boton-guardar { background: #00e6b0; color: #181a1b; }
+html.dark-mode .boton-regresar-panel { color: #00e6b0; }
+
+html.dark-mode footer {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(10px);
+    color: #aaa;
+    border-top: 1px solid #222;
+}
+
+
+/* --- GENERIC STYLES (for both modes) --- */
+.container {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 32px;
+    border-radius: 20px;
+}
+
+h2 { font-size: 2em; text-align: center; margin-bottom: 2rem; }
+form { display: flex; flex-direction: column; gap: 1rem; }
+label { font-weight: 600; }
+input, textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid; box-sizing: border-box; }
+.boton-guardar { border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+.boton-regresar-panel { display: block; text-align: center; margin-top: 1.5rem; font-weight: bold; text-decoration: none; }
+
+footer { text-align: center; padding: 18px 0; margin-top: auto; }
+
+/* --- ACCESSIBILITY --- */
+html.grayscale { filter: grayscale(100%); }
+
+#grayscale-toggle, #contrast-toggle, #back-to-top {
+    position: fixed;
+    z-index: 1001;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+#grayscale-toggle { top: 100px; right: 25px; }
+#contrast-toggle { top: 170px; right: 25px; }
+#back-to-top { bottom: 25px; left: 25px; opacity: 0; visibility: hidden; }
+#back-to-top.visible { opacity: 1; visibility: visible; }
+
+#grayscale-toggle:hover, #contrast-toggle:hover, #back-to-top:hover { transform: scale(1.1); }
+
+.contrast-menu { position: fixed; top: 240px; right: 25px; z-index: 1000; border-radius: 15px; padding: 15px; width: 220px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); display: none; }
+.contrast-menu.active { display: block; }
+.contrast-option { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 12px 15px; margin: 8px 0; cursor: pointer; transition: all 0.3s ease; text-align: left; width: 100%; font-size: 0.95em; }
+.contrast-option:hover { transform: translateX(5px); }
+.contrast-title { font-weight: bold; margin-bottom: 10px; text-align: center; font-size: 1.1em; border-bottom: 1px solid; padding-bottom: 8px; }
+
+html:not(.dark-mode) #grayscale-toggle, html:not(.dark-mode) #contrast-toggle { background-color: #007bff; color: #fff; }
+html:not(.dark-mode) #grayscale-toggle.active { background-color: #6c757d; }
+html:not(.dark-mode) #back-to-top { background-color: #FFD700; }
+html:not(.dark-mode) .contrast-menu { background: rgba(255, 255, 255, 0.9); border-color: #007bff; }
+html:not(.dark-mode) .contrast-option { color: #333; }
+html:not(.dark-mode) .contrast-option.active { background: #007bff; color: #fff; border-color: #007bff; }
+html:not(.dark-mode) .contrast-title { color: #0056b3; border-color: #0056b3; }
+
+html.dark-mode #grayscale-toggle, html.dark-mode #contrast-toggle { background-color: #00e6b0; color: #181a1b; }
+html.dark-mode #grayscale-toggle.active { background-color: #666; }
+html.dark-mode #back-to-top { background-color: #FFD700; }
+html.dark-mode .contrast-menu { background: rgba(24, 26, 27, 0.95); border-color: #00e6b0; }
+html.dark-mode .contrast-option { color: #f5f5f7; }
+html.dark-mode .contrast-option.active { background: #00e6b0; color: #181a1b; border-color: #00e6b0; }
+html.dark-mode .contrast-title { color: #00e6b0; border-color: #00e6b0; }
+
+body.contrast-high { filter: contrast(200%) brightness(120%); }
+body.contrast-very-high { filter: contrast(300%) brightness(140%); }
+body.contrast-inverted { filter: invert(100%) hue-rotate(180deg); }
+body.contrast-yellow-black { filter: sepia(100%) hue-rotate(45deg) contrast(150%); }
+body.contrast-blue-white { filter: hue-rotate(200deg) contrast(150%) brightness(130%); }
+
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 600px) {
+    nav { flex-direction: column; height: auto; padding: 10px 5px; }
+    .nav-left, .nav-right { flex-direction: column; gap: 10px; }
+    .container { width: 98%; padding: 24px 12px; margin: 20px auto; }
+    #grayscale-toggle, #contrast-toggle, #back-to-top { width: 50px; height: 50px; }
+    #grayscale-toggle { top: auto; bottom: 150px; right: 15px; }
+    #contrast-toggle { top: auto; bottom: 85px; right: 15px; }
+    #back-to-top { bottom: 20px; left: 15px; }
+    .contrast-menu { top: auto; bottom: 145px; right: 15px; width: 200px; }
+}

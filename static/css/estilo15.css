@@ -1,0 +1,273 @@
+/* --- FONT DEFINITIONS --- */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('../fonts/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Samsung One';
+    src: url('../fonts/SamsungOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('../fonts/SF-Pro-Text-Regular.otf') format('opentype');
+}
+
+/* --- BASE STYLES --- */
+html, body {
+    height: 100%;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* --- FONT CLASSES --- */
+html.font-google-sans body { font-family: 'Google Sans', sans-serif; }
+html.font-samsung-one body { font-family: 'Samsung One', sans-serif; }
+html.font-sf-pro body { font-family: 'SF Pro Text', sans-serif; }
+
+/* --- LIGHT MODE STYLES (DEFAULT) --- */
+body {
+    background-image: url('../images/background.jpg');
+    color: #333;
+}
+
+nav {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+}
+
+nav a {
+    color: #333;
+}
+
+nav a:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #007bff;
+}
+
+.cart-badge {
+    background: #007bff;
+    color: white;
+}
+
+.glass, .logo-banner-glass, .hero-banner-glass, #logout-modal {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+.hero-text h1, .logo-banner-content h1, .titulo-logo, .info-card h3, #logout-modal h2 {
+    color: #0056b3;
+}
+
+.hero-text p, .logo-banner-content p, .slogan, .info-card p, #logout-modal p {
+    color: #333;
+}
+
+footer {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    color: #555;
+    border-top: 1px solid #ddd;
+}
+
+/* --- DARK MODE STYLES --- */
+html.dark-mode body {
+    background-image: url('../images/background-login.png');
+    color: #f5f5f7;
+}
+
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+}
+
+html.dark-mode nav a {
+    color: #f5f5f7;
+}
+
+html.dark-mode nav a:hover {
+    background: rgba(255,255,255,0.08);
+    color: #00e6b0;
+}
+
+html.dark-mode .cart-badge {
+    background:#00e6b0;
+    color:#181a1b;
+}
+
+html.dark-mode .glass, html.dark-mode .logo-banner-glass, html.dark-mode .hero-banner-glass, html.dark-mode #logout-modal {
+    background: rgba(24, 26, 27, 0.72);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(0,230,176,0.13);
+    box-shadow: 0 8px 32px rgba(0,230,176,0.10), 0 2px 8px rgba(0,0,0,0.18);
+}
+
+html.dark-mode .hero-text h1, html.dark-mode .logo-banner-content h1, html.dark-mode .titulo-logo, html.dark-mode .info-card h3, html.dark-mode #logout-modal h2 {
+    color: #00e6b0;
+}
+
+html.dark-mode .hero-text p, html.dark-mode .logo-banner-content p, html.dark-mode .slogan, html.dark-mode .info-card p, html.dark-mode #logout-modal p {
+    color: #e0f7fa;
+}
+
+html.dark-mode footer {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(10px);
+    color: #aaa;
+    border-top: 1px solid #222;
+}
+
+/* --- OTHER STYLES (Unchanged) --- */
+.main-content {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+nav a img {
+    height: 28px;
+    width: 28px;
+    vertical-align: middle;
+}
+
+.presentacion-grid-new {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 38px;
+    max-width: 1400px;
+    margin: 0 auto 48px auto;
+    padding: 0 24px;
+}
+
+.info-card {
+    min-height: 260px;
+    text-align: center;
+    justify-content: flex-start;
+}
+
+.icono-card {
+    font-size: 2.7em;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 8px #00e6b055);
+}
+
+.logo-banner-glass {
+    max-width: 1400px;
+    margin: 48px auto 38px auto;
+    padding: 38px 24px 38px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-banner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.logo-img-main {
+    width: 260px;
+    max-width: 90vw;
+    height: auto;
+    border-radius: 28px;
+    box-shadow: 0 8px 32px rgba(0,230,176,0.18);
+    background: #232526;
+    object-fit: contain;
+    margin-bottom: 18px;
+    display: block;
+}
+
+/* --- ESTILOS DE BARRA DE NAVEGACIÓN UNIFICADOS --- */
+nav {
+    padding: 0 32px; /* Mantenemos el padding interno para que el contenido no toque los bordes */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+nav a {
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+nav a img {
+    height: 28px;
+    width: 28px;
+    vertical-align: middle;
+}
+
+/* --- ESTILOS PARA MODO CLARO DE LA BARRA --- */
+html:not(.dark-mode) nav {
+    background: transparent; /* Fondo transparente para que se vea la imagen de atrás */
+    backdrop-filter: blur(12px); /* Aumentamos un poco el desenfoque */
+    box-shadow: none; /* Eliminamos la sombra */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* Borde inferior sutil */
+}
+
+html:not(.dark-mode) nav a {
+    color: #FFFFFF;
+}
+
+html:not(.dark-mode) nav a:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #007bff;
+}
+
+/* --- ESTILOS PARA MODO OSCURO DE LA BARRA --- */
+html.dark-mode nav {
+    background: rgba(24, 26, 27, 0.65);
+    backdrop-filter: blur(12px);
+    box-shadow: none; /* Eliminamos la sombra también en modo oscuro */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borde inferior sutil */
+}
+
+html.dark-mode nav a {
+    color: #f5f5f7;
+}
+
+html.dark-mode nav a:hover {
+    background: rgba(255,255,255,0.08);
+    color: #00e6b0;
+}

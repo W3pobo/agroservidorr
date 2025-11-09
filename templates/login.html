@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión | AgronoMia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo36.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Iniciar Sesión</h2>
+        <img src="{{ url_for('static', filename='images/AgronoMia.png') }}" alt="Logo AgronoMia" class="logo-agronomia">
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <form action="{{ url_for('login') }}" method="POST">
+            <div class="campo-form">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+            </div>
+            <div class="campo-form">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                {% if error %}
+                <div class="error-login">{{ error }}</div>
+                {% endif %}
+            </div>
+            
+            <div class.forgot-password" style="text-align: right; margin-top: -10px; margin-bottom: 15px;">
+                <a href="{{ url_for('solicitar_reset') }}" style="color: #00e6b0; font-size: 0.9em; text-decoration: none;">¿Olvidaste tu contraseña?</a>
+            </div>
+            
+            <button type="submit">Ingresar</button>
+        </form>
+        <div class="registro">
+            <p>¿No tienes cuenta?</p>
+            <a href="{{ url_for('registro') }}" style="color:#00e6b0; font-weight:bold; text-decoration:none; transition:color 0.3s; margin-right: 12px;">Regístrate como Cliente</a>
+            <a href="{{ url_for('registro_productores') }}" style="color:#00e6b0; font-weight:bold; text-decoration:none; transition:color 0.3s;">Regístrate como Productor</a>
+        </div>
+
+        <div class="oauth-section">
+            <div class="separator">
+                <span>O inicia sesión con</span>
+            </div>
+            
+            <a href="{{ url_for('login_google') }}" class="google-btn">
+                <img src="https://developers.google.com/identity/images/g-logo.png" 
+                     alt="Google logo" class="google-logo">
+                Continuar con Google
+            </a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/accesibilidad.js') }}"></script>
+</body>
+</html>
