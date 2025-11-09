@@ -16,7 +16,6 @@ from sqlalchemy import and_, not_, exists, func
 import pandas as pd
 import secrets
 import mercadopago
-from dotenv import load_dotenv
 # Importaciones para OAuth y Flask-Login
 import base64
 import pyotp
@@ -28,32 +27,30 @@ from authlib.integrations.flask_client import OAuth
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from functools import wraps
 
-load_dotenv()
 
 # 1. Crear la instancia de Flask
 app = Flask(__name__)
 
 # 2. Configuración de la aplicación
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL') # <-- CORREGIDO
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')                # <-- CORREGIDO
 app.config['GOOGLE_CLIENT_ID'] = os.getenv('GOOGLE_CLIENT_ID')
 app.config['GOOGLE_CLIENT_SECRET'] = os.getenv('GOOGLE_CLIENT_SECRET')
 app.config['UPLOAD_FOLDER'] = 'static/images'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config.update({
-    'SECRET_KEY': 'clave_secreta_super_segura',
     'SESSION_COOKIE_HTTPONLY': True,
     'SESSION_COOKIE_SECURE': False,  # True en producción con HTTPS
     'SESSION_COOKIE_SAMESITE': 'Lax',
 })
 
-pygame.mixer.init()
+#pygame.mixer.init()
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME', 'seedhubagronomia@gmail.com')
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 app.config['MAIL_DEFAULT_SENDER'] = 'seedhubagronomia@gmail.com'
 
