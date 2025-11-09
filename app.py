@@ -2468,22 +2468,44 @@ def actualizar_estado_pedido(pedido_id):
 @app.route('/pago/exitoso')
 def pago_exitoso():
     payment_id = request.args.get('payment_id')
-    external_reference = request.args.get('external_reference')
+    external_reference = request.args.get('external_reference') # Ej: 'pedido_66'
     
     if not external_reference:
         flash("No se pudo confirmar el pedido.", "error")
         return redirect(url_for('carrito'))
 
-    pedido = Pedido.query.get(int(external_reference))
+    # --- INICIO DE LA CORRECCIÓN ---
+    pedido = None
+    try:
+        # 1. Separamos el string por el guion bajo: ['pedido', '66']
+        # 2. Tomamos el último elemento: '66'
+        pedido_id_str = external_reference.split('_')[-1]
+        
+        # 3. Convertimos '66' a un entero
+        pedido_id = int(pedido_id_str)
+        
+        # 4. Buscamos el pedido
+        pedido = Pedido.query.get(pedido_id)
+        
+    except (ValueError, IndexError, TypeError):
+        # Si algo falla (ej. la referencia no tiene '_', o no es un número)
+        flash("Error al procesar la referencia del pedido.", "error")
+        return redirect(url_for('carrito'))
+    # --- FIN DE LA CORRECCIÓN ---
+
     if pedido:
         pedido.estado = 'aprobado'
         db.session.commit()
     
-    Carrito.query.filter_by(usuario_id=current_user.id).delete()
-    db.session.commit()
-    
-    flash("✅ Pago procesado exitosamente con Mercado Pago", "success")
-    return redirect(url_for('historial_pedidos'))
+        # Mueve la limpieza del carrito aquí para que solo ocurra si el pedido se confirma
+        Carrito.query.filter_by(usuario_id=current_user.id).delete()
+        db.session.commit()
+        
+        flash("✅ Pago procesado exitosamente con Mercado Pago", "success")
+        return redirect(url_for('historial_pedidos'))
+    else:
+        flash("No se encontró el pedido asociado al pago.", "error")
+        return redirect(url_for('carrito'))
 
 @app.route('/pago/fallido')
 def pago_fallido():
