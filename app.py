@@ -1586,25 +1586,6 @@ def agregar_carrito(producto_id):
     return redirect(url_for('productos'))
 
 
-@app.route('/metodos_pago', methods=['GET', 'POST'])
-def metodos_pago():
-    if 'usuario_id' not in session:
-        return redirect(url_for('login'))
-
-    usuario_id = session['usuario_id']
-    tarjetas = Tarjeta.query.filter_by(usuario_id=usuario_id).all()
- 
-    tarjetas_json = [
-        {
-            "id": t.id,
-            "numero": t.numero,
-            "propietario": t.propietario,
-            "fecha_expiracion": t.fecha_expiracion
-        }
-        for t in tarjetas
-    ]
-    return render_template('metodos_pago.html', tarjetas=tarjetas, tarjetas_json=tarjetas_json)
-
 
 @app.route('/detalle_pedido/<int:pedido_id>')
 def detalle_pedido(pedido_id):
@@ -1918,36 +1899,6 @@ def enviar_email_verificacion(usuario, token):
         print(f"Error al enviar correo de verificación: {e}")
 # --- FIN DE FUNCIÓN AÑADIDA ---
 
-@app.route('/eliminar_tarjeta/<int:tarjeta_id>', methods=['POST'])
-def eliminar_tarjeta(tarjeta_id):
-    tarjeta = Tarjeta.query.get_or_404(tarjeta_id)
-    if tarjeta.usuario_id == session['usuario_id']:
-        db.session.delete(tarjeta)
-        db.session.commit()
-        flash("✔ Tarjeta eliminada correctamente.", "success")
-    return redirect(url_for('panel_cliente'))
-
-@app.route('/agregar_tarjeta', methods=['GET', 'POST'])
-def agregar_tarjeta():
-    if request.method == 'POST':
-        numero = request.form['numero_tarjeta']
-        propietario = request.form['propietario']
-        fecha_expiracion = request.form['fecha_expiracion']
-        try:
-            nueva_tarjeta = Tarjeta(
-                usuario_id=session['usuario_id'],
-                numero=numero,
-                propietario=propietario,
-                fecha_expiracion=fecha_expiracion
-            )
-            db.session.add(nueva_tarjeta)
-            db.session.commit()
-            flash("✔ Tarjeta agregada exitosamente.", "success")
-        except Exception as e:
-            db.session.rollback()
-            flash("✖ Ocurrió un error al agregar la tarjeta.", "error")
-        return redirect(url_for('agregar_tarjeta'))
-    return render_template('agregar_tarjeta.html')
 
 
 @app.route('/desactivar_producto/<int:producto_id>', methods=['POST'])
